@@ -1,3 +1,6 @@
+[![N|Solid](https://improntus.com/wp-content/uploads/2022/05/Logo-Site.png)](https://www.improntus.com)
+<img src="https://www.prontopaga.com/img/sitesettings/faviconnuevo-1671219803.png" width="80" height="60" />
+
 # Module ProntoPaga
 ## Descripción
 ProntoPaga para Magento (Adobe Commerce) Pagos Rápidos y seguros.
