@@ -191,7 +191,8 @@ class Data extends AbstractHelper
       */
     public function validateCredentials(): int
     {
-        if ($this->getApiEndpoint() && $this->getApiToken() && $this->getSecretKey()) {
+        if ($this->getApiEndpoint() && $this->getApiToken()
+            && $this->getSecretKey() && $this->getAllowedMethods()) {
             return self::USER_AUTHENTICATED;
         }
         return self::INCOMPLETE_CREDENTIALS;
