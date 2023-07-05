@@ -94,7 +94,6 @@ define([
         },
 
         getPlaceOrderDeferredObject: function () {
-            $('button.checkout').attr('disabled', 'disabled');
             return $.when(
                 placeOrderAction(this.getData(), this.messageContainer)
             );
