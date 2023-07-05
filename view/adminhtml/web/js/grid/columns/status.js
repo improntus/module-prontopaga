@@ -8,18 +8,7 @@ define([
         },
 
         getStatus: ({status}) => {
-            debugger
-            return `prontopaga payment ${status}`
-            if (row.status == 'create') {
-                return 'order-create';
-            }else if(row.status == 'success') {
-                return 'order-processing';
-            }else if(row.status == 'rejected') {
-                return 'order-complete';
-            }else if(row.status == 'error') {
-                return 'order-error';
-            }
-            return '#303030';
+            return `prontopaga payment ${status}`Z
         }
     });
 });
