@@ -112,7 +112,8 @@ class Data extends AbstractHelper
      */
     public function getAllowedMethods()
     {
-        return explode(',', $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS) ?? '') ?: [];
+        $methods = $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS) ?? '';
+        return $methods ? explode(',', $methods) : [];
     }
 
     /**
