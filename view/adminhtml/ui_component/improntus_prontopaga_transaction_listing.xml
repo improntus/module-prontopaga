@@ -1,0 +1,133 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">improntus_prontopaga_transaction_listing.improntus_prontopaga_transaction_listing_data_source</item>
+		</item>
+	</argument>
+	<settings>
+		<spinner>improntus_prontopaga_transaction_columns</spinner>
+		<deps>
+			<dep>improntus_prontopaga_transaction_listing.improntus_prontopaga_transaction_listing_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="improntus_prontopaga_transaction_listing_data_source" component="Magento_Ui/js/grid/provider">
+		<settings>
+			<storageConfig>
+				<param name="indexField" xsi:type="string">entity_id</param>
+			</storageConfig>
+			<updateUrl path="mui/index/render"/>
+		</settings>
+		<aclResource>Improntus_ProntoPaga::transaction</aclResource>
+		<dataProvider name="improntus_prontopaga_transaction_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+			<settings>
+				<requestFieldName>id</requestFieldName>
+				<primaryFieldName>entity_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<settings>
+			<sticky>true</sticky>
+		</settings>
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		<paging name="listing_paging"/>
+        <filters name="listing_filters">
+            <settings>
+                <chipsConfig>
+                    <param name="component" xsi:type="string">Magento_Ui/js/grid/filters/chips</param>
+                    <param name="componentType" xsi:type="string">filtersChips</param>
+                    <param name="template" xsi:type="string">ui/grid/filters/chips</param>
+                </chipsConfig>
+            </settings>
+        </filters>
+        <filterSearch name="fulltext"/>
+
+	</listingToolbar>
+	<columns name="improntus_prontopaga_transaction_columns">
+		<selectionsColumn name="ids">
+			<settings>
+				<indexField>entity_id</indexField>
+			</settings>
+		</selectionsColumn>
+		<column name="entity_id">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">ID</label>
+			</settings>
+		</column>
+		<column name="order_id">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Order ID</label>
+			</settings>
+		</column>
+        <column name="transaction_id">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Transaction ID</label>
+			</settings>
+		</column>
+
+        <column name="status" component="Improntus_ProntoPaga/js/grid/columns/status">
+            <settings>
+                <filter>select</filter>
+                <options class="Improntus\ProntoPaga\Ui\Component\Listing\Columns\Status"/>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+            </settings>
+        </column>
+
+		<column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created At</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+
+		<column name="request_body">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Request Body</item>
+                    <item name="resizeEnabled" xsi:type="boolean">true</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+		</column>
+
+		<column name="request_response">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Request Response</label>
+			</settings>
+		</column>
+
+        <column name="run_profile">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Validate Payment</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="component" xsi:type="string">Improntus_ProntoPaga/js/grid/columns/validate-payment</item>
+                </item>
+            </argument>
+        </column>
+
+        <actionsColumn name="actions" class="Improntus\ProntoPaga\Ui\Component\Listing\Column\RowAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeDefaultWidth" xsi:type="string">60</item>
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+
+	</columns>
+</listing>

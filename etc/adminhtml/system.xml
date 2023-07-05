@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="payment" sortOrder="1000" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<group id="prontopaga" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <fieldset_css>prontopaga</fieldset_css>
+                <frontend_model>Magento\Paypal\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+                <comment>
+                    <![CDATA[<div class="prontopaga-payment-logo"></div><div class="prontopaga-payment-text">Pagos Rápidos y seguros con <strong>Pronto Paga.</strong></div>]]>
+                </comment>
+				<field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Title</label>
+				</field>
+				<field id="order_status" type="select" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>New Order Status</label>
+					<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+				</field>
+				<field id="allowspecific" type="allowspecific" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Payment from Applicable Countries</label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Payment from Applicable Countries</label>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+                <field id="specificmethods" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Specicic Allowed Methods</label>
+					<source_model>Improntus\ProntoPaga\Model\Config\Source\PaymentMehods</source_model>
+					<can_be_empty>0</can_be_empty>
+				</field>
+				<field id="sort_order" type="text" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Sort Order</label>
+				</field>
+                <field id="debug" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/prontopaga/debug</config_path>
+                </field>
+                <field id="endpoint" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base URL API Endpoint</label>
+                    <comment>API endpoint for payments. Please make sure that URL ends with '/' (slash), e.g. http:://domain/magento/</comment>
+                    <config_path>payment/prontopaga/endpoint</config_path>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <validate>required validate-no-empty validate-url validate-url-slash</validate>
+                </field>
+                <field id="token" translate="label" type="obscure" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Token</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <config_path>payment/prontopaga/token</config_path>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <validate>required validate-no-empty</validate>
+                </field>
+                <field id="secret_key" translate="label" type="obscure" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <config_path>payment/prontopaga/secret_key</config_path>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <validate>required validate-no-empty</validate>
+                </field>
+                <field id="logo" translate="label" sortOrder="120" type="Magento\Config\Block\System\Config\Form\Field\Image" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo</label>
+                    <backend_model>Improntus\ProntoPaga\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">prontopaga</base_url>
+                    <validate>required-entry</validate>
+                    <upload_dir config="system" scope_info="1">prontopaga</upload_dir>
+                    <comment><![CDATA[Allowed file types: jpg, jpeg, gif, png, svg]]></comment>
+                </field>
+			</group>
+		</section>
+	</system>
+</config>

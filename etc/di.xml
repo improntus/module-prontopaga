@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!-- @model -->
+    <preference for="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" type="Improntus\ProntoPaga\Model\TransactionRepository"/>
+	<preference for="Improntus\ProntoPaga\Api\Data\TransactionInterface" type="Improntus\ProntoPaga\Model\Transaction"/>
+	<preference for="Improntus\ProntoPaga\Api\Data\TransactionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Improntus\ProntoPaga\Model\ResourceModel\Transaction\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">improntus_prontopaga_transaction</argument>
+			<argument name="resourceModel" xsi:type="string">Improntus\ProntoPaga\Model\ResourceModel\Transaction\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="improntus_prontopaga_transaction_listing_data_source" xsi:type="string">Improntus\ProntoPaga\Model\ResourceModel\Transaction\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+
+    <!-- @configuration -->
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="payment/prontopaga/endpoint" xsi:type="string">1</item>
+                <item name="payment/prontopaga/token" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- @logger -->
+    <type name="Improntus\ProntoPaga\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">prontopaga</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Improntus\ProntoPaga\Logger\Handler\CustomHandler</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="ProntoPagaLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="info" xsi:type="object">Improntus\ProntoPaga\Logger\Handler\CustomHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- @virtual type for payment model -->
+    <virtualType name="Prontopaga" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Improntus\ProntoPaga\Model\ConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">ProntoPagaValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">ProntoPagaValidatorPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ProntoPagaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ProntoPagaConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ProntoPagaConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ProntoPagaConfig</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ProntoPagaConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Improntus\ProntoPaga\Model\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ProntoPagaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Improntus\ProntoPaga\Gateway\Validator\CurrencyValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+</config>

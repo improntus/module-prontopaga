@@ -1,0 +1,79 @@
+<?php
+/*
+ * Copyright © Ignacio Muñoz © All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Improntus\ProntoPaga\ViewModel\Detail $viewModel
+ */
+
+$viewModel = $block->getViewModel();
+$transaction = $viewModel->getTransactionData();
+?>
+
+<div class="transaction-content">
+    <div class="table-wrapper data-history">
+        <table class="data table table-data-items history" id="my-data-table">
+            <caption class="table-caption"><?= __('Grid Record') ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col id"><?= __('ID') ?></th>
+                        <th scope="col" class="col order_id"><?= __('Order Id') ?></th>
+                        <th scope="col" class="col status"><?= __('Status') ?></th>
+                        <th scope="col" class="col createt_at"><?= __('Created At') ?></th>
+                        <th scope="col" class="col transaction_id"><?= __('Transaction Id') ?></th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
+                        <?= $transaction->getEntityId() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Order Id')) ?>" class="col order_id">
+                        <?= $transaction->getOrderId() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                        <?= $transaction->getStatus() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Created At')) ?>" class="col created_at">
+                        <?= $viewModel->getFormattedDate($transaction->getCreatedAt()); ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Transaction Id')) ?>" class="col transaction_id">
+                        <?= $transaction->getTransactionId() ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Requests</h2>
+    <button class="beauty">Prettify JSON</button>
+    <button class="beauty" style="display: none;">Unprettify JSON</button>
+
+    <figure class="unformatted-data">
+        <blockquote>
+            <?= $transaction->getRequestBody() ?>
+        </blockquote>
+        <blockquote>
+            <?= $transaction->getRequestResponse() ?>
+        </blockquote>
+    </figure>
+
+    <figure class="formatted-data">
+        <p class="request-body"></p>
+        <p class="request-response"></p>
+    </figure>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Improntus_ProntoPaga/js/beautify" : {
+                "request-body" : <?= $transaction->getRequestBody() ?>,
+                "request-response" : <?= $transaction->getRequestResponse() ?>
+            }
+        }
+    }
+</script>

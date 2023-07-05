@@ -1,0 +1,105 @@
+& when (@media-common = true) {
+    #pronto-pago{
+        display: flex;
+        > input.radio:not([disabled]):focus, textarea:not([disabled]):focus, select:not([disabled]):focus {
+            box-shadow: unset;
+        }
+        .prontopaga-payment-logo {
+            top: 0;
+            left: 0;
+            background: #ffffff;
+            animation: animate .5s linear infinite;
+            border-radius: 3px;
+            > img.payment-banner-checkout {
+                // max-width: 50%;
+                max-width: 20em;
+                vertical-align: middle;
+                filter: drop-shadow(0px 0px 3px white);
+                // animation: loaderPulse 1.5s ease-out infinite;
+            }
+        }
+    }
+
+    // @keyframes loaderPulse {
+    //     60% {
+    //         transform: scale(1);
+    //     }
+    //     65% {
+    //         transform: scale(0.9);
+    //     }
+    //     70% {
+    //         transform: scale(1);
+    //     }
+    // }
+
+    .payment-method-content {
+        .bar {
+            height: 5px;
+            width: 90px;
+            background: #cdf1d8;
+            margin: 15px auto 20px;
+            position: relative;
+            border-radius: 30px;
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: -2.6px;
+                height: 10px;
+                width: 10px;
+                border-radius: 50%;
+                background: #44ce6f;
+                -webkit-animation-duration: 3s;
+                animation-duration: 3s;
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+                -webkit-animation-iteration-count: infinite;
+                animation-iteration-count: infinite;
+                -webkit-animation-name: MOVE-BG;
+                animation-name: MOVE-BG;
+            }
+        }
+
+        .layout-payment-gateway {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: flex-start;
+            grid-gap: 10px;
+            background: #f5f5f5;
+            margin: 0 0 20px;
+            padding: 22px 30px;
+            border-radius: 5px;
+            > div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-flow: column;
+                height: 50px;
+                width: 19%;
+                background: #F1F1F2;
+                border-radius: 10px;
+                font-size: 12px;
+                grid-gap: 10px;
+                > img {
+                    cursor: pointer;
+                    width: 80%;
+                }
+                &:hover{
+                    border: 1px solid #ee0979;
+                }
+            }
+            ._selected {
+                border: 1px solid #ee0979;
+            }
+        }
+    }
+
+    @keyframes MOVE-BG {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(88px);
+        }
+    }
+}

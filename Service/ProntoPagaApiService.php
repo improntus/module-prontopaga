@@ -1,0 +1,137 @@
+<?php
+/**
+ * Copyright © Improntus All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Improntus\ProntoPaga\Service;
+
+use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
+use Magento\Framework\HTTP\Client\Curl;
+use Magento\Framework\Serialize\Serializer\Json;
+
+class ProntoPagaApiService
+{
+    const URI_NEW_PAYMENT = 'api/payment/new';
+    const URI_PAYMENT_METHODS = 'api/payment/methods/';
+    const URI_PAYMENT_DETAILS = 'api/payment/data/';
+
+    /**
+     * @var ProntoPagaHelper
+     */
+    private $prontoPagaHelper;
+
+    /**
+     * @var Curl
+     */
+    private $curl;
+
+    /**
+     * @var Json
+     */
+    private $json;
+
+    /**
+     * Constructor
+     *
+     * @param ProntoPagaHelper $prontoPagaHelper
+     * @param Curl $curl
+     * @param Json $json
+     */
+    public function __construct(
+        ProntoPagaHelper $prontoPagaHelper,
+        Curl $curl,
+        Json $json
+    ) {
+        $this->prontoPagaHelper = $prontoPagaHelper;
+        $this->curl = $curl;
+        $this->json = $json;
+    }
+
+    /**
+     * Create Payment request
+     *
+     * @param string $params
+     * @return array|boolean|mixed
+     */
+    public function createPayment($params)
+    {
+        $url = $this->prontoPagaHelper->getApiEndpoint() . self::URI_NEW_PAYMENT;
+        $params = $this->json->serialize($params);
+        $result = $this->doRequest($url, 'POST', $params);
+
+        if (!$result) {
+            return false;
+        }
+
+        $result = @unserialize($result)
+                    ? $this->json->unserialize($result)
+                    : ['message' => $result];
+
+        return  ['code' => $this->curl->getStatus(), 'body' => $result, 'request_body' => $params];
+    }
+
+    /**
+     * Confirm Payment request
+     *
+     * @param string $params
+     * @return array|boolean|mixed
+     */
+    public function confirmPayment($uid)
+    {
+        $url = $this->prontoPagaHelper->getApiEndpoint() . self::URI_PAYMENT_DETAILS . $uid;
+        $result = $this->doRequest($url);
+
+        if (!$result) {
+            return false;
+        }
+
+        $result = @unserialize($result)
+                    ? $this->json->unserialize($result)
+                    : ['message' => $result];
+
+        return  ['code' => $this->curl->getStatus(), 'body' => $result];
+    }
+
+    /**
+     * Get all Payment methods by currency
+     *
+     * @param string $currency
+     * @return array|boolean|mixed
+     */
+    public function getPaymentMethods(string $currency)
+    {
+        $url = $this->prontoPagaHelper->getApiEndpoint() . self::URI_PAYMENT_METHODS . $currency;
+        $result = $this->doRequest($url);
+
+        if (!$result) {
+            return false;
+        }
+
+        $result = $this->json->unserialize($result);
+        return  ['code' => $this->curl->getStatus(), 'methods' => $result];
+    }
+
+
+    /**
+     * Make request
+     *
+     * @param string $url
+     * @param string $action
+     * @param mixed|null $params
+     * @return mixed
+     */
+    function doRequest($url, $action = 'GET', $params = null)
+    {
+        $apiToken = $this->prontoPagaHelper->getApiToken();
+        $headers = ["Authorization" => "Bearer $apiToken"];
+        $this->curl->setHeaders($headers);
+
+        if ($action == 'GET') {
+            $this->curl->get($url);
+        } else if ($action == 'POST') {
+            $this->curl->post($url, $params);
+        }
+
+        return $this->curl->getBody();
+    }
+}

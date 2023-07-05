@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<prontopaga>
+				<active>1</active>
+				<model>Prontopaga</model>
+				<order_status>pending</order_status>
+				<title>Pronto Paga</title>
+				<allowspecific>0</allowspecific>
+                <specificmethods>webpay_payment</specificmethods>
+				<can_authorize>0</can_authorize>
+                <can_capture>0</can_capture>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>0</is_gateway>
+                <sandbox>1</sandbox>
+                <debug>1</debug>
+                <sort_order>100</sort_order>
+                <endpoint>https://sandbox.insospa.com/</endpoint>
+			</prontopaga>
+		</payment>
+	</default>
+</config>

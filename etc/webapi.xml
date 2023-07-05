@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route url="/V1/improntus-prontopaga/transaction" method="POST">
+		<service class="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::transaction_save"/>
+		</resources>
+	</route>
+	<route url="/V1/improntus-prontopaga/transaction/search" method="GET">
+		<service class="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::transaction_view"/>
+		</resources>
+	</route>
+	<route url="/V1/improntus-prontopaga/transaction/:entityId" method="GET">
+		<service class="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::transaction_view"/>
+		</resources>
+	</route>
+	<route url="/V1/improntus-prontopaga/transaction/:entityId" method="PUT">
+		<service class="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::transaction_update"/>
+		</resources>
+	</route>
+	<route url="/V1/improntus-prontopaga/transaction/:entityId" method="DELETE">
+		<service class="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::transaction_delete"/>
+		</resources>
+	</route>
+</routes>

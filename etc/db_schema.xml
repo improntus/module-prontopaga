@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="improntus_prontopaga_transaction" resource="default" engine="innodb" comment="Pronto Paga Transaction Data">
+		<column name="entity_id" padding="10" unsigned="true" xsi:type="int" nullable="false" identity="true" comment="Entity Id"/>
+		<column name="order_id" nullable="false" xsi:type="int" comment="Order ID" identity="false"/>
+        <column name="transaction_id" nullable="false" xsi:type="varchar" comment="Pronto Paga Transaction ID"/>
+		<column name="status" nullable="false" xsi:type="varchar" comment="status" length="255"/>
+        <column name="request_body" nullable="false" xsi:type="blob" comment="New Payment Body Request"/>
+        <column name="created_at" on_update="false" nullable="false"  xsi:type="timestamp" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column name="request_response" nullable="true" xsi:type="blob" comment="Payment Response"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="entity_id"/>
+		</constraint>
+        <constraint xsi:type="unique" referenceId="IMPRONTUS_PRONTOPAGO_TRANSACTION_ORDER_ID_NIQUE">
+            <column name="order_id"/>
+        </constraint>
+	</table>
+</schema>

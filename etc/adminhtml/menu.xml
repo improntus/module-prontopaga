@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Improntus All rights reserved.
+See COPYING.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Improntus_ProntoPaga::main" title="Improntus ProntoPaga" module="Improntus_ProntoPaga" sortOrder="9999" resource="Magento_Backend::content"/>
+		<add id="Improntus_ProntoPaga::transactions" title="Transactions" module="Improntus_ProntoPaga" sortOrder="9999" resource="Magento_Backend::content"
+                parent="Improntus_ProntoPaga::main" action="improntus_prontopaga/transaction/index"/>
+        <add id="Improntus_ProntoPaga::configuration" title="Configuration" module="Improntus_ProntoPaga" sortOrder="9999" resource="Magento_Backend::content"
+                parent="Improntus_ProntoPaga::main" action="admin/system_config/edit/section/payment/prontopaga"/>
+	</menu>
+</config>
