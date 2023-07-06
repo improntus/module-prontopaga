@@ -22,12 +22,12 @@ See COPYING.txt for license details.
 		</arguments>
 	</type>
 
-    <!-- @configuration -->
+    <!-- @sensitive values -->
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>
             <argument name="sensitive" xsi:type="array">
-                <item name="payment/prontopaga/endpoint" xsi:type="string">1</item>
                 <item name="payment/prontopaga/token" xsi:type="string">1</item>
+                <item name="payment/prontopaga/secret_key" xsi:type="string">1</item>
             </argument>
         </arguments>
     </type>
@@ -83,14 +83,4 @@ See COPYING.txt for license details.
             </argument>
         </arguments>
     </virtualType>
-
-    <!-- @sensitive values -->
-    <type name="Magento\Config\Model\Config\TypePool">
-        <arguments>
-            <argument name="sensitive" xsi:type="array">
-                <item name="payment/prontopaga/token" xsi:type="string">1</item>
-                <item name="payment/prontopaga/secret_key" xsi:type="string">1</item>
-            </argument>
-        </arguments>
-    </type>
 </config>
