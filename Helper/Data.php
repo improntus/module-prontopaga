@@ -133,9 +133,7 @@ class Data extends AbstractHelper
      */
     public function getApiToken(): string
     {
-        return $this->encryptor->decrypt(
-            $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN) ?? ''
-        );
+        return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN) ?? '';
     }
 
      /**
@@ -145,9 +143,7 @@ class Data extends AbstractHelper
      */
     public function getSecretKey(): string
     {
-        return $this->encryptor->decrypt(
-            $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY) ?? ''
-        );
+        return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY) ?? '';
     }
 
     /**

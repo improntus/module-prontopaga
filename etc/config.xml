@@ -22,6 +22,8 @@ See COPYING.txt for license details.
                 <debug>1</debug>
                 <sort_order>100</sort_order>
                 <endpoint>https://sandbox.insospa.com/</endpoint>
+                <token backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
 			</prontopaga>
 		</payment>
 	</default>

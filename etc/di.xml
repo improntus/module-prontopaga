@@ -59,7 +59,6 @@ See COPYING.txt for license details.
             <argument name="validatorPool" xsi:type="object">ProntoPagaValidatorPool</argument>
         </arguments>
     </virtualType>
-
     <virtualType name="ProntoPagaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
         <arguments>
             <argument name="handlers" xsi:type="array">
@@ -77,7 +76,6 @@ See COPYING.txt for license details.
             <argument name="methodCode" xsi:type="const">Improntus\ProntoPaga\Model\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
-
     <virtualType name="ProntoPagaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
         <arguments>
             <argument name="validators" xsi:type="array">
@@ -86,4 +84,13 @@ See COPYING.txt for license details.
         </arguments>
     </virtualType>
 
+    <!-- @sensitive values -->
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="payment/prontopaga/token" xsi:type="string">1</item>
+                <item name="payment/prontopaga/secret_key" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
