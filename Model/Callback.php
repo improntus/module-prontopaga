@@ -34,6 +34,7 @@ class Callback implements CallbackInterface
      * @param ProntoPagaHelper $prontoPagaHelper
      * @param ProntoPaga $prontoPaga
      * @param OrderInterface $orderInterface
+     * @param RequestInterface $request
      */
     public function __construct(
         ProntoPagaHelper $prontoPagaHelper,
@@ -45,20 +46,16 @@ class Callback implements CallbackInterface
         $this->orderInterface = $orderInterface;
     }
 
-     /**
-     * @param $body
-     * @return bool
-     * @throws \Magento\Framework\Webapi\Exception
-     * @throws \Exception
+    /**
+     * {@inheritdoc}
      */
-    public function updateStatus($body)
+    public function updateStatus($request)
     {
         try {
-            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $body, 'method' => __METHOD__]);
+            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $request, 'method' => __METHOD__]);
         } catch (\Exception $e) {
-            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($body), 'method' => __METHOD__]);
+            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($request), 'method' => __METHOD__]);
         }
-
         return true;
     }
 }

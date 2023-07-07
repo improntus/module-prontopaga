@@ -7,12 +7,15 @@ namespace Improntus\ProntoPaga\Api;
 
 use Magento\Framework\Webapi\Exception;
 
+/**
+ * @api
+ */
 interface CallbackInterface
 {
     /**
-     * @param string[] $body
+     * @param mixed|string[] $request
      * @throws Exception
      * @return mixed
      */
-    public function updateStatus($body);
+    public function updateStatus($request);
 }
