@@ -96,6 +96,7 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
+        $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);
         $status = $bodyParams['status'] ?? false;
@@ -129,6 +130,7 @@ class Callback implements CallbackInterface
                 break;
         }
 
+        $this->prontoPaga->persistTransaction($order, $serializedBodyParams, $status);
         return true;
     }
 

@@ -108,7 +108,6 @@ class Response implements ActionInterface
         return $resultRedirect;
     }
 
-
     /**
      * Validate payment after redirect
      *
