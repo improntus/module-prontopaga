@@ -77,7 +77,6 @@ class Response implements ActionInterface
     {
         $resultRedirect = $this->redirectFactory->create();
         $result = $this->request->getParams();
-        $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($result), 'method' => __METHOD__]);
 
         if (!$result) {
             $message = (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
@@ -94,14 +93,13 @@ class Response implements ActionInterface
         }else{
             if (isset($result['type']) && $type = $result['type'] ) {
                 if ($type === ProntoPagaHelper::STATUS_REJECTED || $type === ProntoPagaHelper::STATUS_ERROR) {
-                    $path = $this->rejectedPayment($order, $type);
-                }else if ($type === ProntoPagaHelper::STATUS_FINAL) {
-                    $path = $this->approvedPayment($order);
-                }else if ($type === ProntoPagaHelper::STATUS_CONFIRMATION) {
-                    $path = $this->confirmationPayment($order);
+                    $message = $this->checkoutSession->getProntoPagaError()
+                        ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
+                    $this->checkoutSession->setErrorMessage($message);
+                    $path = self::FAILRURE_PATH;
+                }else if ($type === ProntoPagaHelper::STATUS_FINAL ||$type === ProntoPagaHelper::STATUS_CONFIRMATION ) {
+                    $path = self::SUCCESS_PATH;
                 }
-            }else{
-                $path = $this->rejectedPayment($order);
             }
         }
 
