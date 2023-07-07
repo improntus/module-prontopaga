@@ -22,6 +22,9 @@ See COPYING.txt for license details.
 		</arguments>
 	</type>
 
+    <!-- @callback -->
+    <preference for="Improntus\ProntoPaga\Api\CallbackInterface" type="Improntus\ProntoPaga\Model\Callback"/>
+
     <!-- @sensitive values -->
     <type name="Magento\Config\Model\Config\TypePool">
         <arguments>
@@ -83,4 +86,26 @@ See COPYING.txt for license details.
             </argument>
         </arguments>
     </virtualType>
+
+    <!-- @proxies -->
+    <type name="Improntus\ProntoPaga\Controller\Order\Create">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Improntus\ProntoPaga\Controller\Order\Response">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <!-- <type name="Improntus\ProntoPaga\Block\Onepage\Failure">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Improntus\ProntoPaga\Block\Onepage\Success">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type> -->
 </config>
