@@ -49,12 +49,12 @@ class Callback implements CallbackInterface
     /**
      * {@inheritdoc}
      */
-    public function updateStatus($request)
+    public function updateStatus($body)
     {
         try {
-            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $request, 'method' => __METHOD__]);
+            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $body, 'method' => __METHOD__]);
         } catch (\Exception $e) {
-            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($request), 'method' => __METHOD__]);
+            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($body), 'method' => __METHOD__]);
         }
         return true;
     }

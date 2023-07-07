@@ -13,9 +13,9 @@ use Magento\Framework\Webapi\Exception;
 interface CallbackInterface
 {
     /**
-     * @param mixed|string[] $request
+     * @param string[] $body
      * @throws Exception
      * @return mixed
      */
-    public function updateStatus($request);
+    public function updateStatus($body);
 }
