@@ -77,6 +77,7 @@ class Response implements ActionInterface
     {
         $resultRedirect = $this->redirectFactory->create();
         $result = $this->request->getParams();
+        $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($result), 'method' => __METHOD__]);
 
         if (!$result) {
             $message = (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
