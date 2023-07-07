@@ -212,7 +212,12 @@ class Data extends AbstractHelper
      */
     public function getCallBackUrl(): string
     {
-        return $this->_getUrl('rest/V1/prontopaga/callback/');
+        return $this->_getUrl(null, [
+                '_path' => 'enquiry',
+                '_secure' => true,
+                '_direct' => 'rest/V1/prontopaga/callback'
+            ]
+        );
     }
 
     /**
