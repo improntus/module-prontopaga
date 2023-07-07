@@ -38,9 +38,12 @@ See COPYING.txt for license details.
 
     <!-- @webhook notification API -->
     <route url="/V1/prontopaga/callback/" method="POST">
-        <service class="Improntus\ProntoPaga\Api\CallbackInterface" method="updateStatus"/>
+        <service class="Improntus\ProntoPaga\Api\CallbackInterface" method="confirmOrder"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
+        <!-- <data>
+            <parameter name="request" force="true">%request%</parameter>
+        </data> -->
     </route>
 </routes>
