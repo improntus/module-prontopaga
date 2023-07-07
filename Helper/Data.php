@@ -201,9 +201,18 @@ class Data extends AbstractHelper
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getRedirectUrl()
+    public function getRedirectUrl(): string
     {
         return $this->_getUrl('prontopaga/order/create', ['_secure' => 'true']);
+    }
+
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getCallBackUrl(): string
+    {
+        return $this->_getUrl('rest/V1/prontopaga/callback/');
     }
 
     /**
@@ -211,7 +220,7 @@ class Data extends AbstractHelper
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCallBackUrl($params = [])
+    public function getResponseUrl($params = []): string
     {
         return $this->_getUrl('prontopaga/order/response', $params);
     }

@@ -165,9 +165,9 @@ class Prontopaga
             'clientPhone' => $customerData['clientPhone'],
             'clientDocument' => $customerData['clientDocument'],
             'paymentMethod' => $selectedMethod,
-            'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_CONFIRMATION]),
-            'urlFinal' =>  $this->prontoPagaHelper->getCallBackUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_FINAL]),
-            'urlRejected' =>  $this->prontoPagaHelper->getCallBackUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_REJECTED]),
+            'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(),
+            'urlFinal' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_FINAL]),
+            'urlRejected' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_REJECTED]),
             'order' => $order->getIncrementId()
         ];
     }
