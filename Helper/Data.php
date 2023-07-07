@@ -12,6 +12,8 @@ use Magento\Framework\Encryption\EncryptorInterface;
 use Improntus\ProntoPaga\Logger\Logger;
 use Magento\Store\Model\StoreManagerInterface;
 
+use function Safe\base64_decode;
+
 class Data extends AbstractHelper
 {
     /** class consts */
@@ -252,10 +254,14 @@ class Data extends AbstractHelper
      * Encrypt params
      *
      * @param string $params
+     * @param bool $base64
      * @return string
      */
-    public function encrypt(string $params): string
+    public function encrypt(string $params, bool $base64 = false): string
     {
+        if ($base64) {
+            return base64_encode($this->encryptor->encrypt($params));
+        }
         return $this->encryptor->encrypt($params);
     }
 
@@ -263,10 +269,14 @@ class Data extends AbstractHelper
      * Decrypt params
      *
      * @param string $params
+     * @param bool $base64
      * @return string
      */
-    public function decrypt(string $params): string
+    public function decrypt(string $params, bool $base64 = false): string
     {
+        if ($base64) {
+            return $this->encryptor->decrypt(base64_decode($params));
+        }
         return $this->encryptor->decrypt($params);
     }
 

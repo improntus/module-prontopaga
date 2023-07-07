@@ -28,6 +28,8 @@ use Magento\Sales\Model\Order;
 class Prontopaga
 {
 
+    const SANDBOX_DOCUMENT = '11.111.111-1';
+
      /**
      * @var ProntoPagaHelper
      */
@@ -153,7 +155,7 @@ class Prontopaga
     private function getRequestData($order, $selectedMethod)
     {
         $customerData = $this->getCustomerData($order);
-        $token = $this->prontoPagaHelper->encrypt($order->getEntityId());
+        $token = $this->prontoPagaHelper->encrypt($order->getEntityId(), true);
         return [
             'currency' => 'CLP',
             'country' => 'CL',
@@ -182,7 +184,7 @@ class Prontopaga
             'clientName' => "{$address->getFirstname()} {$address->getLastname()}",
             'clientEmail' => $order->getCustomerEmail(),
             'clientPhone' => $address->getTelephone() ?? '',
-            'clientDocument' => $order->getCustomerTaxvat() ?? ''
+            'clientDocument' => $order->getCustomerTaxvat() ?? self::SANDBOX_DOCUMENT
         ];
     }
 
