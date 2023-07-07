@@ -130,7 +130,7 @@ class Callback implements CallbackInterface
                 break;
         }
 
-        $this->prontoPaga->persistTransaction($order, $serializedBodyParams, $status);
+        $this->prontoPaga->persistTransaction($order, ['body' => ['message' => $serializedBodyParams]], $status);
         return true;
     }
 
