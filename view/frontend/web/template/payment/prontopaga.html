@@ -24,7 +24,7 @@
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
 
-        <div class="bar">&nbsp;</div>
+        <div class="bar" data-bind="visible: isBarVisible">&nbsp;</div>
 
         <div class="layout-payment-gateway">
             <!-- ko foreach: { data: getAllowedMethods(), as: 'method' } -->

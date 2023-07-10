@@ -23,7 +23,8 @@ define([
             template: 'Improntus_ProntoPaga/payment/prontopaga',
             code: 'prontopaga',
             prevSelected: ko.observable(false),
-            methodSelected: ko.observable(false)
+            methodSelected: ko.observable(false),
+            isBarVisible: ko.observable(false),
         },
 
         getCode: function() {
@@ -69,6 +70,8 @@ define([
                 this.messageContainer.addErrorMessage({ message: $t('Please, first select an available platform of payment.') });
                 return false
             }
+
+            self.isBarVisible(true)
 
             if (this.validate() && additionalValidators.validate()) {
                 this.isPlaceOrderActionAllowed(false);
