@@ -57,17 +57,22 @@
         padding: 0 3px;
         text-align: center;
         text-transform: uppercase;
-        &.create {
-            background: #FFB347 none repeat scroll 0 0;
-            border: 1px solid #eb5202;
-            color: #eb5202;
+        &.new, &.create {
+            background: #E5F7FE none repeat scroll 0 0;
+            border: 1px solid #006bb4;
+            color: #006bb4;
         }
         &.success {
             background: #d0e5a9 none repeat scroll 0 0;
             border: 1px solid #5b8116;
             color: #185b00;
         }
-        &.rejected, .error {
+        &.pending {
+            background: #FFB347 none repeat scroll 0 0;
+            border: 1px solid #eb5202;
+            color: #eb5202;
+        }
+        &.rejected, &.canceled, &.expired, &.error {
             background: #f9d4d4 none repeat scroll 0 0;
             border: 1px solid #e22626;
             color: #e22626;

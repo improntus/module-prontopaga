@@ -38,7 +38,7 @@ class Callback implements CallbackInterface
     /**
      * Request rejected by payment method.
      */
-    const STATUS_REJECT = 'reject';
+    const STATUS_REJECT = 'rejected';
 
     /**
      * Request pending approval by payment method.
@@ -96,6 +96,12 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
+
+        if (!$this->prontoPagaHelper->validateSing($bodyParams)) {
+            $this->prontoPagaHelper->log(['type' => 'warning', 'message' => 'Unrecognized request.', 'method' => __METHOD__]);
+            return false;
+        }
+
         $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);

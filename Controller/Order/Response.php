@@ -17,9 +17,6 @@ class Response implements ActionInterface
 {
     const FAILRURE_PATH = 'checkout/onepage/failure';
     const SUCCESS_PATH  = 'checkout/onepage/success';
-    const PAYMENT_SUCCESS = 'success';
-    const PAYMENT_REJECTED = 'rejected';
-    const PAYMENT_ERROR = 'error';
 
     /**
      * @var CheckoutSession
@@ -91,16 +88,18 @@ class Response implements ActionInterface
 
         if ($this->prontoPagaHelper->isDebugEnabled()) {
             $path = $this->validatePayment($order);
-        }else{
-            if (isset($result['type']) && $type = $result['type'] ) {
-                if ($type === ProntoPagaHelper::STATUS_REJECTED || $type === ProntoPagaHelper::STATUS_ERROR) {
-                    $message = $this->checkoutSession->getProntoPagaError()
-                        ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
-                    $this->checkoutSession->setErrorMessage($message);
-                    $path = self::FAILRURE_PATH;
-                }else if ($type === ProntoPagaHelper::STATUS_FINAL ||$type === ProntoPagaHelper::STATUS_CONFIRMATION ) {
-                    $path = self::SUCCESS_PATH;
-                }
+            $resultRedirect->setPath($path);
+            return $resultRedirect;
+        }
+
+        if (isset($result['type']) && $type = $result['type']) {
+            if ($type === ProntoPagaHelper::STATUS_REJECTED || $type === ProntoPagaHelper::STATUS_ERROR) {
+                $message = $this->checkoutSession->getProntoPagaError()
+                    ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
+                $this->checkoutSession->setErrorMessage($message);
+                $path = self::FAILRURE_PATH;
+            }else if ($type === ProntoPagaHelper::STATUS_FINAL ||$type === ProntoPagaHelper::STATUS_CONFIRMATION ) {
+                $path = self::SUCCESS_PATH;
             }
         }
 
@@ -121,9 +120,9 @@ class Response implements ActionInterface
         if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
             $unserializeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
 
-            if ($unserializeResponse['status'] === self::PAYMENT_REJECTED || $unserializeResponse['status'] === self::PAYMENT_ERROR) {
+            if ($unserializeResponse['status'] === ProntoPagaHelper::STATUS_REJECTED || $unserializeResponse['status'] === ProntoPagaHelper::STATUS_ERROR) {
                 $path = $this->rejectedPayment($order, $unserializeResponse['status']);
-            }else if ($unserializeResponse['status'] === self::PAYMENT_SUCCESS) {
+            }else if ($unserializeResponse['status'] === ProntoPagaHelper::STATUS_SUCCESS) {
                 $this->approvedPayment($order);
                 $path = $this->confirmationPayment($order, $unserializeResponse['uid']);
             }

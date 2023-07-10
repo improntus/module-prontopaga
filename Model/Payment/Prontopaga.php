@@ -251,9 +251,9 @@ class Prontopaga
             $message = (__('Payment confirmed by Pronto Paga'));
             $order->addCommentToStatusHistory($message, Order::STATE_PROCESSING);
             $this->orderRepository->save($order);
-            $ppagaTransaction = $this->transactionRepository->getByTransactionId($transactionId);
-            $ppagaTransaction->setStatus('processed');
-            $this->transactionRepository->save($ppagaTransaction);
+            // $ppagaTransaction = $this->transactionRepository->getByTransactionId($transactionId);
+            // $ppagaTransaction->setStatus('processed');
+            // $this->transactionRepository->save($ppagaTransaction);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
             return false;

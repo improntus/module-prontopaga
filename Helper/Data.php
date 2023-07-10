@@ -25,6 +25,7 @@ class Data extends AbstractHelper
     const STATUS_OK = [200, 201];
     const STATUS_UNAUTHORIZED = [400, 401, 403];
     const STATUS_CONFIRMATION = 'confirmation';
+    const STATUS_SUCCESS = 'success';
     const STATUS_FINAL = 'final';
     const STATUS_REJECTED = 'rejected';
     const STATUS_ERROR = 'error';
@@ -233,10 +234,10 @@ class Data extends AbstractHelper
     /**
      *
      * @param array $data
-     * @return void
+     * @return string
      * @see https://sandbox.insospa.com/files/documentation/index.php?lang=es#sign-with-your-secretkey
      */
-    public function firmSecretKey(array $data)
+    public function firmSecretKey(array $data): string
     {
         $keys = array_keys($data);
 		sort($keys);
@@ -303,6 +304,19 @@ class Data extends AbstractHelper
     public function getCurrency($storeId = null): string
     {
         return $this->storeManager->getStore($storeId)->getCurrentCurrency()->getCode();
+    }
+
+    /**
+     * Validate request callback
+     *
+     * @param array $response
+     * @return bool
+     */
+    public function validateSing(array $response): bool
+    {
+        $sign = $response['sign'];
+        unset($response['sign']);
+        return hash_equals($sign, $this->firmSecretKey($response));
     }
 
 }

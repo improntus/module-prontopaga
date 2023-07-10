@@ -25,9 +25,13 @@ class Status implements OptionSourceInterface
 
             $this->_options = [
                 ['value' => '', 'label' => __('--Please Select--')],
+                ['value' => 'new', 'label' => __('New')],
                 ['value' => 'create', 'label' => __('Create')],
                 ['value' => 'success', 'label' => __('Success')],
+                ['value' => 'canceled', 'label' => __('Canceled')],
                 ['value' => 'rejected', 'label' => __('Rejected')],
+                ['value' => 'pending', 'label' => __('Pending')],
+                ['value' => 'expired', 'label' => __('Expired')],
                 ['value' => 'error', 'label' => __('Error')]
             ];
         }
