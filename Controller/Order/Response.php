@@ -94,9 +94,9 @@ class Response implements ActionInterface
 
         // if (isset($result['type']) && $type = $result['type']) {
         if ($type = $this->validatePayment($order, true)) {
-            if ($type === ProntoPagaHelper::STATUS_REJECTED || $type === ProntoPagaHelper::STATUS_ERROR) {
+            if (in_array($type, ProntoPagaHelper::STATUSES_CANCEL)) {
                 $path = $this->rejectedPayment($order);
-            }else if ($type === ProntoPagaHelper::STATUS_FINAL ||$type === ProntoPagaHelper::STATUS_CONFIRMATION ) {
+            }else if (in_array($type, ProntoPagaHelper::STATUSES_SUCCESS)) {
                 $path = self::SUCCESS_PATH;
             }
         }
@@ -124,15 +124,15 @@ class Response implements ActionInterface
                 return $status;
             }
 
-            if ($status === ProntoPagaHelper::STATUS_REJECTED || $status === ProntoPagaHelper::STATUS_ERROR) {
+            if (in_array($status, ProntoPagaHelper::STATUSES_CANCEL)) {
                 $path = $this->rejectedPayment($order, $status);
             } else if ($status === ProntoPagaHelper::STATUS_SUCCESS) {
                 $this->approvedPayment($order);
                 $path = $this->confirmationPayment($order, $decodeResponse['uid']);
+                $this->prontoPaga->invoice($order, $transaction->getTransactionId());
             }
 
             $this->prontoPaga->persistTransaction($order, $response, $status);
-            $this->prontoPaga->invoice($order, $transaction->getTransactionId());
         }
         return $path ?? self::FAILRURE_PATH;
     }
