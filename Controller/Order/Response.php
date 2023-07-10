@@ -117,11 +117,12 @@ class Response implements ActionInterface
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
         $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
         if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
+            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
+
             if ($onlyStatus) {
                 return $response['status'];
             }
 
-            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
             if ($decodeResponse['status'] === ProntoPagaHelper::STATUS_REJECTED || $decodeResponse['status'] === ProntoPagaHelper::STATUS_ERROR) {
                 $path = $this->rejectedPayment($order, $decodeResponse['status']);
             } else if ($decodeResponse['status'] === ProntoPagaHelper::STATUS_SUCCESS) {
