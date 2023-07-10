@@ -98,14 +98,4 @@ See COPYING.txt for license details.
             <argument name="session" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
         </arguments>
     </type>
-    <!-- <type name="Improntus\ProntoPaga\Block\Onepage\Failure">
-        <arguments>
-            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
-        </arguments>
-    </type>
-    <type name="Improntus\ProntoPaga\Block\Onepage\Success">
-        <arguments>
-            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
-        </arguments>
-    </type> -->
 </config>

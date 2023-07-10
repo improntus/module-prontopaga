@@ -98,8 +98,6 @@ class Callback implements CallbackInterface
         $bodyParams = $this->request->getBodyParams();
         $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
 
-        $this->prontoPagaHelper->log(['type' => 'info', 'message' => $serializedBodyParams, 'method' => __METHOD__]);
-
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);
 
@@ -187,7 +185,7 @@ class Callback implements CallbackInterface
             $this->prontoPaga->cancelOrder($order, $message);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
-            new \Magento\Framework\Webapi\Exception(__('Order could not be invoiced.'));
+            new \Magento\Framework\Webapi\Exception(__('Order could not be canceled.'));
             return false;
         }
         return true;

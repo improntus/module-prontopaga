@@ -17,6 +17,7 @@ class Response implements ActionInterface
 {
     const FAILRURE_PATH = 'checkout/onepage/failure';
     const SUCCESS_PATH  = 'checkout/onepage/success';
+    const ERROR_MESSAGE = 'There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.';
 
     /**
      * @var CheckoutSession
@@ -77,8 +78,7 @@ class Response implements ActionInterface
         $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($result), 'method' => __METHOD__]);
 
         if (!$result) {
-            $message = (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
-            $this->checkoutSession->setErrorMessage($message);
+            $this->checkoutSession->setErrorMessage(self::ERROR_MESSAGE);
             $resultRedirect->setPath(self::FAILRURE_PATH);
             return $resultRedirect;
         }
@@ -92,12 +92,10 @@ class Response implements ActionInterface
             return $resultRedirect;
         }
 
-        if (isset($result['type']) && $type = $result['type']) {
+        // if (isset($result['type']) && $type = $result['type']) {
+        if ($type = $this->validatePayment($order, true)) {
             if ($type === ProntoPagaHelper::STATUS_REJECTED || $type === ProntoPagaHelper::STATUS_ERROR) {
-                $message = $this->checkoutSession->getProntoPagaError()
-                    ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
-                $this->checkoutSession->setErrorMessage($message);
-                $path = self::FAILRURE_PATH;
+                $path = $this->rejectedPayment($order);
             }else if ($type === ProntoPagaHelper::STATUS_FINAL ||$type === ProntoPagaHelper::STATUS_CONFIRMATION ) {
                 $path = self::SUCCESS_PATH;
             }
@@ -111,23 +109,27 @@ class Response implements ActionInterface
      * Validate payment after redirect
      *
      * @param \Magento\Sales\Model\Order $order
-     * @return string
+     * @param bool $onlyStatus
+     * @return string|bool
      */
-    private function validatePayment($order)
+    private function validatePayment($order, $onlyStatus = false)
     {
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
         $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
         if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
-            $unserializeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
-
-            if ($unserializeResponse['status'] === ProntoPagaHelper::STATUS_REJECTED || $unserializeResponse['status'] === ProntoPagaHelper::STATUS_ERROR) {
-                $path = $this->rejectedPayment($order, $unserializeResponse['status']);
-            }else if ($unserializeResponse['status'] === ProntoPagaHelper::STATUS_SUCCESS) {
-                $this->approvedPayment($order);
-                $path = $this->confirmationPayment($order, $unserializeResponse['uid']);
+            if ($onlyStatus) {
+                return $response['status'];
             }
 
-            $this->prontoPaga->persistTransaction($order, $response, $unserializeResponse['status']);
+            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
+            if ($decodeResponse['status'] === ProntoPagaHelper::STATUS_REJECTED || $decodeResponse['status'] === ProntoPagaHelper::STATUS_ERROR) {
+                $path = $this->rejectedPayment($order, $decodeResponse['status']);
+            } else if ($decodeResponse['status'] === ProntoPagaHelper::STATUS_SUCCESS) {
+                $this->approvedPayment($order);
+                $path = $this->confirmationPayment($order, $decodeResponse['uid']);
+            }
+
+            $this->prontoPaga->persistTransaction($order, $response, $decodeResponse['status']);
             $this->prontoPaga->invoice($order, $transaction->getTransactionId());
         }
         return $path ?? self::FAILRURE_PATH;
