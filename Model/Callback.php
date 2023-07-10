@@ -96,15 +96,19 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
+        $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
+
+        $this->prontoPagaHelper->log(['type' => 'info', 'message' => $serializedBodyParams, 'method' => __METHOD__]);
+
+        /** @var Order $order */
+        $order = $this->getOrder($bodyParams['order']);
 
         if (!$this->prontoPagaHelper->validateSing($bodyParams)) {
+            $this->prontoPaga->persistTransaction($order, ['body' => ['message' => $serializedBodyParams]], 'pending');
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => 'Unrecognized request.', 'method' => __METHOD__]);
             return false;
         }
 
-        $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
-        /** @var Order $order */
-        $order = $this->getOrder($bodyParams['order']);
         $status = $bodyParams['status'] ?? false;
         $transactionId =  $bodyParams['uid'] ?? false;
 
