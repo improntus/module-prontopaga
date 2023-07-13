@@ -92,7 +92,6 @@ class Response implements ActionInterface
             return $resultRedirect;
         }
 
-        // if (isset($result['type']) && $type = $result['type']) {
         if ($type = $this->validatePayment($order, true)) {
             if (in_array($type, ProntoPagaHelper::STATUSES_CANCEL)) {
                 $path = $this->rejectedPayment($order);
@@ -103,38 +102,6 @@ class Response implements ActionInterface
 
         $resultRedirect->setPath($path);
         return $resultRedirect;
-    }
-
-    /**
-     * Validate payment after redirect
-     *
-     * @param \Magento\Sales\Model\Order $order
-     * @param bool $onlyStatus
-     * @return string|bool
-     */
-    private function validatePayment($order, $onlyStatus = false)
-    {
-        $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
-        $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
-        if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
-            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
-            $status = $decodeResponse['status'];
-
-            if ($onlyStatus) {
-                return $status;
-            }
-
-            if (in_array($status, ProntoPagaHelper::STATUSES_CANCEL)) {
-                $path = $this->rejectedPayment($order, $status);
-            } else if ($status === ProntoPagaHelper::STATUS_SUCCESS) {
-                $this->approvedPayment($order);
-                $path = $this->confirmationPayment($order, $decodeResponse['uid']);
-                $this->prontoPaga->invoice($order, $transaction->getTransactionId());
-            }
-
-            $this->prontoPaga->persistTransaction($order, $response, $status);
-        }
-        return $path ?? self::FAILRURE_PATH;
     }
 
     /**
@@ -172,4 +139,37 @@ class Response implements ActionInterface
         $this->checkoutSession->setErrorMessage($message);
         return self::FAILRURE_PATH;
     }
+
+     /**
+     * Validate payment after redirect
+     *
+     * @param \Magento\Sales\Model\Order $order
+     * @param bool $onlyStatus
+     * @return string|bool
+     */
+    private function validatePayment($order, $onlyStatus = false)
+    {
+        $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
+        $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
+        if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
+            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
+            $status = $decodeResponse['status'];
+
+            if ($onlyStatus) {
+                return $status;
+            }
+
+            if (in_array($status, ProntoPagaHelper::STATUSES_CANCEL)) {
+                $path = $this->rejectedPayment($order, $status);
+            } else if ($status === ProntoPagaHelper::STATUS_SUCCESS) {
+                $this->approvedPayment($order);
+                $path = $this->confirmationPayment($order, $decodeResponse['uid']);
+                $this->prontoPaga->invoice($order, $transaction->getTransactionId());
+            }
+
+            $this->prontoPaga->persistTransaction($order, $response, $status);
+        }
+        return $path ?? self::FAILRURE_PATH;
+    }
+
 }
