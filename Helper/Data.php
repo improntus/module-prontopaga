@@ -37,7 +37,8 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_ACTIVE  = 'payment/prontopaga/active';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_TITLE = 'payment/prontopaga/title';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS = 'payment/prontopaga/specificmethods';
-    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DEBUG = 'payment/prontopaga/debug';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT = 'payment/prontopaga/validate_checkout';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SUCCESS_PAGE = 'payment/prontopaga/success_page';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_ENDPOINT = 'payment/prontopaga/endpoint';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN = 'payment/prontopaga/token';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY = 'payment/prontopaga/secret_key';
@@ -178,13 +179,23 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Retrieve if debug is enabled
+     * Retrieve if might be validate order on checkout page
      *
      * @return boolean
      */
-    public function isDebugEnabled(): bool
+    public function validateOnCheckout(): bool
     {
-        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DEBUG);
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT);
+    }
+
+    /**
+     * Retrieve if might be use custom success page
+     *
+     * @return boolean
+     */
+    public function useSuccessPage(): bool
+    {
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SUCCESS_PAGE);
     }
 
      /**
@@ -259,7 +270,7 @@ class Data extends AbstractHelper
      */
     public function log(array $data): void
     {
-        if ($this->isDebugEnabled()) {
+        if ($this->validateOnCheckout()) {
             $this->logger->setName(self::LOGGER_NAME);
             $data['type'] !== 'debug'
                 ? $this->logger->{$data['type']}($data['message'], ['method_context' => $data['method']])

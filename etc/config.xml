@@ -18,8 +18,8 @@ See COPYING.txt for license details.
                 <can_void>0</can_void>
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>0</is_gateway>
-                <sandbox>1</sandbox>
-                <debug>1</debug>
+                <success_page>1</success_page>
+                <validate_checkout>1</validate_checkout>
                 <sort_order>100</sort_order>
                 <endpoint>https://sandbox.insospa.com/</endpoint>
                 <token backend_model="Magento\Config\Model\Config\Backend\Encrypted" />

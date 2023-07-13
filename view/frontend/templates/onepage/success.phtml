@@ -1,0 +1,30 @@
+<?php
+/** @var \Magento\Checkout\Block\Onepage\Success $block */
+/** @var Improntus\ProntoPaga\ViewModel\Onepage\Success $viewModel */
+
+$viewModel = $block->getViewModel();
+$paymentInfo = $viewModel->getPaymentInfo();
+?>
+
+<?php if ($paymentInfo) : ?>
+    <div class="pp-payment-details">
+        <div class="content">
+            <b>Detalles del pago con <?= $paymentInfo['method'] ?> </b>
+            <div>
+                • Respuesta de la Transacción: <b><?= $paymentInfo['status'] ?></b>
+            </div>
+            <div>
+                • Método de pago: <b><?= $paymentInfo['method'] ?></b>
+            </div>
+            <div>
+                • Monto: <b><?= $viewModel->formatPrice($paymentInfo['amount']) ?></b>
+            </div>
+            <div>
+                • Orden de compra: <b><?= $paymentInfo['order'] ?></b>
+            </div>
+            <div>
+                • Tipo de pago: <b><?= $paymentInfo['method_type'] ?></b>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

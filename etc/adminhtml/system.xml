@@ -18,34 +18,65 @@ See COPYING.txt for license details.
 				</field>
 				<field id="title" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Title</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
 				</field>
 				<field id="order_status" type="select" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>New Order Status</label>
 					<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
 				</field>
 				<field id="allowspecific" type="allowspecific" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Payment from Applicable Countries</label>
 					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
 				</field>
 				<field id="specificcountry" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Payment from Applicable Countries</label>
 					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
 					<can_be_empty>1</can_be_empty>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
 				</field>
                 <field id="specificmethods" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Specicic Allowed Methods</label>
 					<source_model>Improntus\ProntoPaga\Model\Config\Source\PaymentMehods</source_model>
 					<can_be_empty>0</can_be_empty>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
 				</field>
-				<field id="sort_order" type="text" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
-					<label>Sort Order</label>
-				</field>
-                <field id="debug" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Debug</label>
+                <field id="success_page" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Success Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <config_path>payment/prontopaga/debug</config_path>
+                    <config_path>payment/prontopaga/success_page</config_path>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <comment>Enable custom success page.</comment>
                 </field>
-                <field id="endpoint" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="validate_checkout" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Validate on Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/prontopaga/validate_checkout</config_path>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <comment>Validate order on checkout. For local environment or debug module, set option in Yes.</comment>
+                </field>
+				<field id="sort_order" type="text" sortOrder="80" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Sort Order</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+				</field>
+                <field id="endpoint" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Base URL API Endpoint</label>
                     <comment>API endpoint for payments. Please make sure that URL ends with '/' (slash), e.g. http:://domain/magento/</comment>
                     <config_path>payment/prontopaga/endpoint</config_path>
@@ -79,6 +110,9 @@ See COPYING.txt for license details.
                     <validate>required-entry</validate>
                     <upload_dir config="system" scope_info="1">prontopaga</upload_dir>
                     <comment><![CDATA[Allowed file types: jpg, jpeg, gif, png, svg]]></comment>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
                 </field>
 			</group>
 		</section>

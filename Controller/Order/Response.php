@@ -86,7 +86,7 @@ class Response implements ActionInterface
         /** @var \Magento\Sales\Model\Order $order */
         $order = $this->checkoutSession->getLastRealOrder();
 
-        if ($this->prontoPagaHelper->isDebugEnabled()) {
+        if ($this->prontoPagaHelper->validateOnCheckout()) {
             $path = $this->validatePayment($order);
             $resultRedirect->setPath($path);
             return $resultRedirect;
