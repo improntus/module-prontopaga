@@ -99,29 +99,55 @@
             padding: 12px 20px 12px 25px;
             display: block;
             font-size: 1.5rem;
-            background: #e5efe5;
-            color: #006400;
             padding-left: 45px;
             position: relative;
-            > *:first-child:before {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                font-size: 24px;
-                line-height: 24px;
+            &.success {
                 color: #006400;
-                content: '\e60e';
-                font-family: 'luma-icons';
-                margin: -12px 0 0;
-                vertical-align: middle;
-                display: inline-block;
-                font-weight: normal;
-                overflow: hidden;
-                speak: none;
-                left: 0;
-                top: 22px;
-                width: 45px;
-                position: absolute;
-                text-align: center;
+                background: #e5efe5;
+                > *:first-child:before {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-size: 24px;
+                    line-height: 24px;
+                    color: #006400;
+                    content: '\e60e';
+                    font-family: 'luma-icons';
+                    margin: -12px 0 0;
+                    vertical-align: middle;
+                    display: inline-block;
+                    font-weight: normal;
+                    overflow: hidden;
+                    speak: none;
+                    left: 0;
+                    top: 22px;
+                    width: 45px;
+                    position: absolute;
+                    text-align: center;
+                }
+            }
+            &.rejected, &.canceled {
+                background: #fae5e5;
+                color: #e02b27;
+                > *:first-child:before {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-size: 24px;
+                    line-height: 24px;
+                    color: #b30000;
+                    content: '\e61f';
+                    font-family: 'luma-icons';
+                    margin: -12px 0 0;
+                    vertical-align: middle;
+                    display: inline-block;
+                    font-weight: normal;
+                    overflow: hidden;
+                    speak: none;
+                    left: 0;
+                    top: 22px;
+                    width: 45px;
+                    position: absolute;
+                    text-align: center;
+                }
             }
         }
 

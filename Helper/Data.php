@@ -38,7 +38,7 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_TITLE = 'payment/prontopaga/title';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS = 'payment/prontopaga/specificmethods';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT = 'payment/prontopaga/validate_checkout';
-    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SUCCESS_PAGE = 'payment/prontopaga/success_page';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES = 'payment/prontopaga/custom_pages';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_ENDPOINT = 'payment/prontopaga/endpoint';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN = 'payment/prontopaga/token';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY = 'payment/prontopaga/secret_key';
@@ -193,9 +193,9 @@ class Data extends AbstractHelper
      *
      * @return boolean
      */
-    public function useSuccessPage(): bool
+    public function useCustomPages(): bool
     {
-        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SUCCESS_PAGE);
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES);
     }
 
      /**

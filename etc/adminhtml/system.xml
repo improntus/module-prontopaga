@@ -52,14 +52,14 @@ See COPYING.txt for license details.
                         <field id="active">1</field>
                     </depends>
 				</field>
-                <field id="success_page" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="custom_pages" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Success Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <config_path>payment/prontopaga/success_page</config_path>
+                    <config_path>payment/prontopaga/custom_pages</config_path>
                     <depends>
                         <field id="active">1</field>
                     </depends>
-                    <comment>Enable custom success page.</comment>
+                    <comment>Enable custom success/failure pages.</comment>
                 </field>
                 <field id="validate_checkout" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Validate on Checkout</label>

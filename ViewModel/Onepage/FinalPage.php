@@ -12,7 +12,7 @@ use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Pricing\Helper\Data as PricingHelper;
 
-class Success implements ArgumentInterface
+class FinalPage implements ArgumentInterface
 {
 
     /**

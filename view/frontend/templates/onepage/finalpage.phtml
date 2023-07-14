@@ -6,12 +6,13 @@ $viewModel = $block->getViewModel();
 $paymentInfo = $viewModel->getPaymentInfo();
 ?>
 
-<?php if ($paymentInfo) : ?>
+<?php if ($paymentInfo):  ?>
+    <?php $status =  $paymentInfo['status']; ?>
     <div class="pp-payment-details">
-        <div class="content">
+        <div class="content <?= $status?>">
             <b>Detalles del pago con <?= $paymentInfo['method'] ?> </b>
             <div>
-                • Respuesta de la Transacción: <b><?= $paymentInfo['status'] ?></b>
+                • Respuesta de la Transacción: <b><?= $status ?></b>
             </div>
             <div>
                 • Método de pago: <b><?= $paymentInfo['method'] ?></b>
