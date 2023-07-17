@@ -2,9 +2,10 @@ define([
     "jquery",
     "Magento_Ui/js/grid/columns/column",
     "Magento_Ui/js/modal/modal",
+    "uiRegistry",
     "beautify",
     "beautifyConfig"
-], function ($, Column, modal, beautify, beautifyConfig) {
+], function ($, Column, modal, registry, beautify, beautifyConfig) {
     return Column.extend({
         defaults: {
             bodyTmpl: 'Improntus_ProntoPaga/grid/cells/validate-payment',
@@ -48,6 +49,7 @@ define([
             }).done((response) => {
                 if (response.code === 200) {
                     response = beautify.js_beautify(response.body.message, beautifyConfig)
+                    registry.get('index = improntus_prontopaga_transaction_listing_data_source').reload({'refresh': true})
                 }
                 $(`${self.modalElem} ${self.modalContent}`).html(response)
                 $(`${self.modalElem}`).modal('setSubTitle', `uid: ${transaction_id}`)
