@@ -5,7 +5,7 @@ See COPYING.txt for license details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
 	<system>
-		<section id="payment" sortOrder="1000" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+		<section id="payment" sortOrder="1000" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" type="text">
 			<group id="prontopaga" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
                 <fieldset_css>prontopaga</fieldset_css>
                 <frontend_model>Magento\Paypal\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
@@ -115,17 +115,14 @@ See COPYING.txt for license details.
                     </depends>
                 </field>
 
-                <group id="cancel_orders" sortOrder="130" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <group id="cancel_orders" type="text" sortOrder="130" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
                     <depends>
-                        <field id="payment/prontopaga/active">1</field>
+                        <field id="active">1</field>
                     </depends>
                     <label>Cron configuration</label>
                     <field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
                         <label>Cron Enabled</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <depends>
-                            <field id="active">1</field>
-                        </depends>
                         <comment><![CDATA[Enable/Disable cron for cancel pending orders created through Pronto Paga Payment.]]></comment>
                     </field>
                     <field id="schedule" translate="label comment" sortOrder="20" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
