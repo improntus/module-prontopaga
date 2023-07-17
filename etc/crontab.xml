@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!--
+Copyright © Ignacio Muñoz © All rights reserved.
+See COPYING.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="prontopaga">
+        <job instance="Improntus\ProntoPaga\Cron\CancelOrders" method="execute" name="prontopaga_cancel_pending">
+            <schedule>*/5 * * * *</schedule>
+            <config_path>
+                crontab/prontopaga/jobs/prontopaga_cancel_pending/schedule/cron_expr
+            </config_path>
+        </job>
+    </group>
+</config>

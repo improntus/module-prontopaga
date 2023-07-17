@@ -43,6 +43,8 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN = 'payment/prontopaga/token';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY = 'payment/prontopaga/secret_key';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_LOGO = 'payment/prontopaga/logo';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_ACTIVE = 'payment/prontopaga/cancel_orders/active';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_TIMEINTERVAL = 'payment/prontopaga/cancel_orders/timeinterval';
 
     /**
      * @var EncryptorInterface
@@ -169,7 +171,27 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Retrieve if sandbox mode is enabled
+     * Retrieve if cron is enabled
+     *
+     * @return bool
+     */
+    public function isCronEnabled()
+    {
+        return (bool) $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_ACTIVE);
+    }
+
+    /**
+     * Retrieve if cron is enabled
+     *
+     * @return string|null
+     */
+    public function getTimeInterval()
+    {
+        return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_TIMEINTERVAL);
+    }
+
+    /**
+     * Retrieve img path
      *
      * @return string|null
      */
