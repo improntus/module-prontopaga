@@ -36,7 +36,7 @@ define([
 
         /**
          *
-         * @param {*} transactionData
+         * @param {*} transaction_id
          */
         showInfo: function ({transaction_id}) {
             self = this

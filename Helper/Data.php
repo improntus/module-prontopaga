@@ -156,7 +156,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Retrieve if sandbox mode is enabled
+     * Return logo img path
      *
      * @return string|null
      */
@@ -181,7 +181,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Retrieve if cron is enabled
+     * Retrieve time interval for search pending orders
      *
      * @return string|null
      */
@@ -258,7 +258,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $token
+     * @param array|string $params
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
