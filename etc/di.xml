@@ -98,4 +98,13 @@ See COPYING.txt for license details.
             <argument name="session" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
         </arguments>
     </type>
+
+    <!-- @cli command -->
+    <type name="Magento\Framework\Console\CommandList">
+       <arguments>
+           <argument name="commands" xsi:type="array">
+               <item name="prontopaga:cron:run" xsi:type="object">Improntus\ProntoPaga\Console\CancelOrders</item>
+           </argument>
+       </arguments>
+   </type>
 </config>

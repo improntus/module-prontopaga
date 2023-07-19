@@ -7,7 +7,7 @@ namespace Improntus\ProntoPaga\Cron;
 
 use Improntus\ProntoPaga\Api\TransactionRepositoryInterface;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
-use Improntus\ProntoPaga\Model\Payment\ProntoPaga;
+use Improntus\ProntoPaga\Model\Payment\Prontopaga as ProntoPaga;
 use Magento\Sales\Model\ResourceModel\Order\Collection as OrderCollection;
 use Magento\Sales\Model\Order;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
