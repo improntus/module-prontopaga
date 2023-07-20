@@ -100,7 +100,7 @@ class Response implements ActionInterface
             }
         }
 
-        $resultRedirect->setPath($path ?: self::FAILRURE_PATH);
+        $resultRedirect->setPath($path ?? self::FAILRURE_PATH);
         return $resultRedirect;
     }
 
