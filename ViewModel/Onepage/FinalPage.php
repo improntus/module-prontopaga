@@ -66,12 +66,15 @@ class FinalPage implements ArgumentInterface
     /**
      * Retrieve payment info
      *
-     * @return void
+     * @return array
      */
-    public function getPaymentInfo(): array
+    public function getPaymentInfo()
     {
         try {
             $transaction = $this->loadTransaction();
+            if (!$transaction){
+                return [];
+            }
             $paymentInfo = $this->secureResponse($transaction->getRequestResponse());
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => $e->getMessage(), 'method' => __METHOD__]);
@@ -102,13 +105,14 @@ class FinalPage implements ArgumentInterface
     /**
      * Retrieve transaction data
      *
-     * @return \Improntus\ProntoPaga\Model\Transaction|void
+     * @return \Improntus\ProntoPaga\Model\Transaction|boolean
      */
     private function loadTransaction()
     {
-        $orderId = $this->checkoutSession->getLastRealOrder()->getId();
+        $orderId = $this->checkoutSession->getLastRealOrder()->getEntityId();
         if (!$orderId) {
-           return;
+            $this->prontoPagaHelper->log(['type' => 'warning', 'message' => false, 'method' => __METHOD__]);
+           return false;
         }
         return $this->transactionInterface->getByOrderId($orderId);
     }
