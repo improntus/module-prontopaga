@@ -17,5 +17,17 @@
         "index": {
             "FTI_434958A3C533E6E8E3D795D9C9519D82": true
         }
+    },
+    "improntus_prontopaga_payment_methods": {
+        "column": {
+            "entity_id": true,
+            "name": true,
+            "method": true,
+            "currency": true,
+            "logo": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
     }
 }

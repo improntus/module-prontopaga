@@ -5,11 +5,13 @@
  */
 namespace Improntus\ProntoPaga\Helper;
 
+use GuzzleHttp\Promise\Is;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Improntus\ProntoPaga\Logger\Logger;
+use Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface as PaymentMethodsInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 use function Safe\base64_decode;
@@ -21,7 +23,6 @@ class Data extends AbstractHelper
     const USER_AUTHENTICATED = 1;
     const LOGGER_NAME = 'prontopaga';
     const UPLOAD_DIR = 'prontopaga/';
-    const METHODS_IMG_PATH = 'Improntus_ProntoPaga/images/methods';
     const STATUS_OK = [200, 201];
     const STATUS_UNAUTHORIZED = [400, 401, 403];
     const STATUS_CONFIRMATION = 'confirmation';
@@ -57,6 +58,11 @@ class Data extends AbstractHelper
     private $logger;
 
     /**
+     * @var PaymentMethodsInterface
+     */
+    private $paymentMethodsInterface;
+
+    /**
      * @var StoreManagerInterface
      */
     private $storeManager;
@@ -67,17 +73,20 @@ class Data extends AbstractHelper
      * @param Context $context
      * @param EncryptorInterface $encryptor
      * @param Logger $logger
+     * @param PaymentMethodsInterface $paymentMethodsInterface
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
         EncryptorInterface $encryptor,
         Logger $logger,
+        PaymentMethodsInterface $paymentMethodsInterface,
         StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->encryptor = $encryptor;
         $this->logger = $logger;
+        $this->paymentMethodsInterface = $paymentMethodsInterface;
         $this->storeManager = $storeManager;
     }
 
@@ -117,7 +126,7 @@ class Data extends AbstractHelper
     /**
      * Retrieve allowed payment methods
      *
-     * @return string
+     * @return array
      */
     public function getAllowedMethods()
     {
@@ -193,11 +202,17 @@ class Data extends AbstractHelper
     /**
      * Retrieve img path
      *
-     * @return string|null
+     * @return array
      */
     public function getMethodsImgUrl()
     {
-        return self::METHODS_IMG_PATH;
+        foreach ($this->getAllowedMethods() as $method) {
+            $methodsImg[$method] = [
+                    'img' => $this->paymentMethodsInterface->getByMethod($method)->getLogo()
+            ];
+        }
+
+        return $methodsImg ?? [];
     }
 
     /**

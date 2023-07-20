@@ -4,7 +4,7 @@ Copyright © Improntus All rights reserved.
 See COPYING.txt for license details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-	<!-- @model -->
+	<!-- @model transactions -->
     <preference for="Improntus\ProntoPaga\Api\TransactionRepositoryInterface" type="Improntus\ProntoPaga\Model\TransactionRepository"/>
 	<preference for="Improntus\ProntoPaga\Api\Data\TransactionInterface" type="Improntus\ProntoPaga\Model\Transaction"/>
 	<preference for="Improntus\ProntoPaga\Api\Data\TransactionSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
@@ -21,6 +21,11 @@ See COPYING.txt for license details.
 			</argument>
 		</arguments>
 	</type>
+
+    <!-- @model payment methods -->
+    <preference for="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" type="Improntus\ProntoPaga\Model\PaymentMethodsRepository"/>
+	<preference for="Improntus\ProntoPaga\Api\Data\PaymentMethodsInterface" type="Improntus\ProntoPaga\Model\PaymentMethods"/>
+	<preference for="Improntus\ProntoPaga\Api\Data\PaymentMethodsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 
     <!-- @callback -->
     <preference for="Improntus\ProntoPaga\Api\CallbackInterface" type="Improntus\ProntoPaga\Model\Callback"/>

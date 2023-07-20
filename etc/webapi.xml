@@ -36,14 +36,43 @@ See COPYING.txt for license details.
 		</resources>
 	</route>
 
+    <!-- @data model payment methods -->
+    <route url="/V1/prontopaga/payment_methods" method="POST">
+		<service class="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::payment_methods_save"/>
+		</resources>
+	</route>
+	<route url="/V1/prontopaga/payment_methods/search" method="GET">
+		<service class="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::payment_methods_view"/>
+		</resources>
+	</route>
+	<route url="/V1/prontopaga/payment_methods/:entityId" method="GET">
+		<service class="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::payment_methods_view"/>
+		</resources>
+	</route>
+	<route url="/V1/prontopaga/payment_methods/:entityId" method="PUT">
+		<service class="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::payment_methods_update"/>
+		</resources>
+	</route>
+	<route url="/V1/prontopaga/payment_methods/:entityId" method="DELETE">
+		<service class="Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Improntus_ProntoPaga::payment_methods_delete"/>
+		</resources>
+	</route>
+
     <!-- @webhook notification API -->
     <route url="/V1/prontopaga/callback/" method="POST">
         <service class="Improntus\ProntoPaga\Api\CallbackInterface" method="confirmOrder"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
-        <!-- <data>
-            <parameter name="request" force="true">%request%</parameter>
-        </data> -->
     </route>
 </routes>

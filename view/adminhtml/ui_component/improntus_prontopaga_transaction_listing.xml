@@ -51,6 +51,7 @@
 				<indexField>entity_id</indexField>
 			</settings>
 		</selectionsColumn>
+
 		<column name="entity_id">
 			<settings>
 				<filter>text</filter>
@@ -58,12 +59,14 @@
 				<label translate="true">ID</label>
 			</settings>
 		</column>
+
 		<column name="order_id">
 			<settings>
 				<filter>text</filter>
 				<label translate="true">Order ID</label>
 			</settings>
 		</column>
+
         <column name="transaction_id">
 			<settings>
 				<filter>text</filter>
@@ -71,10 +74,10 @@
 			</settings>
 		</column>
 
-        <column name="payment_method">
+        <column name="payment_method" class="Improntus\ProntoPaga\Ui\Component\Listing\Column\PaymentMehods">
             <settings>
                 <filter>select</filter>
-                <options class="Improntus\ProntoPaga\Model\Config\Source\PaymentMehods"/>
+                <options class="Improntus\ProntoPaga\Ui\Component\Listing\Columns\PaymentMehods"/>
                 <dataType>select</dataType>
                 <label translate="true">Payment Method</label>
                 <editor>

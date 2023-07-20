@@ -44,7 +44,7 @@ define([
         },
 
         getMethodLogo: function (method) {
-            return require.toUrl(window.checkoutConfig.payment[this.getCode()].methods_img_url + '/' + method + '.png')
+            return window.checkoutConfig.payment[this.getCode()].methods_img_url[method].img
         },
 
         toggleSelected: function (e) {

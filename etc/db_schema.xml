@@ -26,4 +26,17 @@ See COPYING.txt for license details.
             <column name="payment_method"/>
         </index>
 	</table>
+
+    <table name="improntus_prontopaga_payment_methods" resource="default" engine="innodb" comment="Pronto Paga Payment Methods Data">
+		<column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<column name="name" nullable="false" xsi:type="varchar" comment="name" length="255"/>
+		<column name="method" nullable="false" xsi:type="varchar" comment="method" length="255"/>
+		<column name="currency" nullable="false" xsi:type="varchar" comment="currency" length="255"/>
+		<column name="logo" nullable="false" xsi:type="varchar" comment="logo" length="255"/>
+        <column name="status" nullable="false" xsi:type="varchar" comment="logo" length="255"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="entity_id"/>
+		</constraint>
+	</table>
 </schema>
