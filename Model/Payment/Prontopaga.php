@@ -198,7 +198,7 @@ class Prontopaga
     {
         try {
             $unserializeResponse = $this->json->unserialize($response['body']['message']) ?? '';
-            $unserializeRequest = $this->json->unserialize($response['request_body']) ?? '';
+            $unserializeRequest = $this->json->unserialize($response['request_body'] ?? '') ;
             $transaction = $this->transactionRepository->getByOrderId($order->getId())
                                 ?: $this->transactionFactory->create();
 
