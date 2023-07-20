@@ -15,7 +15,7 @@ $viewModel = $block->getViewModel();
 $paymentInfo = $viewModel->getPaymentInfo();
 ?>
 
-<?php if ($paymentInfo && !$viewModel->validateOnCheckout() && !array_key_exists('urlPay', $paymentInfo) ):  ?>
+<?php if ($paymentInfo && !$viewModel->validateOnCheckout()):  ?>
     <?php $status =  $paymentInfo['status']; ?>
     <div class="pp-payment-details">
         <div class="content <?= $status?>">
