@@ -62,7 +62,7 @@ class Create implements ActionInterface
         Prontopaga $prontoPaga,
         RedirectFactory $redirectFactory,
         RequestInterface $request,
-        string $flow = 'create'
+        string $flow = 'created'
     ) {
         $this->prontoPagaHelper = $prontoPagaHelper;
         $this->checkoutSession = $checkoutSession;

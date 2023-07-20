@@ -17,6 +17,7 @@ interface TransactionInterface
     const ENTITY_ID = 'entity_id';
     const CREATED_AT = 'created_at';
     const REQUEST_BODY = 'request_body';
+    const PAYMENT_METHOD = 'payment_method';
 
     /**
      * Get entity_id
@@ -108,5 +109,18 @@ interface TransactionInterface
      * @return \Improntus\ProntoPaga\Transaction\Api\Data\TransactionInterface
      */
     public function setRequestResponse($requestResponse);
+
+    /**
+     * Get payment_method
+     * @return string|null
+     */
+    public function getPaymentMethod();
+
+    /**
+     * Set payment_method
+     * @param string $paymentMethod
+     * @return \Improntus\ProntoPaga\Transaction\Api\Data\TransactionInterface
+     */
+    public function setPaymentMethod($paymentMethod);
 }
 

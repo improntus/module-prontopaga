@@ -71,6 +71,18 @@
 			</settings>
 		</column>
 
+        <column name="payment_method">
+            <settings>
+                <filter>select</filter>
+                <options class="Improntus\ProntoPaga\Model\Config\Source\PaymentMehods"/>
+                <dataType>select</dataType>
+                <label translate="true">Payment Method</label>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+            </settings>
+        </column>
+
         <column name="status" component="Improntus_ProntoPaga/js/grid/columns/status">
             <settings>
                 <filter>select</filter>

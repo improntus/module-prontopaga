@@ -12,12 +12,18 @@ See COPYING.txt for license details.
         <column name="request_body" nullable="false" xsi:type="blob" comment="New Payment Body Request"/>
         <column name="created_at" on_update="false" nullable="false"  xsi:type="timestamp" default="CURRENT_TIMESTAMP" comment="Created At"/>
         <column name="request_response" nullable="true" xsi:type="blob" comment="Payment Response"/>
+        <column name="payment_method" nullable="false" xsi:type="varchar" comment="Payment method through pronto paga"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
 			<column name="entity_id"/>
 		</constraint>
-        <constraint xsi:type="unique" referenceId="IMPRONTUS_PRONTOPAGO_TRANSACTION_ORDER_ID_NIQUE">
+        <constraint xsi:type="unique" referenceId="IMPRONTUS_PRONTOPAGA_TRANSACTION_ORDER_ID_NIQUE">
             <column name="order_id"/>
         </constraint>
+        <index referenceId="IMPRONTUS_PRONTOPAGA_INDEX_SEARCH_FULLTEXT" indexType="fulltext">
+            <column name="transaction_id"/>
+            <column name="status"/>
+            <column name="payment_method"/>
+        </index>
 	</table>
 </schema>

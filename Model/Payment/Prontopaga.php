@@ -198,13 +198,15 @@ class Prontopaga
     {
         try {
             $unserializeResponse = $this->json->unserialize($response['body']['message']) ?? '';
+            $unserializeRequest = $this->json->unserialize($response['request_body']) ?? '';
             $transaction = $this->transactionRepository->getByOrderId($order->getId())
                                 ?: $this->transactionFactory->create();
 
             $transaction->setOrderId($order->getId());
             $transaction->setTransactionId($unserializeResponse['uid'] ?? '');
             $transaction->setStatus($flow);
-            if ($flow === 'create') $transaction->setRequestBody($response['request_body']);
+            if (!$transaction->getPaymentMethod()) $transaction->setPaymentMethod($unserializeRequest['paymentMethod']);
+            if ($flow === 'created') $transaction->setRequestBody($response['request_body']);
             $transaction->setRequestResponse($response['body']['message']);
             $this->transactionRepository->save($transaction);
         } catch (\Exception $e) {

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © Ignacio Muñoz © All rights reserved.
+ * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Improntus\ProntoPaga\Model\Config\Backend;

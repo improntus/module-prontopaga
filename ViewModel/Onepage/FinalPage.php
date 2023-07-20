@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © Ignacio Muñoz © All rights reserved.
+ * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Improntus\ProntoPaga\ViewModel\Onepage;
@@ -78,6 +78,15 @@ class FinalPage implements ArgumentInterface
             return [];
         }
         return $paymentInfo;
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    public function validateOnCheckout(): bool
+    {
+        return $this->prontoPagaHelper->validateOnCheckout();
     }
 
     /**

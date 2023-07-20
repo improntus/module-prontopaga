@@ -132,5 +132,21 @@ class Transaction extends AbstractModel implements TransactionInterface
     {
         return $this->setData(self::REQUEST_RESPONSE, $requestResponse);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPaymentMethod()
+    {
+        return $this->getData(self::PAYMENT_METHOD);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setPaymentMethod($paymentMethod)
+    {
+        return $this->setData(self::PAYMENT_METHOD, $paymentMethod);
+    }
 }
 

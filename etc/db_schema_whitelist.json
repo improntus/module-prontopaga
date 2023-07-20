@@ -1,0 +1,21 @@
+{
+    "improntus_prontopaga_transaction": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "transaction_id": true,
+            "status": true,
+            "request_body": true,
+            "created_at": true,
+            "request_response": true,
+            "payment_method": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "IMPRONTUS_PRONTOPAGA_TRANSACTION_ORDER_ID": true
+        },
+        "index": {
+            "FTI_434958A3C533E6E8E3D795D9C9519D82": true
+        }
+    }
+}
