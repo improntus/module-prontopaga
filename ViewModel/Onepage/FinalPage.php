@@ -72,15 +72,12 @@ class FinalPage implements ArgumentInterface
     {
         try {
             $transaction = $this->loadTransaction();
-            if (!$transaction){
-                return [];
-            }
             $paymentInfo = $this->secureResponse($transaction->getRequestResponse());
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => $e->getMessage(), 'method' => __METHOD__]);
             return [];
         }
-        return $paymentInfo;
+        return $paymentInfo ?: [];
     }
 
     /**
@@ -111,9 +108,9 @@ class FinalPage implements ArgumentInterface
     {
         $orderId = $this->checkoutSession->getLastRealOrder()->getEntityId();
         if (!$orderId) {
-            $this->prontoPagaHelper->log(['type' => 'error', 'message' => false, 'method' => __METHOD__]);
            return false;
         }
+
         return $this->transactionInterface->getByOrderId($orderId);
     }
 
@@ -126,6 +123,9 @@ class FinalPage implements ArgumentInterface
     private function secureResponse($requestResponse): array
     {
         $requestResponse = $this->json->unserialize($requestResponse);
+        if (!isset($requestResponse['hash'], $requestResponse['hash'])){
+            return false;
+        }
         unset($requestResponse['hash'], $requestResponse['sign']);
         return $requestResponse;
     }
