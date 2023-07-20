@@ -21,6 +21,7 @@ $transaction = $viewModel->getTransactionData();
                     <tr>
                         <th scope="col" class="col id"><?= __('ID') ?></th>
                         <th scope="col" class="col order_id"><?= __('Order Id') ?></th>
+                        <th scope="col" class="col payment_method"><?= __('Payment Method') ?></th>
                         <th scope="col" class="col status"><?= __('Status') ?></th>
                         <th scope="col" class="col createt_at"><?= __('Created At') ?></th>
                         <th scope="col" class="col transaction_id"><?= __('Transaction Id') ?></th>
@@ -33,6 +34,9 @@ $transaction = $viewModel->getTransactionData();
                     </td>
                     <td data-th="<?= $block->escapeHtml(__('Order Id')) ?>" class="col order_id">
                         <?= $transaction->getOrderId() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Payment Method')) ?>" class="col payment_method">
+                        <?= $transaction->getPaymentMethod() ?>
                     </td>
                     <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
                         <?= $transaction->getStatus() ?>
