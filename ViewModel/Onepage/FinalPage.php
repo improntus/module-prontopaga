@@ -111,7 +111,7 @@ class FinalPage implements ArgumentInterface
     {
         $orderId = $this->checkoutSession->getLastRealOrder()->getEntityId();
         if (!$orderId) {
-            $this->prontoPagaHelper->log(['type' => 'warning', 'message' => false, 'method' => __METHOD__]);
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => false, 'method' => __METHOD__]);
            return false;
         }
         return $this->transactionInterface->getByOrderId($orderId);
