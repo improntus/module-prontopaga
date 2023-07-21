@@ -118,9 +118,9 @@ class FinalPage implements ArgumentInterface
      * Remove date from request response
      *
      * @param string $requestResponse
-     * @return array
+     * @return array|boolean
      */
-    private function secureResponse($requestResponse): array
+    private function secureResponse($requestResponse)
     {
         $requestResponse = $this->json->unserialize($requestResponse);
         if (!isset($requestResponse['hash'], $requestResponse['hash'])){
