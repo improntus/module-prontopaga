@@ -312,7 +312,6 @@ class Data extends AbstractHelper
                 ? $this->logger->{$data['type']}($data['message'], ['method_context' => $data['method']])
                 : $this->logger->debug($data['message'], ['method_context' => $data['method']]);
         }
-        return;
     }
 
     /**

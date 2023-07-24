@@ -108,7 +108,5 @@ class Validate extends Action
         if ($transaction && $status) {
             $transaction->setStatus($status)->save();
         }
-
-        return;
     }
 }

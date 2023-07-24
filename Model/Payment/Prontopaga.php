@@ -212,8 +212,6 @@ class Prontopaga
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
         }
-
-        return;
     }
 
     /**
@@ -310,7 +308,5 @@ class Prontopaga
             $order->addCommentToStatusHistory($message, Order::STATE_PAYMENT_REVIEW);
             $this->orderRepository->save($order);
         }
-
-        return;
     }
 }

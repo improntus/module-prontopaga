@@ -89,8 +89,6 @@ class CancelOrders
             $this->prontoPaga->cancelOrder($order, $message);
             $this->updateTransactionGrid($order->getEntityId());
         }
-
-        return;
     }
 
     /**
@@ -137,6 +135,5 @@ class CancelOrders
         if ($transaction) {
             $transaction->setStatus(self::TRANSACTION_CANCELED)->save();
         }
-        return;
     }
 }
