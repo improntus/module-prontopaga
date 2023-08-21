@@ -18,7 +18,7 @@ class Detail extends Action implements HttpGetActionInterface
     /**
      * Authorization level of a basic admin session
      */
-    const ADMIN_RESOURCE = 'Improntus_ProntoPaga::transaction_view';
+    const ADMIN_RESOURCE = 'Improntus_ProntoPaga::transactions_page_view';
 
     /**
      * @var bool|PageFactory

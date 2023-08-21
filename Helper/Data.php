@@ -306,12 +306,10 @@ class Data extends AbstractHelper
      */
     public function log(array $data): void
     {
-        if ($this->validateOnCheckout()) {
-            $this->logger->setName(self::LOGGER_NAME);
-            $data['type'] !== 'debug'
-                ? $this->logger->{$data['type']}($data['message'], ['method_context' => $data['method']])
-                : $this->logger->debug($data['message'], ['method_context' => $data['method']]);
-        }
+        $this->logger->setName(self::LOGGER_NAME);
+        $data['type'] !== 'debug'
+            ? $this->logger->{$data['type']}($data['message'], ['method_context' => $data['method']])
+            : $this->logger->debug($data['message'], ['method_context' => $data['method']]);
     }
 
     /**

@@ -18,7 +18,7 @@
 			</storageConfig>
 			<updateUrl path="mui/index/render"/>
 		</settings>
-		<aclResource>Improntus_ProntoPaga::transaction</aclResource>
+		<aclResource>Improntus_ProntoPaga::transactions_page_view</aclResource>
 		<dataProvider name="improntus_prontopaga_transaction_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
 			<settings>
 				<requestFieldName>id</requestFieldName>

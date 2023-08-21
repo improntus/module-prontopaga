@@ -10,6 +10,8 @@ namespace Improntus\ProntoPaga\Controller\Adminhtml\Transaction;
 class Index extends \Magento\Backend\App\Action
 {
 
+    const ADMIN_RESOURCE = 'Improntus_ProntoPaga::transactions_page_view';
+
     protected $resultPageFactory;
 
     /**
@@ -34,8 +36,8 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-            $resultPage->getConfig()->getTitle()->prepend(__("Pronto Paga Transactions"));
-            return $resultPage;
+        $resultPage->getConfig()->getTitle()->prepend(__("Pronto Paga Transactions"));
+        return $resultPage;
     }
 }
 
