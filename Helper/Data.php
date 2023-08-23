@@ -46,6 +46,9 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_ACTIVE = 'payment/prontopaga/cancel_orders/active';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_TIMEINTERVAL = 'payment/prontopaga/cancel_orders/timeinterval';
 
+    /** Get country path */
+    const COUNTRY_CODE_PATH = 'general/country/default';
+
     /**
      * @var EncryptorInterface
      */
@@ -340,6 +343,18 @@ class Data extends AbstractHelper
             return $this->encryptor->decrypt(base64_decode($params));
         }
         return $this->encryptor->decrypt($params);
+    }
+
+     /**
+     * Get Country code by store scope
+     *
+     * @return string
+     */
+    public function getCountryCode(): string
+    {
+        return $this->getConfigValue(
+            self::COUNTRY_CODE_PATH
+        );
     }
 
     /**

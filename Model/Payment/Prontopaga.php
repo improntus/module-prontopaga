@@ -157,8 +157,8 @@ class Prontopaga
         $customerData = $this->getCustomerData($order);
         $token = $this->prontoPagaHelper->encrypt($order->getEntityId(), true);
         return [
-            'currency' => 'CLP',
-            'country' => 'CL',
+            'currency' => $this->prontoPagaHelper->getCurrency($order->getStore()->getId()),
+            'country' => $this->prontoPagaHelper->getCountryCode(),
             'amount' => round((int)$order->getGrandTotal(), 0),
             'clientName' => $customerData['clientName'],
             'clientEmail' => $customerData['clientEmail'],
