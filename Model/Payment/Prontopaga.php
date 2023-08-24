@@ -184,7 +184,7 @@ class Prontopaga
             'clientName' => "{$address->getFirstname()} {$address->getLastname()}",
             'clientEmail' => $order->getCustomerEmail(),
             'clientPhone' => $address->getTelephone() ?? '',
-            'clientDocument' => $order->getCustomerTaxvat() ?? self::SANDBOX_DOCUMENT
+            'clientDocument' => $order->getCustomerTaxvat() ?? ''//self::SANDBOX_DOCUMENT
         ];
     }
 
