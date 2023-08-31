@@ -47,6 +47,20 @@
             <!--/ko-->
         </div>
 
+        <div class="field">
+            <label for="card-document">
+                <!-- ko i18n: 'Document Number' --><!-- /ko -->
+            </label>
+            <input id="card-document" class="document" type="text"
+                data-bind="value: getDocumentNumber($element)"
+                placeholder="" data-validate='{required:true, rutvalidation: true}'>
+
+            <div class="field-error" data-bind="visible: documentError()" generated="true">
+                <span>This is a required field.</span>
+            </div>
+        </div>
+
+
         <div class="actions-toolbar">
             <div class="primary">
                 <button class="action primary checkout"

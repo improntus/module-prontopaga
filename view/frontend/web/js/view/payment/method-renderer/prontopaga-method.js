@@ -25,10 +25,25 @@ define([
             prevSelected: ko.observable(false),
             methodSelected: ko.observable(false),
             isBarVisible: ko.observable(false),
+            documentNumber: ko.observable(''),
+            documentError: ko.observable(false)
         },
 
         getCode: function() {
             return this.code;
+        },
+
+        /**
+         * Get data
+         * @returns {Object}
+         */
+        getData: function () {
+            return {
+                'method': this.item.method,
+                'additional_data': {
+                    'document_number': this.documentNumber()
+                }
+            };
         },
 
         getAllowedMethods: function () {
@@ -62,6 +77,7 @@ define([
 
         placeOrder: function (data, event) {
             let self = this;
+
             if (event) {
                 event.preventDefault();
             }
@@ -69,6 +85,14 @@ define([
             if (!this.methodSelected()) {
                 this.messageContainer.addErrorMessage({ message: $t('Please, first select an available platform of payment.') });
                 return false
+            }
+
+            if (!this.documentNumber()) {
+                this.messageContainer.addErrorMessage({ message: $t('Document number is required.') });
+                this.validateDoc(false)
+                return false
+            } else {
+                this.validateDoc(true)
             }
 
             self.isBarVisible(true)
@@ -89,6 +113,27 @@ define([
                 return true;
             }
             return false;
+        },
+
+        getDocumentNumber: function (elem) {
+            let customerData = window.checkoutConfig?.customerData
+
+            if (elem.value) {
+                customerData.taxvat = elem.value;
+            }
+            this.documentNumber(elem.value)
+
+            return (customerData.taxvat && customerData.taxvat !== undefined)
+                ? customerData.taxvat.replace(/[^a-zA-Z0-9]/g, '')
+                : '';
+        },
+
+        validateDoc: function (isValid) {
+            this.documentError(!isValid)
+            let doc = $('#card-document')
+            isValid
+                ? doc.removeClass('error')
+                : doc.addClass('error');
         },
 
         afterPlaceOrder: function () {

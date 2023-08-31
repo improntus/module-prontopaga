@@ -1,2 +1,4 @@
 "Please, first select an available platform of payment.","Por favor, primero seleccione una plataforma de pago disponible.",module,Improntus_ProntoPaga
 "Redirecting to a payment gateway.","Redireccionando a una pasarela de pago.",module,Improntus_ProntoPaga
+"Document Number","Número de Documento",module,Improntus_ProntoPaga
+"Document number is required.","El número de documento es requerido.",module,Improntus_ProntoPaga

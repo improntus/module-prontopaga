@@ -78,6 +78,23 @@
                 border: 1px solid #ee0979;
             }
         }
+
+        .field {
+            margin-bottom: 10px;
+            label span {
+                &:after {
+                    content: '*';
+                    color: #e02b27;
+                    font-size: 1.2rem;
+                    margin: 0 0 0 5px;
+                }
+            }
+            .document{
+                &.error {
+                    border-color: #ed8380;
+                }
+            }
+        }
     }
 
     @keyframes MOVE-BG {

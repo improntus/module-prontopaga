@@ -29,6 +29,7 @@ class Prontopaga
 {
 
     const SANDBOX_DOCUMENT = '11.111.111-1';
+    const DOCUMENT_KEY = 'document_number';
 
      /**
      * @var ProntoPagaHelper
@@ -180,11 +181,14 @@ class Prontopaga
     private function getCustomerData($order)
     {
         $address = $order->getBillingAddress();
+        $payment = $order->getPayment();
         return [
             'clientName' => "{$address->getFirstname()} {$address->getLastname()}",
             'clientEmail' => $order->getCustomerEmail(),
             'clientPhone' => $address->getTelephone() ?? '',
-            'clientDocument' => $order->getCustomerTaxvat() ?? ''//self::SANDBOX_DOCUMENT
+            'clientDocument' => $payment->getAdditionalInformation(self::DOCUMENT_KEY)
+                ?? $order->getCustomerTaxvat()
+                ?? ''//self::SANDBOX_DOCUMENT
         ];
     }
 
