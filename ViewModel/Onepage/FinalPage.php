@@ -91,6 +91,15 @@ class FinalPage implements ArgumentInterface
 
     /**
      *
+     * @return boolean
+     */
+    public function useCustomPages(): bool
+    {
+        return $this->prontoPagaHelper->useCustomPages();
+    }
+
+    /**
+     *
      * @param string|int|float $price
      * @return string
      */

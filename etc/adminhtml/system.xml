@@ -79,7 +79,7 @@ See COPYING.txt for license details.
                     <comment>Enable document number input on Payment Method section visible in checkout.</comment>
                 </field>
                  <field id="field_required" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Validate on Checkout</label>
+                    <label>Document Number Required</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="document_field">1</field>
