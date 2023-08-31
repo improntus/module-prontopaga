@@ -70,13 +70,29 @@ See COPYING.txt for license details.
                     </depends>
                     <comment>Validate order on checkout. For local environment or debug module, set option in Yes.</comment>
                 </field>
-				<field id="sort_order" type="text" sortOrder="80" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" canRestore="1">
+                <field id="document_field" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Number document</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <comment>Enable document number input on Payment Method section visible in checkout.</comment>
+                </field>
+                 <field id="field_required" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Validate on Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="document_field">1</field>
+                    </depends>
+                    <comment>Field required.</comment>
+                </field>
+				<field id="sort_order" type="text" sortOrder="100" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" canRestore="1">
 					<label>Sort Order</label>
                     <depends>
                         <field id="active">1</field>
                     </depends>
 				</field>
-                <field id="endpoint" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="endpoint" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Base URL API Endpoint</label>
                     <comment>API endpoint for payments. Please make sure that URL ends with '/' (slash), e.g. http:://domain/magento/</comment>
                     <config_path>payment/prontopaga/endpoint</config_path>
@@ -85,7 +101,7 @@ See COPYING.txt for license details.
                     </depends>
                     <validate>required validate-no-empty validate-url validate-url-slash</validate>
                 </field>
-                <field id="token" translate="label" type="obscure" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="token" translate="label" type="obscure" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API Token</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                     <config_path>payment/prontopaga/token</config_path>
@@ -94,7 +110,7 @@ See COPYING.txt for license details.
                     </depends>
                     <validate>required validate-no-empty</validate>
                 </field>
-                <field id="secret_key" translate="label" type="obscure" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="secret_key" translate="label" type="obscure" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Secret Key</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                     <config_path>payment/prontopaga/secret_key</config_path>
@@ -103,7 +119,7 @@ See COPYING.txt for license details.
                     </depends>
                     <validate>required validate-no-empty</validate>
                 </field>
-                <field id="logo" translate="label" sortOrder="120" type="Magento\Config\Block\System\Config\Form\Field\Image" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="logo" translate="label" sortOrder="140" type="Magento\Config\Block\System\Config\Form\Field\Image" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Improntus\ProntoPaga\Model\Config\Backend\Image</backend_model>
                     <base_url type="media" scope_info="1">prontopaga</base_url>
@@ -115,7 +131,7 @@ See COPYING.txt for license details.
                     </depends>
                 </field>
 
-                <group id="cancel_orders" type="text" sortOrder="130" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <group id="cancel_orders" type="text" sortOrder="150" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
                     <depends>
                         <field id="active">1</field>
                     </depends>

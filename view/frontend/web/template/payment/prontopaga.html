@@ -47,12 +47,12 @@
             <!--/ko-->
         </div>
 
-        <div class="field">
+        <div class="field" data-bind="visible: useDocumentNumber()">
             <label for="card-document">
                 <!-- ko i18n: 'Document Number' --><!-- /ko -->
             </label>
             <input id="card-document" class="document" type="text"
-                data-bind="value: getDocumentNumber($element)"
+                data-bind="value: setDocumentNumber($element)"
                 placeholder="" data-validate='{required:true, rutvalidation: true}'>
 
             <div class="field-error" data-bind="visible: documentError()" generated="true">

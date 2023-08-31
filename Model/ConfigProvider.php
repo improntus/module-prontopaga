@@ -67,6 +67,8 @@ class ConfigProvider implements ConfigProviderInterface
                     'code' =>  self::CODE,
                     'allowed_methods' => $this->prontoPagaHelper->getAllowedMethods(),
                     'methods_img_url' => $this->prontoPagaHelper->getMethodsImgUrl(),
+                    'use_document_field' => $this->prontoPagaHelper->useDocumentField(),
+                    'is_field_required' => $this->prontoPagaHelper->isFieldRequired()
                 ]
             ],
         ];

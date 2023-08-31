@@ -39,6 +39,8 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS = 'payment/prontopaga/specificmethods';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT = 'payment/prontopaga/validate_checkout';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES = 'payment/prontopaga/custom_pages';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DOCUMENT_FIELD = 'payment/prontopaga/document_field';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_FIELD_REQUIRED = 'payment/prontopaga/field_required';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_ENDPOINT = 'payment/prontopaga/endpoint';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN = 'payment/prontopaga/token';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY = 'payment/prontopaga/secret_key';
@@ -235,6 +237,26 @@ class Data extends AbstractHelper
     public function useCustomPages(): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES);
+    }
+
+     /**
+     * Retrieve if might be use document number input
+     *
+     * @return boolean
+     */
+    public function useDocumentField(): bool
+    {
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DOCUMENT_FIELD);
+    }
+
+     /**
+     * Retrieve if document number field is required
+     *
+     * @return boolean
+     */
+    public function isFieldRequired(): bool
+    {
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_FIELD_REQUIRED);
     }
 
      /**

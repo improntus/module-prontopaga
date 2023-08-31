@@ -22,6 +22,10 @@ define([
     ko
 ) {
     'use strict';
+
+    const CODE = 'prontopaga'
+    const CONFIG_PAYMENT =  window.checkoutConfig.payment[CODE]
+
     return Component.extend({
         defaults: {
             template: 'Improntus_ProntoPaga/payment/prontopaga',
@@ -29,10 +33,15 @@ define([
             prevSelected: ko.observable(false),
             methodSelected: ko.observable(false),
             isBarVisible: ko.observable(false),
+            useDocumentNumber: ko.observable(CONFIG_PAYMENT.use_document_field),
+            isFieldRequired: ko.observable(CONFIG_PAYMENT.is_field_required),
             documentNumber: ko.observable(''),
             documentError: ko.observable(false)
         },
 
+        /**
+         * @returns {String}
+         */
         getCode: function() {
             return this.code;
         },
@@ -50,20 +59,27 @@ define([
             };
         },
 
+
         getAllowedMethods: function () {
-            return window.checkoutConfig.payment[this.getCode()].allowed_methods;
+            return CONFIG_PAYMENT.allowed_methods;
         },
 
+        /**
+         * @returns {String}
+         */
         getTitle: function () {
-            return !this.getLogo() ? window.checkoutConfig.payment[this.getCode()].title : ''
+            return !this.getLogo() ? CONFIG_PAYMENT.title : ''
         },
 
+        /**
+         * @returns {String}
+         */
         getLogo: function () {
-            return window.checkoutConfig.payment[this.getCode()].logo
+            return CONFIG_PAYMENT.logo
         },
 
         getMethodLogo: function (method) {
-            return window.checkoutConfig.payment[this.getCode()].methods_img_url[method].img
+            return CONFIG_PAYMENT.methods_img_url[method].img
         },
 
         toggleSelected: function (e) {
@@ -91,7 +107,7 @@ define([
                 return false
             }
 
-            if (!this.documentNumber()) {
+            if (!this.documentNumber() && this.useDocumentNumber() && this.isFieldRequired()) {
                 this.messageContainer.addErrorMessage({ message: $t('Document number is required.') });
                 this.validateDoc(false)
                 return false
@@ -119,17 +135,8 @@ define([
             return false;
         },
 
-        getDocumentNumber: function (elem) {
-            let customerData = window.checkoutConfig?.customerData
-
-            if (elem.value) {
-                customerData.taxvat = elem.value;
-            }
+        setDocumentNumber: function (elem) {
             this.documentNumber(elem.value)
-
-            return (customerData.taxvat && customerData.taxvat !== undefined)
-                ? customerData.taxvat.replace(/[^a-zA-Z0-9]/g, '')
-                : '';
         },
 
         validateDoc: function (isValid) {
@@ -142,7 +149,7 @@ define([
 
         afterPlaceOrder: function () {
             fullScreenLoader.startLoader();
-            window.location.href = `${window.checkoutConfig.payment[this.getCode()].redirect_url}?method=${this.methodSelected()}`;
+            window.location.href = `${CONFIG_PAYMENT.redirect_url}?method=${this.methodSelected()}`;
         },
 
         getPlaceOrderDeferredObject: function () {
