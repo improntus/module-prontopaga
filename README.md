@@ -2,10 +2,10 @@
 <img src="https://www.prontopaga.com/img/sitesettings/faviconnuevo-1671219803.png" width="80" height="60" />
 
 # Module ProntoPaga
-## Descripción
+## Description
 ProntoPaga para Magento (Adobe Commerce) Pagos Rápidos y seguros.
-### Instalación
 
+### Installation
 ```sh
 $ composer require improntus/module-prontopaga
 $ php bin/magento module:enable Improntus_ProntoPaga --clear-static-content
@@ -19,5 +19,6 @@ Configuraciones disponibles en Tiendas > Configuracion > Métodos de Pago > Pron
 ### Contemplaciones
 - N/A
 
-## Autor
-Ignacio Muñoz.
+## Author
+
+[![N|Solid](https://improntus.com/wp-content/uploads/2022/05/Logo-Site.png)](https://www.improntus.com)
