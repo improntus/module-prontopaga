@@ -1,9 +1,9 @@
-[![N|Solid](https://improntus.com/wp-content/uploads/2022/05/Logo-Site.png)](https://www.improntus.com)
-<img src="https://www.prontopaga.com/img/sitesettings/faviconnuevo-1671219803.png" width="80" height="60" />
+# ProntoPaga payment module
 
-# Module ProntoPaga
+[![N|Solid](https://www.prontopaga.com/img/sitesettings/faviconnuevo-1671219803.png)](https://www.prontopaga.com/)
+
 ## Description
-ProntoPaga para Magento (Adobe Commerce) Pagos Rápidos y seguros.
+Official module ProntoPaga for Adobe Commerce and Magento Open Source.
 
 ### Installation
 ```sh
@@ -13,11 +13,10 @@ $ php bin/magento setup:upgrade
 $ php bin/magento setup:static-content:deploy
 ```
 
-### Configuraciones
-Configuraciones disponibles en Tiendas > Configuracion > Métodos de Pago > ProntoPaga
+### Configuration
+You can configure the integration at:
 
-### Contemplaciones
-- N/A
+Stores > Configuration > Payment methods > ProntoPaga
 
 ## Author
 
