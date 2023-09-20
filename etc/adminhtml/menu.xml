@@ -5,7 +5,7 @@ See COPYING.txt for license details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
-		<add id="Improntus_ProntoPaga::main" title="Improntus ProntoPaga" module="Improntus_ProntoPaga" sortOrder="9999" resource="Improntus_ProntoPaga::main"/>
+		<add id="Improntus_ProntoPaga::main" title="ProntoPaga" module="Improntus_ProntoPaga" sortOrder="9999" resource="Improntus_ProntoPaga::main"/>
 		<add id="Improntus_ProntoPaga::transactions_page_view" title="Transactions" module="Improntus_ProntoPaga" sortOrder="9999"
             resource="Improntus_ProntoPaga::transactions_page_view" parent="Improntus_ProntoPaga::main" action="improntus_prontopaga/transaction/index"/>
         <add id="Improntus_ProntoPaga::configuration" title="Configuration" module="Improntus_ProntoPaga" sortOrder="9999"
