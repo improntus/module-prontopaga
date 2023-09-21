@@ -7,7 +7,8 @@ namespace Improntus\ProntoPaga\Service;
 
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\HTTP\Client\Curl;
-use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Serialize\SerializerInterface as Json;
+
 
 class ProntoPagaApiService
 {
@@ -63,9 +64,12 @@ class ProntoPagaApiService
             return false;
         }
 
-        $result = @unserialize($result)
-                    ? $this->json->unserialize($result)
-                    : ['message' => $result];
+        try {
+            $result = $this->json->unserialize($result);
+        } catch (\Exception $e) {
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
+            $result =  ['message' => $result];
+        }
 
         return  ['code' => $this->curl->getStatus(), 'body' => $result, 'request_body' => $params];
     }
@@ -85,9 +89,12 @@ class ProntoPagaApiService
             return false;
         }
 
-        $result = @unserialize($result)
-                    ? $this->json->unserialize($result)
-                    : ['message' => $result];
+        try {
+            $result = $this->json->unserialize($result);
+        } catch (\Exception $e) {
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
+            $result =  ['message' => $result];
+        }
 
         return  ['code' => $this->curl->getStatus(), 'body' => $result];
     }
