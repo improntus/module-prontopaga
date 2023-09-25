@@ -44,15 +44,6 @@ class RowAction extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$item) {
                 $item[$this->getData('name')] = [
-                    // 'edit' => [
-                    //     'href' =>
-                    //         $this->urlBuilder->getUrl(
-                    //             'improntus_prontopaga/transaction/detail',
-                    //             ['entity_id' => $item['entity_id']]
-                    //         ),
-                    //     'label' => __('View'),
-                    //     'hidden' => false
-                    // ],
                     'view' => [
                         'href' =>
                             $this->urlBuilder->getUrl(

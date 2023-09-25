@@ -47,7 +47,7 @@ class PaymentMehods implements OptionSourceInterface
                 ];
             }
         }
-        return $this->_options;
+        return $this->_options ?? [];
     }
 
     /**

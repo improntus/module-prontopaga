@@ -211,8 +211,9 @@ class Data extends AbstractHelper
     public function getMethodsImgUrl()
     {
         foreach ($this->getAllowedMethods() as $method) {
+            $logo = $this->paymentMethodsInterface->getByMethod($method);
             $methodsImg[$method] = [
-                    'img' => $this->paymentMethodsInterface->getByMethod($method)->getLogo()
+                    'img' => $logo ? $logo->getLogo() : ''
             ];
         }
 

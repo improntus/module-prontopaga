@@ -35,6 +35,6 @@ class Status implements OptionSourceInterface
                 ['value' => 'error', 'label' => __('Error')]
             ];
         }
-        return $this->_options;
+        return $this->_options ?? [];
     }
 }
