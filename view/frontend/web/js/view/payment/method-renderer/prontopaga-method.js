@@ -79,7 +79,7 @@ define([
         },
 
         getMethodLogo: function (method) {
-            return CONFIG_PAYMENT.methods_img_url[method].img
+            return CONFIG_PAYMENT?.methods_img_url[method]?.img ?? ''
         },
 
         toggleSelected: function (e) {

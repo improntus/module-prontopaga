@@ -12,7 +12,6 @@ See COPYING.txt for license details.
 				<order_status>pending</order_status>
 				<title>Pronto Paga</title>
 				<allowspecific>0</allowspecific>
-                <specificmethods>webpay_payment</specificmethods>
 				<can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
                 <can_void>0</can_void>
