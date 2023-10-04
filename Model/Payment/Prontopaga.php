@@ -24,6 +24,7 @@ use Magento\Framework\Phrase;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\TransactionInterface;
 use Magento\Sales\Model\Order;
+use Magento\Framework\App\ResourceConnection;
 
 class Prontopaga
 {
@@ -87,6 +88,11 @@ class Prontopaga
     public $json;
 
     /**
+     * @var ResourceConnection
+     */
+    private $resourceConnection;
+
+    /**
      *
      * @param ProntoPagaHelper $prontoPagaHelper
      * @param WebService $webService
@@ -99,6 +105,7 @@ class Prontopaga
      * @param TransactionRepositoryInterface $transactionRepository
      * @param TransactionFactory $transactionFactory
      * @param Json $json
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
         ProntoPagaHelper $prontoPagaHelper,
@@ -111,7 +118,8 @@ class Prontopaga
         OrderSender $orderSender,
         TransactionRepositoryInterface $transactionRepository,
         TransactionFactory $transactionFactory,
-        Json $json
+        Json $json,
+        ResourceConnection $resourceConnection
     ) {
         $this->prontoPagaHelper = $prontoPagaHelper;
         $this->webService = $webService;
@@ -124,6 +132,7 @@ class Prontopaga
         $this->transactionRepository = $transactionRepository;
         $this->transactionFactory = $transactionFactory;
         $this->json = $json;
+        $this->resourceConnection = $resourceConnection;
     }
 
     /**
@@ -229,6 +238,8 @@ class Prontopaga
             return false;
         }
 
+        $connection = $this->resourceConnection->getConnection();
+        $connection->beginTransaction();
         try {
             $invoice = $this->invoiceManagement->prepareInvoice($order);
             $invoice->register();
@@ -255,11 +266,15 @@ class Prontopaga
             $message = (__('Payment confirmed by Pronto Paga'));
             $order->addCommentToStatusHistory($message, Order::STATE_PROCESSING);
             $this->orderRepository->save($order);
-            // $ppagaTransaction = $this->transactionRepository->getByTransactionId($transactionId);
-            // $ppagaTransaction->setStatus('processed');
-            // $this->transactionRepository->save($ppagaTransaction);
+            $connection->commit();
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
+            $connection->rollBack();
+            $this->prontoPagaHelper->log(
+                ['type' => 'error',
+                'message' => "Invoice creating for order {$order->getIncrementId()} failed: {$e->getMessage()}",
+                'method' => __METHOD__]
+            );
             return false;
         }
 

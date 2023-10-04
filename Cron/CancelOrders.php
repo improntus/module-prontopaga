@@ -72,16 +72,13 @@ class CancelOrders
     public function execute()
     {
         if (!$this->prontoPagaHelper->isCronEnabled()) {
-            $this->prontoPagaHelper->log(['type' => 'error', 'message' => 'Cancel orders Pronto Paga is disabled.', 'method' => __METHOD__]);
             return;
         }
 
         $collection = $this->getOrderCollection(self::PENDING, $this->getCreatedAt());
         foreach ($collection as $order) {
-            if (
-                $order->getState() !== Order::STATE_NEW ||
-                $order->getStatus() === Order::STATE_PAYMENT_REVIEW
-            ) {
+            if ($order->getState() !== Order::STATE_NEW ||
+                $order->getStatus() === Order::STATE_PAYMENT_REVIEW) {
                 continue;
             }
 

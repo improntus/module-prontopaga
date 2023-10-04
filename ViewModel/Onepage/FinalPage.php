@@ -71,13 +71,14 @@ class FinalPage implements ArgumentInterface
     public function getPaymentInfo()
     {
         try {
-            $transaction = $this->loadTransaction();
-            $paymentInfo = $this->secureResponse($transaction->getRequestResponse());
+            if ($transaction = $this->loadTransaction()) {
+                $paymentInfo = $this->secureResponse($transaction->getRequestResponse() ?? '');
+            }
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => $e->getMessage(), 'method' => __METHOD__]);
             return [];
         }
-        return $paymentInfo ?: [];
+        return isset($paymentInfo) ? $paymentInfo : [];
     }
 
     /**
