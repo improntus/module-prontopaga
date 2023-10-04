@@ -81,4 +81,3 @@ interface PaymentMethodsInterface
      */
     public function setLogo($logo);
 }
-

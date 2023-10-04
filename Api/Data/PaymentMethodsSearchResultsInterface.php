@@ -23,4 +23,3 @@ interface PaymentMethodsSearchResultsInterface extends \Magento\Framework\Api\Se
      */
     public function setItems(array $items);
 }
-

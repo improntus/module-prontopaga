@@ -98,8 +98,8 @@ class PaymentMethodsRepository implements PaymentMethodsRepositoryInterface
     }
 
      /**
-     * @inheritDoc
-     */
+      * @inheritDoc
+      */
     public function getByMethod($method)
     {
         $paymentMethods = $this->paymentMethodsFactory->create();
@@ -159,4 +159,3 @@ class PaymentMethodsRepository implements PaymentMethodsRepositoryInterface
         return $this->delete($this->get($entityId));
     }
 }
-

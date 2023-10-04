@@ -98,8 +98,8 @@ class TransactionRepository implements TransactionRepositoryInterface
     }
 
      /**
-     * @inheritDoc
-     */
+      * @inheritDoc
+      */
     public function getByTransactionId($transactionId)
     {
         $transaction = $this->transactionFactory->create();
@@ -172,4 +172,3 @@ class TransactionRepository implements TransactionRepositoryInterface
         return $this->delete($this->get($entityId));
     }
 }
-

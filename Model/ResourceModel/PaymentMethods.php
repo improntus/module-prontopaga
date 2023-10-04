@@ -20,4 +20,3 @@ class PaymentMethods extends AbstractDb
         $this->_init('improntus_prontopaga_payment_methods', 'entity_id');
     }
 }
-

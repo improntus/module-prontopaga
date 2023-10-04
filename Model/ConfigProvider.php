@@ -43,7 +43,7 @@ class ConfigProvider implements ConfigProviderInterface
         AssetRepository $assetRepository,
         ProntoPagaHelper $prontoPagaHelper,
         StoreManagerInterface $storeManager
-    ){
+    ) {
         $this->storeManager = $storeManager;
         $this->assetRepository = $assetRepository;
         $this->prontoPagaHelper = $prontoPagaHelper;

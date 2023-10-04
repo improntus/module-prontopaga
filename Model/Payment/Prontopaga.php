@@ -33,13 +33,13 @@ class Prontopaga
     const DOCUMENT_KEY = 'document_number';
 
      /**
-     * @var ProntoPagaHelper
-     */
+      * @var ProntoPagaHelper
+      */
     private $prontoPagaHelper;
 
      /**
-     * @var WebService
-     */
+      * @var WebService
+      */
     public $webService;
 
     /**
@@ -58,8 +58,8 @@ class Prontopaga
     private $paymentRepository;
 
      /**
-     * @var PaymentTransactionRepository
-     */
+      * @var PaymentTransactionRepository
+      */
     private $paymentTransactionRepository;
 
     /**
@@ -68,8 +68,8 @@ class Prontopaga
     private $invoiceRepository;
 
      /**
-     * @var OrderSender
-     */
+      * @var OrderSender
+      */
     private $orderSender;
 
     /**
@@ -202,11 +202,11 @@ class Prontopaga
     }
 
      /**
-     * @param $order
-     * @param $response
-     * @return void
-     * @throws LocalizedException
-     */
+      * @param $order
+      * @param $response
+      * @return void
+      * @throws LocalizedException
+      */
     public function persistTransaction($order, $response = null, $flow = null)
     {
         try {
@@ -218,8 +218,12 @@ class Prontopaga
             $transaction->setOrderId($order->getId());
             $transaction->setTransactionId($unserializeResponse['uid'] ?? '');
             $transaction->setStatus($flow);
-            if (!$transaction->getPaymentMethod()) $transaction->setPaymentMethod($unserializeRequest['paymentMethod']);
-            if ($flow === 'created') $transaction->setRequestBody($response['request_body']);
+            if (!$transaction->getPaymentMethod()) {
+                $transaction->setPaymentMethod($unserializeRequest['paymentMethod']);
+            }
+            if ($flow === 'created') {
+                $transaction->setRequestBody($response['request_body']);
+            }
             $transaction->setRequestResponse($response['body']['message']);
             $this->transactionRepository->save($transaction);
         } catch (\Exception $e) {
@@ -282,11 +286,11 @@ class Prontopaga
     }
 
      /**
-     * @param $payment
-     * @param $invoice
-     * @param $paypalTransaction
-     * @return mixed
-     */
+      * @param $payment
+      * @param $invoice
+      * @param $paypalTransaction
+      * @return mixed
+      */
     private function generateTransaction($payment, $invoice, $transactionId)
     {
         $payment->setTransactionId($transactionId);

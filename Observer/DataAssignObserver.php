@@ -19,9 +19,9 @@ class DataAssignObserver extends AbstractDataAssignObserver
     ];
 
     /**
-    * @param Observer $observer
-    * @throws LocalizedException
-    */
+     * @param Observer $observer
+     * @throws LocalizedException
+     */
     public function execute(Observer $observer)
     {
         $dataObject = $this->readDataArgument($observer);
@@ -38,7 +38,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
 
         $paymentModel = $this->readPaymentModelArgument($observer);
         $paymentModel->setAdditionalInformation(
-           'document_number',
+            'document_number',
             $additionalData['document_number']
         );
 

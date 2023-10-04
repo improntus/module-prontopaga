@@ -149,4 +149,3 @@ class Transaction extends AbstractModel implements TransactionInterface
         return $this->setData(self::PAYMENT_METHOD, $paymentMethod);
     }
 }
-

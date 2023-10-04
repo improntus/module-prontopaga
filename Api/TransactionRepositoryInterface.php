@@ -31,11 +31,11 @@ interface TransactionRepositoryInterface
     public function get($entityId);
 
      /**
-     * Retrieve transaction
-     * @param string $transactionId
-     * @return \Improntus\ProntoPaga\Api\Data\TransactionInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
+      * Retrieve transaction
+      * @param string $transactionId
+      * @return \Improntus\ProntoPaga\Api\Data\TransactionInterface
+      * @throws \Magento\Framework\Exception\LocalizedException
+      */
     public function getByTransactionId($transactionId);
 
 
@@ -76,4 +76,3 @@ interface TransactionRepositoryInterface
      */
     public function deleteById($entityId);
 }
-

@@ -101,11 +101,13 @@ class Data extends AbstractHelper
      * @return string|null
      */
     public function getConfigValue(string $field, $storeId = null)
-	{
-		return $this->scopeConfig->getValue(
-			$field, ScopeInterface::SCOPE_STORE, $storeId
-		);
-	}
+    {
+        return $this->scopeConfig->getValue(
+            $field,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
 
     /**
      * Retrieve if payment method is enabled
@@ -159,10 +161,10 @@ class Data extends AbstractHelper
     }
 
      /**
-     * Retrieve secret key
-     *
-     * @return string
-     */
+      * Retrieve secret key
+      *
+      * @return string
+      */
     public function getSecretKey(): string
     {
         return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY) ?? '';
@@ -241,20 +243,20 @@ class Data extends AbstractHelper
     }
 
      /**
-     * Retrieve if might be use document number input
-     *
-     * @return boolean
-     */
+      * Retrieve if might be use document number input
+      *
+      * @return boolean
+      */
     public function useDocumentField(): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DOCUMENT_FIELD);
     }
 
      /**
-     * Retrieve if document number field is required
-     *
-     * @return boolean
-     */
+      * Retrieve if document number field is required
+      *
+      * @return boolean
+      */
     public function isFieldRequired(): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_FIELD_REQUIRED);
@@ -275,9 +277,9 @@ class Data extends AbstractHelper
     }
 
      /**
-     * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
+      * @return string
+      * @throws \Magento\Framework\Exception\NoSuchEntityException
+      */
     public function getRedirectUrl(): string
     {
         return $this->_getUrl('prontopaga/order/create', ['_secure' => 'true']);
@@ -293,8 +295,7 @@ class Data extends AbstractHelper
                 '_path' => 'enquiry',
                 '_secure' => true,
                 '_direct' => 'rest/V1/prontopaga/callback'
-            ]
-        );
+            ]);
     }
 
     /**
@@ -316,11 +317,11 @@ class Data extends AbstractHelper
     public function firmSecretKey(array $data): string
     {
         $keys = array_keys($data);
-		sort($keys);
-		$toSign = '';
-		foreach ($keys as $key) {
-			$toSign .= $key . $data[$key];
-		}
+        sort($keys);
+        $toSign = '';
+        foreach ($keys as $key) {
+            $toSign .= $key . $data[$key];
+        }
 
         return hash_hmac('sha256', $toSign, $this->getSecretKey());
     }
@@ -369,10 +370,10 @@ class Data extends AbstractHelper
     }
 
      /**
-     * Get Country code by store scope
-     *
-     * @return string
-     */
+      * Get Country code by store scope
+      *
+      * @return string
+      */
     public function getCountryCode(): string
     {
         return $this->getConfigValue(
@@ -403,5 +404,4 @@ class Data extends AbstractHelper
         unset($response['sign']);
         return hash_equals($sign, $this->firmSecretKey($response));
     }
-
 }

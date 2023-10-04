@@ -101,4 +101,3 @@ class PaymentMethods extends AbstractModel implements PaymentMethodsInterface
         return $this->setData(self::LOGO, $logo);
     }
 }
-

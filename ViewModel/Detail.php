@@ -11,7 +11,6 @@ use Improntus\ProntoPaga\Model\TransactionFactory;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
-
 class Detail implements ArgumentInterface
 {
     /**

@@ -23,7 +23,7 @@ class TimeInterval implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         $this->options = [['value' => '', 'label' => __('-- Please Select--')]];
-        foreach(range(0, 100, 5) as $value){
+        foreach (range(0, 100, 5) as $value) {
             $this->options[] = ['value' => $value, 'label' => $value];
         }
         return $this->options;

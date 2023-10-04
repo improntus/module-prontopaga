@@ -67,8 +67,8 @@ class CancelOrders
     }
 
      /**
-     * @return void
-     */
+      * @return void
+      */
     public function execute()
     {
         if (!$this->prontoPagaHelper->isCronEnabled()) {
@@ -103,15 +103,15 @@ class CancelOrders
             ->where('sop.last_trans_id IS NULL');
         $this->orderCollection->addFieldToFilter('main_table.status', $status)
                 ->addFieldToFilter('main_table.created_at', ['lteq' => $createdAt])
-                ->setOrder('main_table.created_at','ASC');
+                ->setOrder('main_table.created_at', 'ASC');
         return $this->orderCollection;
     }
 
      /**
-     * Retrieve formatted locale date
-     *
-     * @return string
-     */
+      * Retrieve formatted locale date
+      *
+      * @return string
+      */
     public function getCreatedAt(): string
     {
         $timeInterval = $this->prontoPagaHelper->getTimeInterval();

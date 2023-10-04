@@ -23,4 +23,3 @@ interface TransactionSearchResultsInterface extends \Magento\Framework\Api\Searc
      */
     public function setItems(array $items);
 }
-

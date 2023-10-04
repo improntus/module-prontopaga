@@ -118,7 +118,7 @@ class FinalPage implements ArgumentInterface
     {
         $orderId = $this->checkoutSession->getLastRealOrder()->getEntityId();
         if (!$orderId) {
-           return false;
+            return false;
         }
 
         return $this->transactionInterface->getByOrderId($orderId);
@@ -133,7 +133,7 @@ class FinalPage implements ArgumentInterface
     private function secureResponse($requestResponse)
     {
         $requestResponse = $this->json->unserialize($requestResponse);
-        if (!isset($requestResponse['hash'], $requestResponse['hash'])){
+        if (!isset($requestResponse['hash'], $requestResponse['hash'])) {
             return false;
         }
         unset($requestResponse['hash'], $requestResponse['sign']);

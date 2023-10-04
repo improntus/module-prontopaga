@@ -9,7 +9,6 @@ use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\SerializerInterface as Json;
 
-
 class ProntoPagaApiService
 {
     const URI_NEW_PAYMENT = 'api/payment/new';
@@ -135,7 +134,7 @@ class ProntoPagaApiService
 
         if ($action == 'GET') {
             $this->curl->get($url);
-        } else if ($action == 'POST') {
+        } elseif ($action == 'POST') {
             $this->curl->post($url, $params);
         }
 

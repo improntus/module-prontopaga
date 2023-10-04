@@ -20,4 +20,3 @@ class Transaction extends AbstractDb
         $this->_init('improntus_prontopaga_transaction', 'entity_id');
     }
 }
-

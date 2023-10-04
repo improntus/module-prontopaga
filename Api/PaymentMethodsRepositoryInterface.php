@@ -31,11 +31,11 @@ interface PaymentMethodsRepositoryInterface
     public function get($entityId);
 
      /**
-     * Retrieve payment_methods
-     * @param string $method
-     * @return \Improntus\ProntoPaga\Api\Data\PaymentMethodsInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
+      * Retrieve payment_methods
+      * @param string $method
+      * @return \Improntus\ProntoPaga\Api\Data\PaymentMethodsInterface
+      * @throws \Magento\Framework\Exception\LocalizedException
+      */
     public function getByMethod($method);
 
     /**
@@ -67,4 +67,3 @@ interface PaymentMethodsRepositoryInterface
      */
     public function deleteById($paymentMethodsId);
 }
-

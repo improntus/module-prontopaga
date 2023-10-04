@@ -95,7 +95,7 @@ class Response implements ActionInterface
         if ($type = $this->validatePayment($order, true)) {
             if (in_array($type, ProntoPagaHelper::STATUSES_CANCEL)) {
                 $path = $this->rejectedPayment($order);
-            }else if (in_array($type, ProntoPagaHelper::STATUSES_SUCCESS)) {
+            } elseif (in_array($type, ProntoPagaHelper::STATUSES_SUCCESS)) {
                 $path = self::SUCCESS_PATH;
             }
         }
@@ -141,12 +141,12 @@ class Response implements ActionInterface
     }
 
      /**
-     * Validate payment after redirect
-     *
-     * @param \Magento\Sales\Model\Order $order
-     * @param bool $onlyStatus
-     * @return string|bool
-     */
+      * Validate payment after redirect
+      *
+      * @param \Magento\Sales\Model\Order $order
+      * @param bool $onlyStatus
+      * @return string|bool
+      */
     private function validatePayment($order, $onlyStatus = false)
     {
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
@@ -161,7 +161,7 @@ class Response implements ActionInterface
 
             if (in_array($status, ProntoPagaHelper::STATUSES_CANCEL)) {
                 $path = $this->rejectedPayment($order, $status);
-            } else if ($status === ProntoPagaHelper::STATUS_SUCCESS) {
+            } elseif ($status === ProntoPagaHelper::STATUS_SUCCESS) {
                 $this->approvedPayment($order);
                 $path = $this->confirmationPayment($order, $decodeResponse['uid']);
                 $this->prontoPaga->invoice($order, $transaction->getTransactionId());
@@ -171,5 +171,4 @@ class Response implements ActionInterface
         }
         return $path ?? self::FAILRURE_PATH;
     }
-
 }

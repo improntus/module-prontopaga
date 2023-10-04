@@ -26,8 +26,8 @@ class CancelOrders extends Command
     protected $cancelOrdersCron;
 
      /**
-     * @var string
-     */
+      * @var string
+      */
     protected string $name;
 
     /**
@@ -55,13 +55,13 @@ class CancelOrders extends Command
     protected function configure()
     {
         $options = [
-			new InputOption(
-				self::TYPE,
-				null,
-				InputOption::VALUE_REQUIRED,
-				"Run cron by code"
+            new InputOption(
+                self::TYPE,
+                null,
+                InputOption::VALUE_REQUIRED,
+                "Run cron by code"
             )
-		];
+        ];
 
         $this->setName('prontopaga:cron:run');
         $this->setDescription('Run cron in interaction mode.');
@@ -114,11 +114,11 @@ class CancelOrders extends Command
     }
 
      /**
-     * Add attribute type validator.
-     *
-     * @param \Symfony\Component\Console\Question\Question $question
-     * @return void
-     */
+      * Add attribute type validator.
+      *
+      * @param \Symfony\Component\Console\Question\Question $question
+      * @return void
+      */
     private function addOptionChoisedValidator(Question $question)
     {
         $question->setValidator(function ($value) {

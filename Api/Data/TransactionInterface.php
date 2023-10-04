@@ -59,9 +59,9 @@ interface TransactionInterface
     public function setStatus($status);
 
      /**
-     * Get transaction_id
-     * @return string|null
-     */
+      * Get transaction_id
+      * @return string|null
+      */
     public function getTransactionId();
 
     /**
@@ -123,4 +123,3 @@ interface TransactionInterface
      */
     public function setPaymentMethod($paymentMethod);
 }
-
