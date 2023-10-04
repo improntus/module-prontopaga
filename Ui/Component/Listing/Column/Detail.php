@@ -46,6 +46,7 @@ class Detail extends Column
     }
 
     /**
+     *
      * @param array $dataSource
      * @return array
      */
@@ -53,7 +54,7 @@ class Detail extends Column
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
-                $transaction  = $this->getDataIdByOrderId($item['entity_id']);
+                $transaction = $this->getDataIdByOrderId($item['entity_id']);
                 $item[$this->getData('name')] = $transaction ? $this->getActionView($transaction) : $this->getAdvertising();
             }
         }
