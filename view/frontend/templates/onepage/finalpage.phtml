@@ -9,6 +9,7 @@
  *
  * @var \Magento\Checkout\Block\Onepage\Success $block
  * @var \Improntus\ProntoPaga\ViewModel\Onepage\FinalPage $viewModel
+ * @var \Magento\Framework\Escaper $escaper
  */
 
 $viewModel = $block->getViewModel();
@@ -18,22 +19,22 @@ $paymentInfo = $viewModel->getPaymentInfo();
 <?php if ($paymentInfo && $viewModel->useCustomPages()):  ?>
     <?php $status =  $paymentInfo['status']; ?>
     <div class="pp-payment-details">
-        <div class="content <?= $status?>">
-            <b>Detalles del pago con <?= $paymentInfo['method'] ?> </b>
+        <div class="content <?= $escaper->escapeHtml($status) ?>">
+            <b>Detalles del pago con <?= $escaper->escapeHtml($paymentInfo['method']) ?> </b>
             <div>
-                • Respuesta de la Transacción: <b><?= $status ?></b>
+                • Respuesta de la Transacción: <b><?= $escaper->escapeHtml($status) ?></b>
             </div>
             <div>
-                • Método de pago: <b><?= $paymentInfo['method'] ?></b>
+                • Método de pago: <b><?= $escaper->escapeHtml($paymentInfo['method']) ?></b>
             </div>
             <div>
-                • Monto: <b><?= $viewModel->formatPrice($paymentInfo['amount']) ?></b>
+                • Monto: <b><?= $escaper->escapeHtml($viewModel->formatPrice($paymentInfo['amount'])) ?></b>
             </div>
             <div>
-                • Orden de compra: <b><?= $paymentInfo['order'] ?></b>
+                • Orden de compra: <b><?= $escaper->escapeHtml($paymentInfo['order']) ?></b>
             </div>
             <div>
-                • Tipo de pago: <b><?= $paymentInfo['method_type'] ?></b>
+                • Tipo de pago: <b><?= $escaper->escapeHtml($paymentInfo['method_type']) ?></b>
             </div>
         </div>
     </div>

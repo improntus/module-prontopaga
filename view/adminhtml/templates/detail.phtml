@@ -7,6 +7,7 @@
 /**
  * @var \Magento\Framework\View\Element\Template $block
  * @var \Improntus\ProntoPaga\ViewModel\Detail $viewModel
+ * @var \Magento\Framework\Escaper $escaper
  */
 
 $viewModel = $block->getViewModel();
@@ -16,36 +17,36 @@ $transaction = $viewModel->getTransactionData();
 <div class="transaction-content">
     <div class="table-wrapper data-history">
         <table class="data table table-data-items history" id="my-data-table">
-            <caption class="table-caption"><?= __('Grid Record') ?></caption>
+            <caption class="table-caption"><?= $escaper->escapeHtml(__('Grid Record')) ?></caption>
                 <thead>
                     <tr>
-                        <th scope="col" class="col id"><?= __('ID') ?></th>
-                        <th scope="col" class="col order_id"><?= __('Order Id') ?></th>
-                        <th scope="col" class="col payment_method"><?= __('Payment Method') ?></th>
-                        <th scope="col" class="col status"><?= __('Status') ?></th>
-                        <th scope="col" class="col createt_at"><?= __('Created At') ?></th>
-                        <th scope="col" class="col transaction_id"><?= __('Transaction Id') ?></th>
+                        <th scope="col" class="col id"><?= $escaper->escapeHtml(__('ID')) ?></th>
+                        <th scope="col" class="col order_id"><?= $escaper->escapeHtml(__('Order Id')) ?></th>
+                        <th scope="col" class="col payment_method"><?= $escaper->escapeHtml(__('Payment Method')) ?></th>
+                        <th scope="col" class="col status"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                        <th scope="col" class="col createt_at"><?= $escaper->escapeHtml(__('Created At')) ?></th>
+                        <th scope="col" class="col transaction_id"><?= $escaper->escapeHtml(__('Transaction Id')) ?></th>
                     </tr>
                 </thead>
             <tbody>
                 <tr>
-                    <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
-                        <?= $transaction->getEntityId() ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col id">
+                        <?= $escaper->escapeHtml($transaction->getEntityId()) ?>
                     </td>
-                    <td data-th="<?= $block->escapeHtml(__('Order Id')) ?>" class="col order_id">
-                        <?= $transaction->getOrderId() ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Order Id')) ?>" class="col order_id">
+                        <?= $escaper->escapeHtml($transaction->getOrderId()) ?>
                     </td>
-                    <td data-th="<?= $block->escapeHtml(__('Payment Method')) ?>" class="col payment_method">
-                        <?= $transaction->getPaymentMethod() ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Payment Method')) ?>" class="col payment_method">
+                        <?= $escaper->escapeHtml($transaction->getPaymentMethod()) ?>
                     </td>
-                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
-                        <?= $transaction->getStatus() ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Status')) ?>" class="col status">
+                        <?= $escaper->escapeHtml($transaction->getStatus()) ?>
                     </td>
-                    <td data-th="<?= $block->escapeHtml(__('Created At')) ?>" class="col created_at">
-                        <?= $viewModel->getFormattedDate($transaction->getCreatedAt()); ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Created At')) ?>" class="col created_at">
+                        <?= $escaper->escapeHtml($viewModel->getFormattedDate($transaction->getCreatedAt())) ?>
                     </td>
-                    <td data-th="<?= $block->escapeHtml(__('Transaction Id')) ?>" class="col transaction_id">
-                        <?= $transaction->getTransactionId() ?>
+                    <td data-th="<?= $escaper->escapeHtml(__('Transaction Id')) ?>" class="col transaction_id">
+                        <?= $escaper->escapeHtml($transaction->getTransactionId()) ?>
                     </td>
                 </tr>
             </tbody>
@@ -58,10 +59,10 @@ $transaction = $viewModel->getTransactionData();
 
     <figure class="unformatted-data">
         <blockquote>
-            <?= $transaction->getRequestBody() ?>
+            <?= $escaper->escapeHtml($transaction->getRequestBody()) ?>
         </blockquote>
         <blockquote>
-            <?= $transaction->getRequestResponse() ?>
+            <?= $escaper->escapeHtml($transaction->getRequestResponse()) ?>
         </blockquote>
     </figure>
 
@@ -75,8 +76,8 @@ $transaction = $viewModel->getTransactionData();
     {
         "*": {
             "Improntus_ProntoPaga/js/beautify" : {
-                "request-body" : <?= $transaction->getRequestBody() ?>,
-                "request-response" : <?= $transaction->getRequestResponse() ?>
+                "request-body" : <?= $escaper->escapeHtml($transaction->getRequestBody()) ?>,
+                "request-response" : <?= $escaper->escapeHtml($transaction->getRequestResponse()) ?>
             }
         }
     }

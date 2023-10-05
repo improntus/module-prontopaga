@@ -8,7 +8,7 @@ define([
             "indent_char": "&nbsp;",
             "indent_with_tabs": false,
             "editorconfig": false,
-            "eol": "<br/>",
+            "eol": "<br>",
             "end_with_newline": false,
             "indent_level": 0,
             "preserve_newlines": true,
