@@ -23,8 +23,8 @@ define([
 ) {
     'use strict';
 
-    const CODE = 'prontopaga'
-    const CONFIG_PAYMENT =  window.checkoutConfig.payment[CODE]
+    const CODE = 'prontopaga',
+        CONFIG_PAYMENT = window.checkoutConfig.payment[CODE];
 
     return Component.extend({
         defaults: {
@@ -42,7 +42,7 @@ define([
         /**
          * @returns {String}
          */
-        getCode: function() {
+        getCode: function () {
             return this.code;
         },
 
@@ -59,7 +59,9 @@ define([
             };
         },
 
-
+        /**
+         * @returns {Array}
+         */
         getAllowedMethods: function () {
             return CONFIG_PAYMENT.allowed_methods;
         },
@@ -68,33 +70,52 @@ define([
          * @returns {String}
          */
         getTitle: function () {
-            return !this.getLogo() ? CONFIG_PAYMENT.title : ''
+            return !this.getLogo() ? CONFIG_PAYMENT.title : '';
         },
 
         /**
          * @returns {String}
          */
         getLogo: function () {
-            return CONFIG_PAYMENT.logo
+            return CONFIG_PAYMENT.logo;
         },
 
+        /**
+         *
+         * @param {*} method
+         * @returns {String}
+         */
         getMethodLogo: function (method) {
-            return CONFIG_PAYMENT?.methods_img_url[method]?.img ?? ''
+            return CONFIG_PAYMENT?.methods_img_url[method]?.img ?? '';
         },
 
+        /**
+         *
+         * @param {*} e
+         */
         toggleSelected: function (e) {
             if (this.prevSelected()) {
-                this.prevSelected().toggleClass('_selected')
+                this.prevSelected().toggleClass('_selected');
             }
-            $(`#${e.id}`).toggleClass('_selected')
-            this.prevSelected($(`#${e.id}`))
-            this.methodSelected(e.id)
+            $(`#${e.id}`).toggleClass('_selected');
+            this.prevSelected($(`#${e.id}`));
+            this.methodSelected(e.id);
         },
 
+        /**
+         *
+         * @returns {Number|String}
+         */
         getOrderTotal: function () {
             return quote.totals()['grand_total'];
         },
 
+        /**
+         *
+         * @param {*} data
+         * @param {*} event
+         * @returns {Boolean}
+         */
         placeOrder: function (data, event) {
             let self = this;
 
@@ -103,19 +124,20 @@ define([
             }
 
             if (!this.methodSelected()) {
-                this.messageContainer.addErrorMessage({ message: $t('Please, first select an available platform of payment.') });
-                return false
+                this.messageContainer.addErrorMessage(
+                    { message: $t('Please, first select an available platform of payment.') }
+                );
+                return false;
             }
 
             if (!this.documentNumber() && this.useDocumentNumber() && this.isFieldRequired()) {
                 this.messageContainer.addErrorMessage({ message: $t('Document number is required.') });
-                this.validateDoc(false)
-                return false
-            } else {
-                this.validateDoc(true)
+                this.validateDoc(false);
+                return false;
             }
 
-            self.isBarVisible(true)
+            this.validateDoc(true);
+            self.isBarVisible(true);
 
             if (this.validate() && additionalValidators.validate()) {
                 this.isPlaceOrderActionAllowed(false);
@@ -135,27 +157,36 @@ define([
             return false;
         },
 
+        /**
+         *
+         * @param {*} elem
+         * @returns {void}
+         */
         setDocumentNumber: function (elem) {
-            this.documentNumber(elem.value)
+            this.documentNumber(elem.value);
         },
 
+        /** @inheritdoc */
         validateDoc: function (isValid) {
-            this.documentError(!isValid)
-            let doc = $('#card-document')
+            this.documentError(!isValid);
+            let doc = $('#card-document');
+
             isValid
                 ? doc.removeClass('error')
                 : doc.addClass('error');
         },
 
+        /** @inheritdoc */
         afterPlaceOrder: function () {
             fullScreenLoader.startLoader();
             window.location.href = `${CONFIG_PAYMENT.redirect_url}?method=${this.methodSelected()}`;
         },
 
+        /** @inheritdoc */
         getPlaceOrderDeferredObject: function () {
             return $.when(
                 placeOrderAction(this.getData(), this.messageContainer)
             );
-        },
+        }
     });
 });

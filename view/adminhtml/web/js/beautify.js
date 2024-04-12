@@ -8,15 +8,16 @@ define([
     return (config) => {
         $(() => {
             $.each(config, (index, value) => {
-                const dataJson = JSON.stringify(value)
-                $(`.${index}`).html(`"${index}":` + beautify.js_beautify(dataJson, beautifyConfig))
-            })
+                const dataJson = JSON.stringify(value);
+
+                $(`.${index}`).html(`"${index}":` + beautify.js_beautify(dataJson, beautifyConfig));
+            });
 
             $('.beauty').on('click', () => {
-                $('.formatted-data').toggle()
-                $('.unformatted-data').toggle()
-                $('.beauty').toggle()
+                $('.formatted-data').toggle();
+                $('.unformatted-data').toggle();
+                $('.beauty').toggle();
             });
         });
-    }
+    };
 });

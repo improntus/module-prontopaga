@@ -18,16 +18,16 @@ $transaction = $viewModel->getTransactionData();
     <div class="table-wrapper data-history">
         <table class="data table table-data-items history" id="my-data-table">
             <caption class="table-caption"><?= $escaper->escapeHtml(__('Grid Record')) ?></caption>
-                <thead>
-                    <tr>
-                        <th scope="col" class="col id"><?= $escaper->escapeHtml(__('ID')) ?></th>
-                        <th scope="col" class="col order_id"><?= $escaper->escapeHtml(__('Order Id')) ?></th>
-                        <th scope="col" class="col payment_method"><?= $escaper->escapeHtml(__('Payment Method')) ?></th>
-                        <th scope="col" class="col status"><?= $escaper->escapeHtml(__('Status')) ?></th>
-                        <th scope="col" class="col createt_at"><?= $escaper->escapeHtml(__('Created At')) ?></th>
-                        <th scope="col" class="col transaction_id"><?= $escaper->escapeHtml(__('Transaction Id')) ?></th>
-                    </tr>
-                </thead>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?= $escaper->escapeHtml(__('ID')) ?></th>
+                    <th scope="col" class="col order_id"><?= $escaper->escapeHtml(__('Order Id')) ?></th>
+                    <th scope="col" class="col payment_method"><?= $escaper->escapeHtml(__('Payment Method')) ?></th>
+                    <th scope="col" class="col status"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                    <th scope="col" class="col createt_at"><?= $escaper->escapeHtml(__('Created At')) ?></th>
+                    <th scope="col" class="col transaction_id"><?= $escaper->escapeHtml(__('Transaction Id')) ?></th>
+                </tr>
+            </thead>
             <tbody>
                 <tr>
                     <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col id">
@@ -76,8 +76,8 @@ $transaction = $viewModel->getTransactionData();
     {
         "*": {
             "Improntus_ProntoPaga/js/beautify" : {
-                "request-body" : <?= $escaper->escapeHtml($transaction->getRequestBody()) ?>,
-                "request-response" : <?= $escaper->escapeHtml($transaction->getRequestResponse()) ?>
+                "request-body": <?= $escaper->escapeHtml($transaction->getRequestBody()) ?>,
+                "request-response": <?= $escaper->escapeHtml($transaction->getRequestResponse()) ?>
             }
         }
     }

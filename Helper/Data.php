@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -45,6 +47,7 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN = 'payment/prontopaga/token';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY = 'payment/prontopaga/secret_key';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_LOGO = 'payment/prontopaga/logo';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_REFUND_ORDERS_ACTIVE = 'payment/prontopaga/refund_orders/active';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_ACTIVE = 'payment/prontopaga/cancel_orders/active';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_CANCEL_ORDERS_TIMEINTERVAL = 'payment/prontopaga/cancel_orders/timeinterval';
 
@@ -160,11 +163,11 @@ class Data extends AbstractHelper
         return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_API_TOKEN) ?? '';
     }
 
-     /**
-      * Retrieve secret key
-      *
-      * @return string
-      */
+    /**
+     * Retrieve secret key
+     *
+     * @return string
+     */
     public function getSecretKey(): string
     {
         return $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SECRET_KEY) ?? '';
@@ -179,10 +182,20 @@ class Data extends AbstractHelper
     {
         if ($filePath = $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_LOGO)) {
             return $this->storeManager->getStore()
-                            ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::UPLOAD_DIR  .  $filePath;
+                ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::UPLOAD_DIR  .  $filePath;
         }
 
         return $filePath;
+    }
+
+    /**
+     * Retrieve if refund is enabled
+     *
+     * @return bool
+     */
+    public function isRefundEnabled()
+    {
+        return (bool) $this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_REFUND_ORDERS_ACTIVE);
     }
 
     /**
@@ -215,7 +228,7 @@ class Data extends AbstractHelper
         foreach ($this->getAllowedMethods() as $method) {
             $logo = $this->paymentMethodsInterface->getByMethod($method);
             $methodsImg[$method] = [
-                    'img' => $logo ? $logo->getLogo() : ''
+                'img' => $logo ? $logo->getLogo() : ''
             ];
         }
 
@@ -242,44 +255,46 @@ class Data extends AbstractHelper
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES);
     }
 
-     /**
-      * Retrieve if might be use document number input
-      *
-      * @return boolean
-      */
+    /**
+     * Retrieve if might be use document number input
+     *
+     * @return boolean
+     */
     public function useDocumentField(): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DOCUMENT_FIELD);
     }
 
-     /**
-      * Retrieve if document number field is required
-      *
-      * @return boolean
-      */
+    /**
+     * Retrieve if document number field is required
+     *
+     * @return boolean
+     */
     public function isFieldRequired(): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_FIELD_REQUIRED);
     }
 
-     /**
-      * Validate credentials
-      *
-      * @return integer
-      */
+    /**
+     * Validate credentials
+     *
+     * @return integer
+     */
     public function validateCredentials(): int
     {
-        if ($this->getApiEndpoint() && $this->getApiToken()
-            && $this->getSecretKey() && $this->getAllowedMethods()) {
+        if (
+            $this->getApiEndpoint() && $this->getApiToken()
+            && $this->getSecretKey() && $this->getAllowedMethods()
+        ) {
             return self::USER_AUTHENTICATED;
         }
         return self::INCOMPLETE_CREDENTIALS;
     }
 
-     /**
-      * @return string
-      * @throws \Magento\Framework\Exception\NoSuchEntityException
-      */
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
     public function getRedirectUrl(): string
     {
         return $this->_getUrl('prontopaga/order/create', ['_secure' => 'true']);
@@ -292,10 +307,10 @@ class Data extends AbstractHelper
     public function getCallBackUrl(): string
     {
         return $this->_getUrl(null, [
-                '_path' => 'enquiry',
-                '_secure' => true,
-                '_direct' => 'rest/V1/prontopaga/callback'
-            ]);
+            '_path' => 'enquiry',
+            '_secure' => true,
+            '_direct' => 'rest/V1/prontopaga/callback'
+        ]);
     }
 
     /**
@@ -369,11 +384,11 @@ class Data extends AbstractHelper
         return $this->encryptor->decrypt($params);
     }
 
-     /**
-      * Get Country code by store scope
-      *
-      * @return string
-      */
+    /**
+     * Get Country code by store scope
+     *
+     * @return string
+     */
     public function getCountryCode(): string
     {
         return $this->getConfigValue(

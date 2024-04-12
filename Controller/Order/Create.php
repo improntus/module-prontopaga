@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Controller\Order;
 
 use Magento\Framework\App\ActionInterface;
@@ -87,19 +89,23 @@ class Create implements ActionInterface
 
         if ($response = $this->prontoPaga->createTransaction($order, $selectedMethod)) {
             if (in_array($response['code'], ProntoPagaHelper::STATUS_UNAUTHORIZED)) {
-                $message = "Order {$order->getIncrementId()} errors: {$response['body']['message']}";
+                if (isset($response['body']['error'])) {
+                    $errorKey = key($response['body']['error']);
+                    $error = $response['body']['error'][$errorKey] ?? '';
+                }
+                $message = __("Order {$order->getIncrementId()} error: %1", $error ?? '');
                 $this->prontoPagaHelper->log(['type' => 'info', 'message' => $message, 'method' => __METHOD__]);
-                $this->checkoutSession->setProntoPagaError($message);
-                $response['urlPay'] = $this->prontoPagaHelper->getCallBackUrl([
+                // $this->checkoutSession->setProntoPagaError($message);
+                $response['urlPay'] = $this->prontoPagaHelper->getResponseUrl([
                     'token' => $this->prontoPagaHelper->encrypt($order->getEntityId()),
-                    'type' =>  self::ERROR
+                    'type' =>  ProntoPagaHelper::STATUS_REJECTED
                 ]);
                 $this->flow =  'error';
             }
         }
 
         $this->prontoPaga->persistTransaction($order, $response, $this->flow);
-        $url = $response['urlPay'] ?? $this->prontoPaga->json->unserialize($response['body']['message'])['urlPay'];
+        $url = $response['urlPay'] ?? $response['body']['urlPay'];
         $resultRedirect->setUrl($url);
         return $resultRedirect;
     }

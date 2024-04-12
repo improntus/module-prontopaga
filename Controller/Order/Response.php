@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Controller\Order;
 
 use Magento\Framework\App\ActionInterface;
@@ -129,30 +131,31 @@ class Response implements ActionInterface
     /**
      *
      * @param \Magento\Sales\Model\Order $order
-     * @param string $type
+     * @param \Magento\Framework\Phrase|string $type
      * @return void
      */
     private function rejectedPayment($order)
     {
-        $message = $this->checkoutSession->getProntoPagaError() ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
+        $message = $this->checkoutSession->getProntoPagaError()
+            ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
         $this->prontoPaga->cancelOrder($order, $message);
         $this->checkoutSession->setErrorMessage($message);
         return self::FAILRURE_PATH;
     }
 
-     /**
-      * Validate payment after redirect
-      *
-      * @param \Magento\Sales\Model\Order $order
-      * @param bool $onlyStatus
-      * @return string|bool
-      */
+    /**
+     * Validate payment after redirect
+     *
+     * @param \Magento\Sales\Model\Order $order
+     * @param bool $onlyStatus
+     * @return string|bool
+     */
     private function validatePayment($order, $onlyStatus = false)
     {
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
         $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
         if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
-            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message']);
+            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
             $status = $decodeResponse['status'];
 
             if ($onlyStatus) {

@@ -8,7 +8,7 @@ define([
         },
 
         getStatus: ({status}) => {
-            return `prontopaga payment ${status}`
+            return `prontopaga payment ${status}`;
         }
     });
 });

@@ -1,8 +1,9 @@
 <?php
-/**
+/*
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Model\Config\Source;
 
 use Improntus\ProntoPaga\Service\ProntoPagaApiService as WebService;
@@ -10,7 +11,7 @@ use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Improntus\ProntoPaga\Model\PaymentMethods as PaymentMethods;
 use Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface as PaymentMethodsInterface;
 
-class PaymentMehods implements \Magento\Framework\Option\ArrayInterface
+class PaymentMehods implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
      * @var WebService
@@ -102,13 +103,14 @@ class PaymentMehods implements \Magento\Framework\Option\ArrayInterface
     private function setPaymentsMethods($request): void
     {
         foreach ($request['methods'] as $method) {
-            /** @var \Improntus\ProntoPaga\Model\PaymentMethods $data */
-            $data = $this->paymentMethodsInterface->getByMethod($method['method']);
-            if ($data) {
-                $method['entity_id'] = $data->getEntityId();
-                $data->setData($method)->save();
+            /** @var \Improntus\ProntoPaga\Model\PaymentMethods $paymentMethod */
+            $paymentMethod = $this->paymentMethodsInterface->getByMethod($method['method']);
+            if ($paymentMethod) {
+                $method['entity_id'] = $paymentMethod->getEntityId();
+                $paymentMethod->setData($method)->save();
             } else {
-                $this->paymentMethods->setData($method)->save();
+                $this->paymentMethods->setData($method);
+                $this->paymentMethodsInterface->save($this->paymentMethods);
             }
         }
     }

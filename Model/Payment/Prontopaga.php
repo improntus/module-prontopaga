@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Improntus\ProntoPaga\Model\Payment;
@@ -28,18 +30,17 @@ use Magento\Framework\App\ResourceConnection;
 
 class Prontopaga
 {
-
     const SANDBOX_DOCUMENT = '11.111.111-1';
     const DOCUMENT_KEY = 'document_number';
 
-     /**
-      * @var ProntoPagaHelper
-      */
+    /**
+     * @var ProntoPagaHelper
+     */
     private $prontoPagaHelper;
 
-     /**
-      * @var WebService
-      */
+    /**
+     * @var WebService
+     */
     public $webService;
 
     /**
@@ -57,9 +58,9 @@ class Prontopaga
      */
     private $paymentRepository;
 
-     /**
-      * @var PaymentTransactionRepository
-      */
+    /**
+     * @var PaymentTransactionRepository
+     */
     private $paymentTransactionRepository;
 
     /**
@@ -67,9 +68,9 @@ class Prontopaga
      */
     private $invoiceRepository;
 
-     /**
-      * @var OrderSender
-      */
+    /**
+     * @var OrderSender
+     */
     private $orderSender;
 
     /**
@@ -197,34 +198,32 @@ class Prontopaga
             'clientPhone' => $address->getTelephone() ?? '',
             'clientDocument' => $payment->getAdditionalInformation(self::DOCUMENT_KEY)
                 ?? $order->getCustomerTaxvat()
-                ?? ''//self::SANDBOX_DOCUMENT
+                ?? '' //self::SANDBOX_DOCUMENT
         ];
     }
 
-     /**
-      * @param $order
-      * @param $response
-      * @return void
-      * @throws LocalizedException
-      */
+    /**
+     * @param $order
+     * @param $response
+     * @return void
+     * @throws LocalizedException
+     */
     public function persistTransaction($order, $response = null, $flow = null)
     {
         try {
-            $unserializeResponse = $this->json->unserialize($response['body']['message']) ?? '';
-            $unserializeRequest = $this->json->unserialize($response['request_body'] ?? '{}') ;
+            $unserializeResponse = $this->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
+            $unserializeRequest = $this->json->unserialize($response['request_body'] ?? '{}');
             $transaction = $this->transactionRepository->getByOrderId($order->getId())
-                                ?: $this->transactionFactory->create();
+                ?: $this->transactionFactory->create();
 
             $transaction->setOrderId($order->getId());
             $transaction->setTransactionId($unserializeResponse['uid'] ?? '');
             $transaction->setStatus($flow);
             if (!$transaction->getPaymentMethod()) {
-                $transaction->setPaymentMethod($unserializeRequest['paymentMethod']);
+                $transaction->setPaymentMethod($unserializeRequest['paymentMethod'] ?? '');
             }
-            if ($flow === 'created') {
-                $transaction->setRequestBody($response['request_body']);
-            }
-            $transaction->setRequestResponse($response['body']['message']);
+            $transaction->setRequestBody($response['request_body'] ?? $transaction->getRequestBody());
+            $transaction->setRequestResponse($this->json->serialize($unserializeResponse));
             $this->transactionRepository->save($transaction);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
@@ -275,9 +274,11 @@ class Prontopaga
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
             $connection->rollBack();
             $this->prontoPagaHelper->log(
-                ['type' => 'error',
-                'message' => "Invoice creating for order {$order->getIncrementId()} failed: {$e->getMessage()}",
-                'method' => __METHOD__]
+                [
+                    'type' => 'error',
+                    'message' => "Invoice creating for order {$order->getIncrementId()} failed: {$e->getMessage()}",
+                    'method' => __METHOD__
+                ]
             );
             return false;
         }
@@ -285,12 +286,12 @@ class Prontopaga
         return true;
     }
 
-     /**
-      * @param $payment
-      * @param $invoice
-      * @param $paypalTransaction
-      * @return mixed
-      */
+    /**
+     * @param $payment
+     * @param $invoice
+     * @param $paypalTransaction
+     * @return mixed
+     */
     private function generateTransaction($payment, $invoice, $transactionId)
     {
         $payment->setTransactionId($transactionId);

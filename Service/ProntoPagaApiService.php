@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Service;
 
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
@@ -14,6 +16,7 @@ class ProntoPagaApiService
     const URI_NEW_PAYMENT = 'api/payment/new';
     const URI_PAYMENT_METHODS = 'api/payment/methods/';
     const URI_PAYMENT_DETAILS = 'api/payment/data/';
+    const URI_PAYMENT_REFUND = 'api/reverse/new';
 
     /**
      * @var ProntoPagaHelper
@@ -67,7 +70,6 @@ class ProntoPagaApiService
             $result = $this->json->unserialize($result);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
-            $result =  ['message' => $result];
         }
 
         return  ['code' => $this->curl->getStatus(), 'body' => $result, 'request_body' => $params];
@@ -92,10 +94,34 @@ class ProntoPagaApiService
             $result = $this->json->unserialize($result);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
-            $result =  ['message' => $result];
         }
 
         return  ['code' => $this->curl->getStatus(), 'body' => $result];
+    }
+
+    /**
+     * Create Payment request
+     *
+     * @param string $params
+     * @return array|boolean|mixed
+     */
+    public function createRefund($params)
+    {
+        $url = $this->prontoPagaHelper->getApiEndpoint() . self::URI_PAYMENT_REFUND;
+        $params = $this->json->serialize($params);
+        $result = $this->doRequest($url, 'POST', $params);
+
+        if (!$result) {
+            return false;
+        }
+
+        try {
+            $result = $this->json->unserialize($result);
+        } catch (\Exception $e) {
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
+        }
+
+        return  ['code' => $this->curl->getStatus(), 'body' => $result, 'request_body' => $params];
     }
 
     /**

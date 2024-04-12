@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Model;
 
 use Improntus\ProntoPaga\Api\CallbackInterface;
@@ -96,13 +98,11 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
-        $serializedBodyParams = $this->prontoPaga->json->serialize($bodyParams);
-
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);
 
         if (!$this->prontoPagaHelper->validateSing($bodyParams)) {
-            $this->prontoPaga->persistTransaction($order, ['body' => ['message' => $serializedBodyParams]], 'pending');
+            $this->prontoPaga->persistTransaction($order, ['body' => $bodyParams], 'pending');
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => 'Unrecognized request.', 'method' => __METHOD__]);
             return false;
         }
@@ -138,7 +138,7 @@ class Callback implements CallbackInterface
                 break;
         }
 
-        $this->prontoPaga->persistTransaction($order, ['body' => ['message' => $serializedBodyParams]], $status);
+        $this->prontoPaga->persistTransaction($order, ['body' =>  $bodyParams], $status);
         return true;
     }
 
@@ -180,8 +180,8 @@ class Callback implements CallbackInterface
     {
         try {
             $message = $type === self::STATUS_CANCELED
-                            ?  __('Order canceled by user.')
-                            :  __('There was a problem retrieving payment confirmation from Pronto Paga.');
+                ?  __('Order canceled by user.')
+                :  __('There was a problem retrieving payment confirmation from Pronto Paga.');
             $this->prontoPaga->cancelOrder($order, $message);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);

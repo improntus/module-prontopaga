@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Controller\Adminhtml\Transaction;
 
 use Magento\Backend\App\Action;
@@ -80,8 +82,8 @@ class Validate extends Action
         $resultJson = $this->resultJsonFactory->create();
         $uid =  $this->getRequest()->getParam('transactionId');
 
-        if (!$this->formKeyValidator->validate($this->getRequest())) {
-            $resultJson->setData([]);
+        if (!$this->formKeyValidator->validate($this->getRequest()) || !$uid) {
+            return $resultJson->setData([]);
         }
 
         $response = $this->webService->confirmPayment($uid);
@@ -103,7 +105,7 @@ class Validate extends Action
     private function updateTransaction($uid, $response)
     {
         $transaction = $this->transactionInterface->getByTransactionId($uid);
-        $response = $this->json->unserialize($response['body']['message']);
+        $response = $this->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
         $status = isset($response['status']) && $response['status'] ? $response['status'] : '';
         if ($transaction && $status) {
             $transaction->setStatus($status)->save();

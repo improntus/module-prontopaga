@@ -9,6 +9,7 @@ define(
     ) {
         'use strict';
         const type = 'prontopaga';
+
         if (window.checkoutConfig.payment[type].active) {
             rendererList.push(
                 {

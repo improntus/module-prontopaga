@@ -45,7 +45,7 @@ See COPYING.txt for license details.
                     </depends>
 				</field>
                 <field id="specificmethods" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
-					<label>Specicic Allowed Methods</label>
+					<label>Specific Allowed Methods</label>
 					<source_model>Improntus\ProntoPaga\Model\Config\Source\PaymentMehods</source_model>
 					<can_be_empty>0</can_be_empty>
                     <depends>
@@ -131,12 +131,24 @@ See COPYING.txt for license details.
                     </depends>
                 </field>
 
-                <group id="cancel_orders" type="text" sortOrder="150" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <group id="refund_orders" type="text" sortOrder="150" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
                     <depends>
                         <field id="active">1</field>
                     </depends>
-                    <label>Cron configuration</label>
-                    <field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                    <label>Refund Configuration</label>
+                    <field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" canRestore="1">
+                        <label>Enable Refund</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><model>Improntus\ProntoPaga\Model\Config\Comment\AutoReturnComment</model></comment>
+                    </field>
+                </group>
+
+                <group id="cancel_orders" type="text" sortOrder="160" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <label>Cancel Order Cron Configuration</label>
+                    <field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" canRestore="1">
                         <label>Cron Enabled</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[Enable/Disable cron for cancel pending orders created through Pronto Paga Payment.]]></comment>
