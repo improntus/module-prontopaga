@@ -51,7 +51,8 @@ define([
                 dataType: 'json'
             }).done((response) => {
                 if (response.code === 200) {
-                    response = beautify.js_beautify(response.body, beautifyConfig);
+                    let body = JSON.stringify(response.body);
+                    response = beautify.js_beautify(body, beautifyConfig);
                     registry.get('index = improntus_prontopaga_transaction_listing_data_source').reload({'refresh': true});
                 }
                 $(`${self.modalElem} ${self.modalContent}`).html(response);

@@ -88,7 +88,7 @@ class Validate extends Action
 
         $response = $this->webService->confirmPayment($uid);
         if (!in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
-            return $resultJson->setData($response['body']['message']);
+            return $resultJson->setData($response);
         }
 
         $this->updateTransaction($uid, $response);
@@ -105,7 +105,7 @@ class Validate extends Action
     private function updateTransaction($uid, $response)
     {
         $transaction = $this->transactionInterface->getByTransactionId($uid);
-        $response = $this->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
+        $response = $response['body'] ?? '';
         $status = isset($response['status']) && $response['status'] ? $response['status'] : '';
         if ($transaction && $status) {
             $transaction->setStatus($status)->save();

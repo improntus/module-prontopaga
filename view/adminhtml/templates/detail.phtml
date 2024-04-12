@@ -76,8 +76,8 @@ $transaction = $viewModel->getTransactionData();
     {
         "*": {
             "Improntus_ProntoPaga/js/beautify" : {
-                "request-body": <?= $escaper->escapeHtml($transaction->getRequestBody()) ?>,
-                "request-response": <?= $escaper->escapeHtml($transaction->getRequestResponse()) ?>
+                "request-body": <?= /* @noEscape */ $transaction->getRequestBody() ?>,
+                "request-response": <?= /* @noEscape */ $transaction->getRequestResponse() ?>
             }
         }
     }

@@ -124,7 +124,7 @@ class Response implements ActionInterface
      */
     private function approvedPayment($order)
     {
-        $this->prontoPaga->addSuccessToStatusHistory($order);
+        $this->prontoPaga->addSuccessToStatusHistory($order, ProntoPagaHelper::ORIGIN_CHECKOUT);
         return self::SUCCESS_PATH;
     }
 
@@ -139,7 +139,8 @@ class Response implements ActionInterface
         $message = $this->checkoutSession->getProntoPagaError()
             ?? (__('There was a problem retrieving data from Pronto Paga. Wait for status confirmation from Pronto Paga.'));
         $this->prontoPaga->cancelOrder($order, $message);
-        $this->checkoutSession->setErrorMessage($message);
+        $this->checkoutSession->setProntoPagaError('');
+        $this->checkoutSession->setErrorMessage($message ?? '');
         return self::FAILRURE_PATH;
     }
 
@@ -155,7 +156,7 @@ class Response implements ActionInterface
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
         $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
         if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
-            $decodeResponse = $this->prontoPaga->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
+            $decodeResponse = $response['body'] ?? '';
             $status = $decodeResponse['status'];
 
             if ($onlyStatus) {

@@ -211,7 +211,7 @@ class Prontopaga
     public function persistTransaction($order, $response = null, $flow = null)
     {
         try {
-            $unserializeResponse = $this->json->unserialize($response['body']['message'] ?? '{}') ?: $response['body'] ?? '';
+            $unserializeResponse = $response['body'] ?? '';
             $unserializeRequest = $this->json->unserialize($response['request_body'] ?? '{}');
             $transaction = $this->transactionRepository->getByOrderId($order->getId())
                 ?: $this->transactionFactory->create();
@@ -266,7 +266,7 @@ class Prontopaga
             $invoice->getOrder()->setIsInProcess(true);
             $payment->addTransactionCommentsToOrder($transaction, __('Pronto Paga'));
             $this->invoiceRepository->save($invoice);
-            $message = (__('Payment confirmed by Pronto Paga'));
+            $message = (__('Payment confirmed by Pronto Paga. Invoice generated automatically.'));
             $order->addCommentToStatusHistory($message, Order::STATE_PROCESSING);
             $this->orderRepository->save($order);
             $connection->commit();
@@ -322,13 +322,14 @@ class Prontopaga
 
     /**
      * @param OrderInterface $order
+     * @param string $origin
      * @return void
      */
-    public function addSuccessToStatusHistory($order)
+    public function addSuccessToStatusHistory($order, $origin)
     {
         /** @var \Magento\Sales\Model\Order $order */
         if ($order->getState() === Order::STATE_NEW) {
-            $message = (__('Payment confirmed by Pronto Paga, awaiting capture.'));
+            $message = (__('Payment confirmed by Pronto Paga from %1, awaiting capture.', $origin));
             $order->addCommentToStatusHistory($message, Order::STATE_PAYMENT_REVIEW);
             $this->orderRepository->save($order);
         }

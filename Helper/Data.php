@@ -34,6 +34,8 @@ class Data extends AbstractHelper
     const STATUS_CANCELED = 'canceled';
     const STATUSES_SUCCESS = [self::STATUS_CONFIRMATION, self::STATUS_SUCCESS, self::STATUS_FINAL];
     const STATUSES_CANCEL = [self::STATUS_REJECTED, self::STATUS_ERROR, self::STATUS_CANCELED];
+    const ORIGIN_CHECKOUT = 'checkout';
+    const ORIGIN_CALLBACK = 'callback';
 
     /** Configuration path for Pronto Paga payment section */
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_ACTIVE  = 'payment/prontopaga/active';

@@ -161,7 +161,7 @@ class Callback implements CallbackInterface
     private function successProcess($order, $transactionId): bool
     {
         try {
-            $this->prontoPaga->addSuccessToStatusHistory($order);
+            $this->prontoPaga->addSuccessToStatusHistory($order, ProntoPagaHelper::ORIGIN_CALLBACK);
             $this->prontoPaga->invoice($order, $transactionId);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
