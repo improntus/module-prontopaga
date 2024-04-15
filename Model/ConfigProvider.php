@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Model;
 
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
@@ -13,7 +15,6 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class ConfigProvider implements ConfigProviderInterface
 {
-    const CODE = 'prontopaga';
     const BANNER = 'Improntus_ProntoPaga::images/logo.png';
 
     /**
@@ -59,12 +60,12 @@ class ConfigProvider implements ConfigProviderInterface
     {
         return [
             'payment' => [
-                self::CODE => [
+                ProntoPagaHelper::PAYMENT_CODE => [
                     'active' => $this->prontoPagaHelper->isEnabled() && $this->prontoPagaHelper->validateCredentials(),
                     'redirect_url' => $this->prontoPagaHelper->getRedirectUrl(),
                     'title' => $this->prontoPagaHelper->getTitle(),
                     'logo' => $this->prontoPagaHelper->getLogo() ?: $this->assetRepository->getUrl(self::BANNER),
-                    'code' =>  self::CODE,
+                    'code' =>  ProntoPagaHelper::PAYMENT_CODE,
                     'allowed_methods' => $this->prontoPagaHelper->getAllowedMethods(),
                     'methods_img_url' => $this->prontoPagaHelper->getMethodsImgUrl(),
                     'use_document_field' => $this->prontoPagaHelper->useDocumentField(),

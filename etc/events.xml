@@ -4,7 +4,18 @@ Copyright © Improntus All rights reserved.
 See COPYING.txt for license details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- @add additional data to payment -->
     <event name="payment_method_assign_data_prontopaga">
         <observer name="prontopaga_data_assigner" instance="Improntus\ProntoPaga\Observer\DataAssignObserver" />
+    </event>
+
+    <!-- @observer before save credit memo -->
+    <event name="sales_order_creditmemo_save_before">
+        <observer name="prontopaga_data_creditmemo_save_before" instance="Improntus\ProntoPaga\Observer\CreditmemoSaveBeforeObserver"/>
+    </event>
+
+    <!-- @observer after save credit memo -->
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="prontopaga_data_creditmemo_save_after" instance="Improntus\ProntoPaga\Observer\CreditmemoSaveAfterObserver"/>
     </event>
 </config>

@@ -60,7 +60,7 @@ See COPYING.txt for license details.
     <!-- @virtual type for payment model -->
     <virtualType name="Prontopaga" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">Improntus\ProntoPaga\Model\ConfigProvider::CODE</argument>
+            <argument name="code" xsi:type="const">Improntus\ProntoPaga\Helper\Data::PAYMENT_CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">ProntoPagaValueHandlerPool</argument>
@@ -81,7 +81,7 @@ See COPYING.txt for license details.
     </virtualType>
     <virtualType name="ProntoPagaConfig" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">Improntus\ProntoPaga\Model\ConfigProvider::CODE</argument>
+            <argument name="methodCode" xsi:type="const">Improntus\ProntoPaga\Helper\Data::PAYMENT_CODE</argument>
         </arguments>
     </virtualType>
     <virtualType name="ProntoPagaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">

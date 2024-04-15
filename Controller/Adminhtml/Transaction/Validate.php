@@ -106,8 +106,8 @@ class Validate extends Action
     {
         $transaction = $this->transactionInterface->getByTransactionId($uid);
         $response = $response['body'] ?? '';
-        $status = isset($response['status']) && $response['status'] ? $response['status'] : '';
-        if ($transaction && $status) {
+        $status = $responseBody['status'] ?? '';
+        if ($status && $transaction->getStatus() !== ProntoPagaHelper::STATUS_REFUNDED) {
             $transaction->setStatus($status)->save();
         }
     }

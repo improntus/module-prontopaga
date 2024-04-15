@@ -69,7 +69,7 @@ See COPYING.txt for license details.
 	</route>
 
     <!-- @webhook notification API -->
-    <route url="/V1/prontopaga/callback/" method="POST">
+    <route url="/V1/prontopaga/callback" method="POST">
         <service class="Improntus\ProntoPaga\Api\CallbackInterface" method="confirmOrder"/>
         <resources>
             <resource ref="anonymous"/>

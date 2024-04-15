@@ -22,6 +22,7 @@ class Data extends AbstractHelper
     /** class consts */
     const INCOMPLETE_CREDENTIALS = 0;
     const USER_AUTHENTICATED = 1;
+    const PAYMENT_CODE = 'prontopaga';
     const LOGGER_NAME = 'prontopaga';
     const UPLOAD_DIR = 'prontopaga/';
     const STATUS_OK = [200, 201];
@@ -32,6 +33,7 @@ class Data extends AbstractHelper
     const STATUS_REJECTED = 'rejected';
     const STATUS_ERROR = 'error';
     const STATUS_CANCELED = 'canceled';
+    const STATUS_REFUNDED = 'refunded';
     const STATUSES_SUCCESS = [self::STATUS_CONFIRMATION, self::STATUS_SUCCESS, self::STATUS_FINAL];
     const STATUSES_CANCEL = [self::STATUS_REJECTED, self::STATUS_ERROR, self::STATUS_CANCELED];
     const ORIGIN_CHECKOUT = 'checkout';
