@@ -98,6 +98,7 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
+        $this->prontoPagaHelper->log(['type' => 'info', 'message' => __('Callback params %1', $this->prontoPaga->json->serialize($bodyParams)), 'method' => __METHOD__]);
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);
 
