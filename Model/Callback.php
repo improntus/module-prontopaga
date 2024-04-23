@@ -98,7 +98,17 @@ class Callback implements CallbackInterface
     public function confirmOrder()
     {
         $bodyParams = $this->request->getBodyParams();
-        $this->prontoPagaHelper->log(['type' => 'info', 'message' => __('Callback params %1', $this->prontoPaga->json->serialize($bodyParams)), 'method' => __METHOD__]);
+        $ref = $this->request->getParam('ref');
+        $ref = $this->prontoPagaHelper->decrypt($ref, true);
+
+        $this->prontoPagaHelper->log([
+            'type' => 'info',
+            'message' => __(
+                'Callback params %1',
+                $this->prontoPaga->json->serialize($bodyParams)
+            ), 'method' => __METHOD__
+        ]);
+
         /** @var Order $order */
         $order = $this->getOrder($bodyParams['order']);
 
@@ -106,6 +116,11 @@ class Callback implements CallbackInterface
             $this->prontoPaga->persistTransaction($order, ['body' => $bodyParams], 'pending');
             $this->prontoPagaHelper->log(['type' => 'warning', 'message' => 'Unrecognized request.', 'method' => __METHOD__]);
             return false;
+        }
+
+        if ($ref === ProntoPagaHelper::STEP_REFUND) {
+            $this->prontoPaga->persistTransaction($order, ['body' =>  $bodyParams], ProntoPagaHelper::STATUS_REFUNDED);
+            return true;
         }
 
         $status = $bodyParams['status'] ?? false;

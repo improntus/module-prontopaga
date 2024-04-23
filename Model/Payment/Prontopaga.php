@@ -176,10 +176,11 @@ class Prontopaga
             'clientPhone' => $customerData['clientPhone'],
             'clientDocument' => $customerData['clientDocument'],
             'paymentMethod' => $selectedMethod,
-            'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(),
+            'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(ProntoPagaHelper::STEP_PAYMENT),
             'urlFinal' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_FINAL]),
             'urlRejected' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_REJECTED]),
             'order' => $order->getIncrementId()
+            // 'order' => rand(1, 2147483647)
         ];
     }
 
@@ -203,31 +204,63 @@ class Prontopaga
     }
 
     /**
-     * @param $order
-     * @param $response
+     * @param Order $order
+     * @param mixed $response
+     * @param string|null $flow
      * @return void
      * @throws LocalizedException
      */
     public function persistTransaction($order, $response = null, $flow = null)
     {
         try {
-            $unserializeResponse = $response['body'] ?? '';
-            $unserializeRequest = $this->json->unserialize($response['request_body'] ?? '{}');
+            // Default values for response and request bodies
+            $responseBody = $response['body'] ?? '';
+            $requestBody = $this->json->unserialize($response['request_body'] ?? '{}');
+
+            // Retrieve transaction by order id or create a new one if it doesn't exist
             $transaction = $this->transactionRepository->getByOrderId($order->getId())
                 ?: $this->transactionFactory->create();
 
+            // Set order id, transaction id and status
             $transaction->setOrderId($order->getId());
-            $transaction->setTransactionId($unserializeResponse['uid'] ?? '');
+            $transaction->setTransactionId($responseBody['uid'] ?? '');
             $transaction->setStatus($flow);
+
+            // Set payment method if it's not already set
             if (!$transaction->getPaymentMethod()) {
-                $transaction->setPaymentMethod($unserializeRequest['paymentMethod'] ?? '');
+                $transaction->setPaymentMethod($requestBody['paymentMethod'] ?? '');
             }
+
+            // Set request body and request response
             $transaction->setRequestBody($response['request_body'] ?? $transaction->getRequestBody());
-            $transaction->setRequestResponse($this->json->serialize($unserializeResponse));
+            $transaction->setRequestResponse(
+                $this->getRequestResponse($transaction, $responseBody, $flow)
+            );
+
             $this->transactionRepository->save($transaction);
         } catch (\Exception $e) {
             $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
         }
+    }
+
+    /**
+     * Get request response based on the flow
+     *
+     * @param \Improntus\ProntoPaga\Api\Data\TransactionInterface $transaction
+     * @param mixed $responseBody
+     * @param string|null $flow
+     * @return string
+     */
+    private function getRequestResponse($transaction, $responseBody, $flow)
+    {
+        $newResponse = $this->json->serialize($responseBody);
+
+        if ($flow === ProntoPagaHelper::STEP_REFUND) {
+            $prevResponse = $transaction->getRequestResponse();
+            return "{$prevResponse} \n {$newResponse}";
+        }
+
+        return $newResponse;
     }
 
     /**

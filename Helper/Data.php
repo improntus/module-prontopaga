@@ -38,6 +38,8 @@ class Data extends AbstractHelper
     const STATUSES_CANCEL = [self::STATUS_REJECTED, self::STATUS_ERROR, self::STATUS_CANCELED];
     const ORIGIN_CHECKOUT = 'checkout';
     const ORIGIN_CALLBACK = 'callback';
+    const STEP_REFUND = 'refund';
+    const STEP_PAYMENT = 'payment';
 
     /** Configuration path for Pronto Paga payment section */
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_ACTIVE  = 'payment/prontopaga/active';
@@ -305,15 +307,17 @@ class Data extends AbstractHelper
     }
 
     /**
+     * @param string $step
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCallBackUrl(): string
+    public function getCallBackUrl($step = ''): string
     {
+        $step = $this->encrypt($step, true);
         return $this->_getUrl(null, [
             '_path' => 'enquiry',
             '_secure' => true,
-            '_direct' => 'rest/V1/prontopaga/callback'
+            '_direct' => "rest/V1/prontopaga/callback/?ref={$step}"
         ]);
     }
 
@@ -419,6 +423,11 @@ class Data extends AbstractHelper
      */
     public function validateSing(array $response): bool
     {
+        if (!isset($response['sign'])) {
+            return false;
+        }
+
+        // Remove sign from response
         $sign = $response['sign'];
         unset($response['sign']);
         return hash_equals($sign, $this->firmSecretKey($response));

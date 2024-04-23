@@ -104,7 +104,7 @@ class CreditmemoSaveAfterObserver implements ObserverInterface
             $response = $this->webService->createRefund($requestData);
             if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
                 if ($response['body']['status'] === ProntoPagaHelper::STATUS_SUCCESS) {
-                    $this->updateTransaction($transaction);
+                    // $this->updateTransaction($transaction);
                     $message = __('Refund confirmed by Pronto Paga, The credit memo was successfully refunded. Reference: %1', $creditmemo->getIncrementId());
                     $order->addCommentToStatusHistory($message);
                     $this->orderRepository->save($order);
@@ -139,7 +139,7 @@ class CreditmemoSaveAfterObserver implements ObserverInterface
             'reference' => $this->getReferenceId($transaction),
             'clientDocument' => $order->getPayment()->getAdditionalInformation(ProntoPagaPayment::DOCUMENT_KEY) ?? $order->getCustomerTaxvat() ?? '',
             'amount' => $creditmemo->getGrandTotal(),
-            'urlCallbackRefund' => $this->prontoPagaHelper->getCallBackUrl()
+            'urlCallbackRefund' => $this->prontoPagaHelper->getCallBackUrl(ProntoPagaHelper::STEP_REFUND)
         ];
     }
 

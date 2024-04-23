@@ -3,6 +3,7 @@
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Improntus\ProntoPaga\Observer;
 
 use Magento\Framework\Event\Observer;
@@ -11,11 +12,13 @@ use Magento\Quote\Api\Data\PaymentInterface;
 
 class DataAssignObserver extends AbstractDataAssignObserver
 {
+    const DOCUMENT_NUMBER = 'document_number';
+
     /**
      * @var array
      */
     private $keys = [
-        'document_number'
+        self::DOCUMENT_NUMBER
     ];
 
     /**
@@ -38,8 +41,8 @@ class DataAssignObserver extends AbstractDataAssignObserver
 
         $paymentModel = $this->readPaymentModelArgument($observer);
         $paymentModel->setAdditionalInformation(
-            'document_number',
-            $additionalData['document_number']
+            self::DOCUMENT_NUMBER,
+            $additionalData[self::DOCUMENT_NUMBER]
         );
 
         foreach ($data as $key => $value) {
