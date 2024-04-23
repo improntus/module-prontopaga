@@ -253,14 +253,18 @@ class Prontopaga
      */
     private function getRequestResponse($transaction, $responseBody, $flow)
     {
-        $newResponse = $this->json->serialize($responseBody);
+        if ($flow === ProntoPagaHelper::STATUS_REFUNDED) {
+            $prevResponse = $this->json->unserialize($transaction->getRequestResponse());
 
-        if ($flow === ProntoPagaHelper::STEP_REFUND) {
-            $prevResponse = $transaction->getRequestResponse();
-            return "{$prevResponse} \n {$newResponse}";
+            //check if array is multidimensional
+            if (isset($prevResponse[0])) {
+                $responseBody = array_merge($prevResponse, [$responseBody]);
+            } else {
+                $responseBody = [$prevResponse, $responseBody];
+            }
         }
 
-        return $newResponse;
+        return $this->json->serialize($responseBody);
     }
 
     /**

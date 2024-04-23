@@ -1,23 +1,23 @@
 {
-    "name": "improntus/module-prontopaga",
-    "version": "1.0.1",
-    "description": "Pronto Paga module for magento by Improntus",
-    "type": "magento2-module",
-    "license": "GPL-3.0",
-    "authors": [
-        {
-            "name": "Ignacio Muñoz",
-            "email": "ignacio.munoz@improntus.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {},
-    "autoload": {
-        "files": [
-            "registration.php"
-        ],
-        "psr-4": {
-            "Improntus\\ProntoPaga\\": ""
-        }
+  "name": "improntus/module-prontopaga",
+  "version": "1.0.2",
+  "description": "Pronto Paga module for magento by Improntus",
+  "type": "magento2-module",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Ignacio Muñoz",
+      "email": "ignacio.munoz@improntus.com"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Improntus\\ProntoPaga\\": ""
+    }
+  }
 }

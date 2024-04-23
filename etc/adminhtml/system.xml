@@ -61,14 +61,14 @@ See COPYING.txt for license details.
                     </depends>
                     <comment>Enable custom success/failure pages.</comment>
                 </field>
-                <field id="validate_checkout" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Validate on Checkout</label>
+                <field id="local_validation" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Validate on Local</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <config_path>payment/prontopaga/validate_checkout</config_path>
+                    <config_path>payment/prontopaga/local_validation</config_path>
                     <depends>
                         <field id="active">1</field>
                     </depends>
-                    <comment>Validate order on checkout. For local environment or debug module, set option in Yes.</comment>
+                    <comment>Validate order on local/sandbox. For local environment or debug module, set option in Yes.</comment>
                 </field>
                 <field id="document_field" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Number document</label>

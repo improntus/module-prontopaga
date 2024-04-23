@@ -45,7 +45,7 @@ class Data extends AbstractHelper
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_ACTIVE  = 'payment/prontopaga/active';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_TITLE = 'payment/prontopaga/title';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_SPECIFICMETHODS = 'payment/prontopaga/specificmethods';
-    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT = 'payment/prontopaga/validate_checkout';
+    const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_LOCAL_VALIDATION = 'payment/prontopaga/local_validation';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_CUSTOM_PAGES = 'payment/prontopaga/custom_pages';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_DOCUMENT_FIELD = 'payment/prontopaga/document_field';
     const XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_FIELD_REQUIRED = 'payment/prontopaga/field_required';
@@ -246,9 +246,9 @@ class Data extends AbstractHelper
      *
      * @return boolean
      */
-    public function validateOnCheckout(): bool
+    public function localValidation(): bool
     {
-        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_VALIDATE_ON_CHECKOUT);
+        return (bool)$this->getConfigValue(self::XML_PATH_IMPRONTUS_PRONTOPAGO_PAYMENT_LOCAL_VALIDATION);
     }
 
     /**

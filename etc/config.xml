@@ -18,7 +18,7 @@ See COPYING.txt for license details.
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>0</is_gateway>
                 <custom_pages>1</custom_pages>
-                <validate_checkout>1</validate_checkout>
+                <local_validation>1</local_validation>
                 <document_field>1</document_field>
                 <field_required>1</field_required>
                 <sort_order>100</sort_order>

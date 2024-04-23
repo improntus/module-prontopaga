@@ -85,9 +85,9 @@ class FinalPage implements ArgumentInterface
      *
      * @return boolean
      */
-    public function validateOnCheckout(): bool
+    public function localValidation(): bool
     {
-        return $this->prontoPagaHelper->validateOnCheckout();
+        return $this->prontoPagaHelper->localValidation();
     }
 
     /**
