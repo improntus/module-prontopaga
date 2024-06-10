@@ -17,6 +17,7 @@ use Magento\Framework\App\RequestInterface;
 class Create implements ActionInterface
 {
     const ERROR = 'error';
+    const FAILRURE_PATH = 'checkout/onepage/failure';
 
     /**
      * @var ProntoPagaHelper
@@ -82,30 +83,36 @@ class Create implements ActionInterface
      */
     public function execute()
     {
-        /** @var \Magento\Sales\Model\Order $oder */
-        $order = $this->checkoutSession->getLastRealOrder();
-        $selectedMethod = $this->request->getParam('method');
-        $resultRedirect = $this->redirectFactory->create();
+        try {
+            /** @var \Magento\Sales\Model\Order $oder */
+            $order = $this->checkoutSession->getLastRealOrder();
+            $selectedMethod = $this->request->getParam('method');
+            $resultRedirect = $this->redirectFactory->create();
 
-        if ($response = $this->prontoPaga->createTransaction($order, $selectedMethod)) {
-            if (in_array($response['code'], ProntoPagaHelper::STATUS_UNAUTHORIZED)) {
-                if (isset($response['body']['error'])) {
-                    $errorKey = key($response['body']['error']);
-                    $error = $response['body']['error'][$errorKey] ?? '';
+            if ($response = $this->prontoPaga->createTransaction($order, $selectedMethod)) {
+                if (in_array($response['code'], ProntoPagaHelper::STATUS_UNAUTHORIZED)) {
+                    if (isset($response['body']['error'])) {
+                        $errorKey = key($response['body']['error']);
+                        $error = $response['body']['error'][$errorKey] ?? '';
+                    }
+                    $message = (__("Order %1 error: %2", $order->getIncrementId(), $error ?? ''));
+                    $this->prontoPagaHelper->log(['type' => 'info', 'message' => $message, 'method' => __METHOD__]);
+                    $response['urlPay'] = $this->prontoPagaHelper->getResponseUrl([
+                        'token' => $this->prontoPagaHelper->encrypt($order->getEntityId()),
+                        'type' =>  ProntoPagaHelper::STATUS_REJECTED
+                    ]);
+                    $this->flow =  'error';
                 }
-                $message = (__("Order %1 error: %2", $order->getIncrementId(), $error ?? ''));
-                $this->prontoPagaHelper->log(['type' => 'info', 'message' => $message, 'method' => __METHOD__]);
-                $response['urlPay'] = $this->prontoPagaHelper->getResponseUrl([
-                    'token' => $this->prontoPagaHelper->encrypt($order->getEntityId()),
-                    'type' =>  ProntoPagaHelper::STATUS_REJECTED
-                ]);
-                $this->flow =  'error';
             }
-        }
 
-        $this->prontoPaga->persistTransaction($order, $response, $this->flow);
-        $url = $response['urlPay'] ?? $response['body']['urlPay'];
-        $resultRedirect->setUrl($url);
+            $this->prontoPaga->persistTransaction($order, $response, $this->flow);
+            $url = $response['urlPay'] ?? $response['body']['urlPay'];
+            $resultRedirect->setUrl($url);
+        } catch (\Exception $e) {
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
+            $this->checkoutSession->setErrorMessage(__('An error occurred while processing your request. Please try again later.'));
+            $resultRedirect->setPath(self::FAILRURE_PATH);
+        }
         return $resultRedirect;
     }
 }
