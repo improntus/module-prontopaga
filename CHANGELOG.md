@@ -20,5 +20,5 @@ CHANGELOG
 * Encrypted params ared added to  callbackUrl to validate the request and check the step.
 
 ### 1.0.3 (2024-06-10)
-* Validate confirm payment method to check if uid is empty.
+* Validate confirm payment method to check if uid is empty and return to failure page.
 

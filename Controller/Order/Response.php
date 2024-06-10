@@ -155,7 +155,7 @@ class Response implements ActionInterface
     {
         $transaction = $this->prontoPaga->transactionRepository->getByOrderId($order->getId());
         $response = $this->prontoPaga->webService->confirmPayment($transaction->getTransactionId());
-        if (in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
+        if ($response && in_array($response['code'], ProntoPagaHelper::STATUS_OK)) {
             $decodeResponse = $response['body'] ?? '';
             $status = $decodeResponse['status'];
 
