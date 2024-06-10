@@ -13,11 +13,9 @@ use Magento\Framework\App\RequestInterface;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Improntus\ProntoPaga\Model\Payment\Prontopaga;
-use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 
-class Response implements ActionInterface, HttpPostActionInterface, HttpGetActionInterface
+class Response implements ActionInterface
 {
     const FAILRURE_PATH = 'checkout/onepage/failure';
     const SUCCESS_PATH  = 'checkout/onepage/success';

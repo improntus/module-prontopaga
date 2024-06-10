@@ -24,4 +24,4 @@ CHANGELOG
 * Update Label for `specificmethods` configuration field and remove canRestore option.
 * Update transactions repository get methods and update persistTransaction to load transaction by entity_id from order.
 * Added try catch on `ProntoPagaController` create payment method to catch exceptions and return to failure page.
-
+* Removed extra params on urlPay on create payment controller.
