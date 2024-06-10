@@ -83,6 +83,10 @@ class ProntoPagaApiService
      */
     public function confirmPayment($uid)
     {
+        if (!$uid) {
+            return false;
+        }
+
         $url = $this->prontoPagaHelper->getApiEndpoint() . self::URI_PAYMENT_DETAILS . $uid;
         $result = $this->doRequest($url);
 

@@ -19,3 +19,6 @@ CHANGELOG
 * Rename function `validateOnCheckout` to `localValidation` to avoid confusion.
 * Encrypted params ared added to  callbackUrl to validate the request and check the step.
 
+### 1.0.3 (2024-06-10)
+* Validate confirm payment method to check if uid is empty.
+
