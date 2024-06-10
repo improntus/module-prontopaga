@@ -97,10 +97,7 @@ class Create implements ActionInterface
                     }
                     $message = (__("Order %1 error: %2", $order->getIncrementId(), $error ?? ''));
                     $this->prontoPagaHelper->log(['type' => 'info', 'message' => $message, 'method' => __METHOD__]);
-                    $response['urlPay'] = $this->prontoPagaHelper->getResponseUrl([
-                        'token' => $this->prontoPagaHelper->encrypt($order->getEntityId()),
-                        'type' =>  ProntoPagaHelper::STATUS_REJECTED
-                    ]);
+                    $response['urlPay'] = $this->prontoPagaHelper->getResponseUrl();
                     $this->flow =  'error';
                 }
             }
