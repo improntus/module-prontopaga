@@ -36,8 +36,8 @@ See COPYING.txt for license details.
                         <field id="active">1</field>
                     </depends>
 				</field>
-				<field id="specificcountry" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label" canRestore="1">
-					<label>Payment from Applicable Countries</label>
+				<field id="specificcountry" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Payment from Specific Countries</label>
 					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
 					<can_be_empty>1</can_be_empty>
                     <depends>

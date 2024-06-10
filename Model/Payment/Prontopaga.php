@@ -179,8 +179,8 @@ class Prontopaga
             'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(ProntoPagaHelper::STEP_PAYMENT),
             'urlFinal' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_FINAL]),
             'urlRejected' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_REJECTED]),
-            'order' => $order->getIncrementId()
-            // 'order' => rand(1, 2147483647)
+            // 'order' => $order->getIncrementId()
+            'order' => rand(1, 2147483647)
         ];
     }
 
