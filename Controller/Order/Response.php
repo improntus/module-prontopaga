@@ -13,9 +13,11 @@ use Magento\Framework\App\RequestInterface;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Improntus\ProntoPaga\Model\Payment\Prontopaga;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 
-class Response implements ActionInterface
+class Response implements ActionInterface, HttpPostActionInterface, HttpGetActionInterface
 {
     const FAILRURE_PATH = 'checkout/onepage/failure';
     const SUCCESS_PATH  = 'checkout/onepage/success';
@@ -75,34 +77,40 @@ class Response implements ActionInterface
      */
     public function execute()
     {
-        $resultRedirect = $this->redirectFactory->create();
-        $result = $this->request->getParams();
-        $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($result), 'method' => __METHOD__]);
+        try {
+            $resultRedirect = $this->redirectFactory->create();
+            $result = $this->request->getParams();
+            $this->prontoPagaHelper->log(['type' => 'info', 'message' => $this->prontoPaga->json->serialize($result), 'method' => __METHOD__]);
 
-        if (!$result) {
+            if (!$result) {
+                $this->checkoutSession->setErrorMessage(self::ERROR_MESSAGE);
+                $resultRedirect->setPath(self::FAILRURE_PATH);
+                return $resultRedirect;
+            }
+
+            /** @var \Magento\Sales\Model\Order $order */
+            $order = $this->checkoutSession->getLastRealOrder();
+
+            if ($this->prontoPagaHelper->localValidation()) {
+                $path = $this->validatePayment($order);
+                $resultRedirect->setPath($path);
+                return $resultRedirect;
+            }
+
+            if ($type = $this->validatePayment($order, true)) {
+                if (in_array($type, ProntoPagaHelper::STATUSES_CANCEL)) {
+                    $path = $this->rejectedPayment($order);
+                } elseif (in_array($type, ProntoPagaHelper::STATUSES_SUCCESS)) {
+                    $path = self::SUCCESS_PATH;
+                }
+            }
+
+            $resultRedirect->setPath($path ?? self::FAILRURE_PATH);
+        } catch (\Exception $e) {
+            $this->prontoPagaHelper->log(['type' => 'error', 'message' => $e->getMessage(), 'method' => __METHOD__]);
             $this->checkoutSession->setErrorMessage(self::ERROR_MESSAGE);
             $resultRedirect->setPath(self::FAILRURE_PATH);
-            return $resultRedirect;
         }
-
-        /** @var \Magento\Sales\Model\Order $order */
-        $order = $this->checkoutSession->getLastRealOrder();
-
-        if ($this->prontoPagaHelper->localValidation()) {
-            $path = $this->validatePayment($order);
-            $resultRedirect->setPath($path);
-            return $resultRedirect;
-        }
-
-        if ($type = $this->validatePayment($order, true)) {
-            if (in_array($type, ProntoPagaHelper::STATUSES_CANCEL)) {
-                $path = $this->rejectedPayment($order);
-            } elseif (in_array($type, ProntoPagaHelper::STATUSES_SUCCESS)) {
-                $path = self::SUCCESS_PATH;
-            }
-        }
-
-        $resultRedirect->setPath($path ?? self::FAILRURE_PATH);
         return $resultRedirect;
     }
 
