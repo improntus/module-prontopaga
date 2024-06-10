@@ -21,4 +21,6 @@ CHANGELOG
 
 ### 1.0.3 (2024-06-10)
 * Validate confirm payment method to check if uid is empty and return to failure page.
+* Update Label for `specificmethods` configuration field and remove canRestore option.
+* Update transactions repository get methods and update persistTransaction to load transaction by entity_id from order.
 

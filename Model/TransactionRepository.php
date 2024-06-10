@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Improntus All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Improntus\ProntoPaga\Model;
@@ -91,20 +93,20 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         $transaction = $this->transactionFactory->create();
         $this->resource->load($transaction, $entityId);
-        if (!$transaction->getId()) {
+        if (!$transaction->getEntityId()) {
             throw new NoSuchEntityException(__('transaction with id "%1" does not exist.', $entityId));
         }
         return $transaction;
     }
 
-     /**
-      * @inheritDoc
-      */
+    /**
+     * @inheritDoc
+     */
     public function getByTransactionId($transactionId)
     {
         $transaction = $this->transactionFactory->create();
         $this->resource->load($transaction, $transactionId, 'transaction_id');
-        if (!$transaction->getId()) {
+        if (!$transaction->getEntityId()) {
             return false;
         }
         return $transaction;
@@ -117,7 +119,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         $transaction = $this->transactionFactory->create();
         $this->resource->load($transaction, $orderId, 'order_id');
-        if (!$transaction->getId()) {
+        if (!$transaction->getEntityId()) {
             return false;
         }
         return $transaction;

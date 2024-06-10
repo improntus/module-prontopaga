@@ -179,8 +179,8 @@ class Prontopaga
             'urlConfirmation' => $this->prontoPagaHelper->getCallBackUrl(ProntoPagaHelper::STEP_PAYMENT),
             'urlFinal' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_FINAL]),
             'urlRejected' =>  $this->prontoPagaHelper->getResponseUrl(['token' => $token, 'type' =>  ProntoPagaHelper::STATUS_REJECTED]),
-            // 'order' => $order->getIncrementId()
-            'order' => rand(1, 2147483647)
+            'order' => $order->getIncrementId()
+            // 'order' => rand(1, 2147483647)
         ];
     }
 
@@ -218,11 +218,11 @@ class Prontopaga
             $requestBody = $this->json->unserialize($response['request_body'] ?? '{}');
 
             // Retrieve transaction by order id or create a new one if it doesn't exist
-            $transaction = $this->transactionRepository->getByOrderId($order->getId())
+            $transaction = $this->transactionRepository->getByOrderId($order->getEntityId())
                 ?: $this->transactionFactory->create();
 
             // Set order id, transaction id and status
-            $transaction->setOrderId($order->getId());
+            $transaction->setOrderId($order->getEntityId());
             $transaction->setTransactionId($responseBody['uid'] ?? '');
             $transaction->setStatus($flow);
 
