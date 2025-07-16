@@ -43,7 +43,7 @@ class CancelOrders extends Command
      */
     public function __construct(
         CancelOrdersCron $cancelOrdersCron,
-        string $name = null,
+        ?string $name = null,
     ) {
         parent::__construct($name);
         $this->cancelOrdersCron = $cancelOrdersCron;
