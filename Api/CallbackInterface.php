@@ -1,10 +1,10 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Api;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 use Magento\Framework\Webapi\Exception;
 
 /**

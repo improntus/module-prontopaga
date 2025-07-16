@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Model;
 
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
@@ -13,6 +8,10 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
 use Magento\Store\Model\StoreManagerInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class ConfigProvider implements ConfigProviderInterface
 {
     const BANNER = 'Improntus_ProntoPaga::images/logo.png';

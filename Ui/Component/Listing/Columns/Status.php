@@ -1,14 +1,13 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Ui\Component\Listing\Columns;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Status implements OptionSourceInterface
 {
     /**

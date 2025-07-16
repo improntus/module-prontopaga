@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Cron;
 
 use Improntus\ProntoPaga\Api\TransactionRepositoryInterface;
@@ -11,7 +7,10 @@ use Improntus\ProntoPaga\Model\Payment\Prontopaga as ProntoPaga;
 use Magento\Sales\Model\ResourceModel\Order\Collection as OrderCollection;
 use Magento\Sales\Model\Order;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
-
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CancelOrders
 {
     const PENDING = 'pending';

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Controller\Order;
 
 use Magento\Framework\App\ActionInterface;
@@ -14,6 +9,10 @@ use Magento\Backend\Model\View\Result\RedirectFactory;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\App\RequestInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Create implements ActionInterface
 {
     const ERROR = 'error';

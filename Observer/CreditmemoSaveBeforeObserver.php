@@ -1,8 +1,4 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Improntus\ProntoPaga\Observer;
 
@@ -11,6 +7,10 @@ use Magento\Framework\Event\Observer;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\App\ResourceConnection;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CreditmemoSaveBeforeObserver implements ObserverInterface
 {
 

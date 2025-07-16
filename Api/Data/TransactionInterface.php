@@ -1,12 +1,12 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace Improntus\ProntoPaga\Api\Data;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 interface TransactionInterface
 {
 

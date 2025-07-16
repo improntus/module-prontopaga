@@ -1,10 +1,9 @@
-<?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Improntus\ProntoPaga\Logger;
+<?php namespace Improntus\ProntoPaga\Logger;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Logger extends \Monolog\Logger
 {
     public function setName($name)

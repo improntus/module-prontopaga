@@ -1,8 +1,4 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Improntus\ProntoPaga\Model\Config\Source;
 
@@ -11,6 +7,10 @@ use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Improntus\ProntoPaga\Model\PaymentMethods as PaymentMethods;
 use Improntus\ProntoPaga\Api\PaymentMethodsRepositoryInterface as PaymentMethodsInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class PaymentMehods implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**

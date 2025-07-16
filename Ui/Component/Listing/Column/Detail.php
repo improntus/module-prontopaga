@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -11,6 +7,10 @@ use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
 use Improntus\ProntoPaga\Api\TransactionRepositoryInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Detail extends Column
 {
     /**

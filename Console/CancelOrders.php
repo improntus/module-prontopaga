@@ -1,8 +1,4 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Console;
 
 use Magento\Framework\Validation\ValidationException;
@@ -15,6 +11,10 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 use Improntus\ProntoPaga\Cron\CancelOrders as CancelOrdersCron;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CancelOrders extends Command
 {
     const TYPE = 'cron-type';

@@ -1,14 +1,14 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Improntus\ProntoPaga\Model\Config\Comment;
 
 use Magento\Config\Model\Config\CommentInterface;
 use Magento\Framework\UrlInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class AutoReturnComment implements CommentInterface
 {
     /**

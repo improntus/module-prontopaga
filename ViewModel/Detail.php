@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
@@ -11,6 +7,10 @@ use Improntus\ProntoPaga\Model\TransactionFactory;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Detail implements ArgumentInterface
 {
     /**

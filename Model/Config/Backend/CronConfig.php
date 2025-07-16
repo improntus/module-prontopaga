@@ -1,10 +1,10 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Model\Config\Backend;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CronConfig extends \Magento\Framework\App\Config\Value
 {
     const CRON_STRING_PATH = 'crontab/prontopaga/jobs/prontopaga_cancel_pending/schedule/cron_expr';

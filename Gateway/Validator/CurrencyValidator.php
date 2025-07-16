@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Gateway\Validator;
 
 use Magento\Payment\Gateway\Validator\ResultInterface;
@@ -10,6 +6,10 @@ use Magento\Payment\Gateway\Validator\ResultInterfaceFactory;
 use Magento\Payment\Gateway\Validator\AbstractValidator;
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CurrencyValidator extends AbstractValidator
 {
     /**

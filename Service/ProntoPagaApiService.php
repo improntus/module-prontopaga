@@ -1,16 +1,15 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Service;
 
 use Improntus\ProntoPaga\Helper\Data as ProntoPagaHelper;
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\SerializerInterface as Json;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class ProntoPagaApiService
 {
     const URI_NEW_PAYMENT = 'api/payment/new';

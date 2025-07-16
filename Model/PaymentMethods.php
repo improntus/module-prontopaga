@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace Improntus\ProntoPaga\Model;
@@ -10,6 +6,10 @@ namespace Improntus\ProntoPaga\Model;
 use Improntus\ProntoPaga\Api\Data\PaymentMethodsInterface;
 use Magento\Framework\Model\AbstractModel;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class PaymentMethods extends AbstractModel implements PaymentMethodsInterface
 {
 

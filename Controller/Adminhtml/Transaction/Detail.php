@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Improntus\ProntoPaga\Controller\Adminhtml\Transaction;
 
 use Magento\Backend\App\Action;
@@ -13,6 +9,10 @@ use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Improntus\ProntoPaga\Api\TransactionRepositoryInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Detail extends Action implements HttpGetActionInterface
 {
     /**

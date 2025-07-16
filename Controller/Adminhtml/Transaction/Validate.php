@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Controller\Adminhtml\Transaction;
 
 use Magento\Backend\App\Action;
@@ -16,6 +11,10 @@ use Magento\Framework\Data\Form\FormKey\Validator;
 use Improntus\ProntoPaga\Api\TransactionRepositoryInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Validate extends Action
 {
     /**

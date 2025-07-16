@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -17,6 +12,10 @@ use Magento\Store\Model\StoreManagerInterface;
 
 use function Safe\base64_decode;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Data extends AbstractHelper
 {
     /** class consts */

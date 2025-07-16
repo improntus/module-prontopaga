@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Controller\Order;
 
 use Magento\Framework\App\ActionInterface;
@@ -15,6 +10,10 @@ use Magento\Framework\Controller\Result\RedirectFactory;
 use Improntus\ProntoPaga\Model\Payment\Prontopaga;
 use Magento\Framework\Exception\LocalizedException;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Response implements ActionInterface
 {
     const FAILRURE_PATH = 'checkout/onepage/failure';

@@ -1,8 +1,4 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Improntus\ProntoPaga\Observer;
 
@@ -10,6 +6,10 @@ use Magento\Framework\Event\Observer;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
 use Magento\Quote\Api\Data\PaymentInterface;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class DataAssignObserver extends AbstractDataAssignObserver
 {
     const DOCUMENT_NUMBER = 'document_number';

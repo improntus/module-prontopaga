@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Improntus\ProntoPaga\Model;
 
 use Improntus\ProntoPaga\Api\CallbackInterface;
@@ -15,6 +10,10 @@ use Magento\Framework\Webapi\Rest\Request;
 
 use function PHPSTORM_META\type;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class Callback implements CallbackInterface
 {
     /**

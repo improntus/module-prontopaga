@@ -1,8 +1,4 @@
 <?php
-/*
- * Copyright © Improntus All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace Improntus\ProntoPaga\Observer;
 
@@ -18,6 +14,10 @@ use Improntus\ProntoPaga\Model\Payment\Prontopaga as ProntoPagaPayment;
 use Magento\Sales\Model\Order\Creditmemo;
 use Magento\Sales\Model\Order;
 
+/**
+ * @author Improntus <http://www.improntus.com> - Adobe Gold Partner - Elevating digital experience
+ * @copyright Copyright (c) 2025 Improntus
+ */
 class CreditmemoSaveAfterObserver implements ObserverInterface
 {
     /**
